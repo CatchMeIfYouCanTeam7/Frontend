@@ -16,7 +16,6 @@ const SignUp = () => {
             <tr>
               닉네임 :&nbsp;
               <input placeholder="2~6글자"></input>
-              <button>중복확인</button>
             </tr>
             <tr className="idPwBtn">
               PW :&nbsp;
