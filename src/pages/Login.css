@@ -1,0 +1,22 @@
+.loginBoxFull {
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  text-align: center;
+  margin: auto;
+  display: flex;
+}
+
+.loginDivBox {
+  width: 95%;
+  max-width: 400px;
+  height: 500px;
+  background-color: whitesmoke;
+  border: 2px solid black;
+  margin: auto;
+  margin-top: 150px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}

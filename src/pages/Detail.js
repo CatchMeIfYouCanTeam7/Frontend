@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import Header from "../components/Header";
 
 const Detail = () => {
-	return (
-		<div>Detail</div>
-	)
-}
+  return (
+    <div>
+      <Header />
+      Detail
+    </div>
+  );
+};
 
-export default Detail
+export default Detail;
