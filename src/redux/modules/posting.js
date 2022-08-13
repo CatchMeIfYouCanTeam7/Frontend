@@ -1,15 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-
-}
+const initialState = {};
 
 const posting = createSlice({
-	name: "posting",
-	initialState,
-	reducers: {
-		
-	}
+  name: "posting",
+  initialState,
+  reducers: {},
 });
 
 export const {} = posting.actions;

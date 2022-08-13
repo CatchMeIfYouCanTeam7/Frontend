@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const PostingDetailBox = () => {
-	return (
-		<div>PostingDetailBox</div>
-	)
-}
+  return <div>PostingDetailBox</div>;
+};
 
-export default PostingDetailBox
+export default PostingDetailBox;
