@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Header from "../../components/Header";
+import Header from "../../components/header/Header";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ const DetailWrap = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
-	flex-direction: column;
+  flex-direction: column;
 `;
 
 const DetailContainer = styled.div`
