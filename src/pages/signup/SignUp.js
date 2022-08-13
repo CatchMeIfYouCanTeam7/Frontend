@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/header/Header";
+import Header from "../../components/header/Header";
 import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +15,8 @@ const SignUp = () => {
             <div className="signUpContents">
               <tr>
                 E-mail :&nbsp;&nbsp;&nbsp;&nbsp;
-                <input placeholder="email"></input><button>중복확인</button>
+                <input placeholder="email"></input>
+                <button>중복확인</button>
               </tr>
               <tr>
                 Nickname :&nbsp;&nbsp;&nbsp;&nbsp;
@@ -26,11 +27,8 @@ const SignUp = () => {
                 <input></input>
               </tr>
               <tr className="idPwBtn">
-                <span>
-                  Re-entepassword
-                  &nbsp;
-                </span> 
-                
+                <span>Re-entepassword &nbsp;</span>
+
                 <span>:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <input></input>
               </tr>
