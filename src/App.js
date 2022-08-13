@@ -1,10 +1,10 @@
 
 import { Route, Routes } from "react-router-dom";
-import Main from "./pages/Main";
-import Detail from "./pages/Detail";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import Posting from "./pages/Posting";
+import Main from "./pages/main/Main";
+import Detail from "./pages/detail/Detail";
+import Login from "./pages/login/Login";
+import SignUp from "./pages/signup/SignUp";
+import Posting from "./pages/posting/Posting";
 
 function App() {
 	return (

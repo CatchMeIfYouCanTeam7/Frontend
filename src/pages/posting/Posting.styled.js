@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 
-export const DetailWrap = styled.div`
+
+export const PostingWrap = styled.div`
 	width: 100vw;
 	height: 90vh;
 	display: flex;
 `;
 
-export const DetailContainer = styled.div`
+export const PostingContainer = styled.div`
 	width: 570px;
-	height: 825px;
+	height: 600px;
 	margin: auto;
 	padding: 20px;
 
@@ -17,7 +18,7 @@ export const DetailContainer = styled.div`
 	border: 1px solid black;
 `;
 
-export const DetailHeader = styled.div`
+export const PostingHeader = styled.div`
 	margin: 20px;
 	/* background-color: aqua; */
 
@@ -25,7 +26,7 @@ export const DetailHeader = styled.div`
 	justify-content: space-between;
 `;
 
-export const DetailContent = styled.div`
+export const PostingImgUproad = styled.div`
 	button {
 		margin: 20px;
 	}
@@ -35,8 +36,8 @@ export const DetailContent = styled.div`
 	}
 `;
 
-export const CommentWrite = styled.div`
-	margin: auto 20px;
+export const InputWrap = styled.div`
+	margin: 30px 10px;
 
 	display: flex;
 	justify-content: space-between;
@@ -49,17 +50,4 @@ export const CommentWrite = styled.div`
 		border: 0px solid #ffffff;
 		border-radius: 5px;
 	}
-`;
-
-export const CommentListContainer = styled.div`
-	text-align: left;
-	margin: 20px;
-`;
-
-export const CommentWrap = styled.div`
-	/* background-color: blue; */
-	margin: 20px auto;
-
-	display: flex;
-	justify-content: space-between;
 `;

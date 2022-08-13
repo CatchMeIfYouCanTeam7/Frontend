@@ -1,15 +1,17 @@
 import React from "react";
-import Header from "../components/Header";
+import Header from "../../components/header/Header";
 import "./SignUp.css";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <Header>SIGN UP</Header>
       <div className="signUpBoxFull">
         <div className="SignUpDivBox">
           <table className="signUpTable">
-            <h1>회원가입</h1>
+            <h1>SIGN UP</h1>
             <div className="signUpContents">
               <tr>
                 E-mail :&nbsp;&nbsp;&nbsp;&nbsp;
@@ -33,7 +35,7 @@ const SignUp = () => {
                 <input></input>
               </tr>
             </div>
-            <button>이전</button>
+            <button onClick={() => navigate(-1)}>이전</button>
             <button>회원가입</button>
           </table>
         </div>
