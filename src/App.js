@@ -1,9 +1,10 @@
-import { Route, Routes } from 'react-router-dom';
-import Main from './pages/Main';
-import Detail from './pages/Detail';
-import Login from './pages/Login';
-import SignUp from './pages/SignUp';
-import Posting from './pages/Posting';
+
+import { Route, Routes } from "react-router-dom";
+import Main from "./pages/Main";
+import Detail from "./pages/Detail";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Posting from "./pages/Posting";
 
 function App() {
 	return (
