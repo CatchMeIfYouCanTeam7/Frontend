@@ -9,16 +9,19 @@ const Login = () => {
       <div className="loginBoxFull">
         <div className="loginDivBox">
           <table className="idPwTable">
+            <h1>LOG IN</h1>
             <tr>
-              ID :&nbsp;
-              <input></input>
+              E-mail :&nbsp;&nbsp;&nbsp;&nbsp;
+              <input className="idInput"/>
             </tr>
-            <div className="idPwBtn">
-              PW :&nbsp;
-              <input></input>
+            <tr className="idPwBtn">
+              Password :&nbsp;&nbsp;&nbsp;&nbsp;
+              <input className="passwordInput"/>
+            </tr>
+            <div className="buttonGroup">  
+              <button>로그인</button>
+              <button>회원가입</button>
             </div>
-            <button>로그인</button>
-            <button>회원가입</button>
           </table>
         </div>
       </div>
