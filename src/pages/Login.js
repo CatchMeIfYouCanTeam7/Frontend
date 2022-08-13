@@ -1,8 +1,11 @@
 import React from "react";
 import "./Login.css";
-import Header from "../components/Header";
+import Header from "../components/header/Header";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  
   return (
     <>
       <Header></Header>
@@ -20,7 +23,7 @@ const Login = () => {
             </tr>
             <div className="buttonGroup">  
               <button>로그인</button>
-              <button>회원가입</button>
+              <button onClick={() => navigate('/SignUp')}>회원가입</button>
             </div>
           </table>
         </div>
