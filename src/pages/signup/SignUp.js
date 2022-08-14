@@ -1,46 +1,101 @@
 import React from "react";
+import { useState } from "react";
 import Header from "../../components/header/Header";
-import "./SignUp.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
+import { StLoginDivFull, StLoginDivBox } from "../login/Login.styled";
+import { StSignUpInput, StSignUpTable, StSignUpDiv } from "./SignUp.styled";
+
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  const [inputValue, setInputValue] = useState({
+    email: '',
+    nickName: '', 
+    password: '',
+    password2: '',
+  });
+  // const { nickName, email, password, password2} = inputValue;
+
+  // const register= ()=>{
+  //   axios
+  // .post('http://localhost:1337/api/auth/local/register', {   
+  //   email: email,
+  //   nickName: nickName,
+  //   password: password,
+  // })
+  // .then(response => {
+  //   // Handle success.
+  //   console.log('Well done!');
+  //   console.log('User profile', response.data.user);
+  //   console.log('User token', response.data.jwt);
+  //   localStorage.setItem('token', response.data.jwt)
+  //   navigate("/")
+  // })
+  // .catch(error => {
+  //   // Handle error.
+  //   console.log('An error occurred:', error.response);
+  // });
+  // }
+
+  const handleInput = event => {
+    const {name, value} = event.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  };
+
+
   return (
-    <div>
+    <>
       <Header>SIGN UP</Header>
-      <div className="signUpBoxFull">
-        <div className="SignUpDivBox">
-          <table className="signUpTable">
+      <StLoginDivFull>
+        <StLoginDivBox>
+          <StSignUpTable>
             <h1>SIGN UP</h1>
-            <div className="signUpContents">
+            <StSignUpDiv>
               <tr>
-                E-mail :&nbsp;&nbsp;&nbsp;&nbsp;
-                <input placeholder="email"></input><button>중복확인</button>
+                E-mail :&nbsp;&nbsp;
+                <StSignUpInput 
+                placeholder="email을 입력해주세요" 
+                name="email"
+                onChanege={handleInput} 
+                />
               </tr>
               <tr>
-                Nickname :&nbsp;&nbsp;&nbsp;&nbsp;
-                <input placeholder="2~6글자"></input>
+                Nickname :&nbsp;&nbsp;
+                <StSignUpInput placeholder="2~8글자"
+                name="nickName"
+                onChange={handleInput} />
               </tr>
               <tr className="idPwBtn">
-                Password :&nbsp;&nbsp;&nbsp;&nbsp;
-                <input></input>
+                Password :&nbsp;&nbsp;&nbsp;
+                <StSignUpInput 
+                name="password"
+                onChange={handleInput}
+                />
               </tr>
               <tr className="idPwBtn">
-                <span>
-                  Re-entepassword
-                  &nbsp;
-                </span> 
-                
-                <span>:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input></input>
+                password2
+                <span>:&nbsp;&nbsp;&nbsp;</span>
+                <StSignUpInput
+                name="password2"
+                onChange={handleInput}/>
               </tr>
-            </div>
-            <button onClick={() => navigate(-1)}>이전</button>
-            <button>회원가입</button>
-          </table>
-        </div>
-      </div>
-    </div>
+            </StSignUpDiv>
+            <button onClick={(
+            ) => navigate(-1)} 
+            style={{marginRight:"5px"}}>
+              이전
+              </button>
+            <button 
+            // onClick={()=>{register();}}
+            style={{marginLeft:"5px"}}>회원가입</button>
+          </StSignUpTable>
+        </StLoginDivBox>
+      </StLoginDivFull>
+    </>
   );
 };
 
