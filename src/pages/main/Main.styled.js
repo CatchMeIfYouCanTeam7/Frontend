@@ -14,7 +14,11 @@ export const MainContainer = styled.div`
   margin: auto;
   text-align: center;
 
-  background-color: aliceblue;
+  border: 6px solid black;
+  border-radius: 15px;
+
+  background-color: #5357f6;
+  position: relative;
 `;
 
 export const ListHeader = styled.div`
@@ -31,11 +35,18 @@ export const ListHeader = styled.div`
     bottom: 0px;
     right: 0px;
   }
+
+  p {
+    color: white;
+    text-align: left;
+    font-size: 32px;
+    font-weight: bold;
+  }
 `;
 
 export const ListContainer = styled.div`
-  background-color: lightgreen;
-  height: 700px;
+  /* background-color: lightgreen; */
+  height: 82.5%;
 
   // scroll
   overflow-y: scroll;
@@ -48,11 +59,19 @@ export const ListContainer = styled.div`
     border-radius: 10px;
   }
   &::-webkit-scrollbar-thumb {
-    background: #888;
+    /* background: #ef8b7c; */
+    background: #ffc500;
     border-radius: 5px;
   }
   &::-webkit-scrollbar-thumb:hover {
-    background: #333;
+    background: #ef8b7c;
     border-radius: 5px;
   }
+`;
+
+export const ImageWrap = styled.img`
+  height: 300px;
+  position: absolute;
+  right: -90px;
+  bottom: -60px;
 `;

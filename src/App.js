@@ -4,10 +4,11 @@ import Detail from "./pages/detail/Detail";
 import Login from "./pages/login/Login";
 import SignUp from "./pages/signup/SignUp";
 import Posting from "./pages/posting/Posting";
+import styled from "styled-components";
 
 function App() {
   return (
-    <div className="App">
+    <AppContainer className="App">
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/Posting" element={<Posting />} />
@@ -17,8 +18,20 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
       </Routes>
-    </div>
+    </AppContainer>
   );
 }
+
+const AppContainer = styled.div`
+  /* background-repeat: repeat; */
+  background-image: linear-gradient(
+      to bottom,
+      transparent,
+      transparent 10%,
+      #fff 10%
+    ),
+    linear-gradient(to right, #5357f6, #5357f6 10%, #fff 10%);
+  background-size: 30px 30px;
+`;
 
 export default App;

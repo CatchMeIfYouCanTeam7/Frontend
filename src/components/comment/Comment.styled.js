@@ -7,6 +7,14 @@ export const CommentContainer = styled.div`
 
   span {
     padding: 0px 10px;
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  hr {
+    background-color: black;
+    height: 2px;
+    border: 0;
   }
 `;
 

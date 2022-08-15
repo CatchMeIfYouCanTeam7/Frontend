@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 // redux
 import { removeComment } from "../../redux/modules/comment";
+import Button from "../button/Button";
 
 // styled-componenets
 import {
@@ -26,7 +27,9 @@ const Comment = ({ comment }) => {
       </CommentNicknameWrap>
       <CommentContentWrap>
         <span>{comment.comment}</span>
-        <button onClick={onRemoveCommentHandler}>삭제</button>
+        <Button id="removeCommentBtn" onClick={onRemoveCommentHandler}>
+          삭제
+        </Button>
         <hr />
       </CommentContentWrap>
     </CommentContainer>

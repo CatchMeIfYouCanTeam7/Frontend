@@ -9,19 +9,21 @@ import { addComment } from "../../redux/modules/comment";
 // components
 import Comment from "../../components/comment/Comment";
 import Header from "../../components/header/Header";
+import Button from "../../components/button/Button";
 
 // data
 import { RESP } from "../../data/response";
 
 // styled-componenets
 import {
+  CommentList,
   CommentListContainer,
   CommentNone,
-  CommentShowBtn,
   CommentWrite,
   DetailContainer,
   DetailContent,
   DetailHeader,
+  DetailHeaderWrap,
   DetailWrap,
 } from "./Detail.styled";
 
@@ -44,18 +46,17 @@ const Detail = () => {
   // let commentList = RESP.COMMENT.result.filter(
   //   (item) => item.questionId === +id,
   // );
-  const commentList = useSelector((item) => item.comment.comment).filter(
-    (item) => item.questionId === +id,
-  );
+  const commentAllList = useSelector((item) => item.comment.comment);
+  const commentList = commentAllList.filter((item) => item.questionId === +id);
 
   useEffect(() => {}, [commentList]);
 
   // 댓글 유무 확인 -> 댓글 보여주기
   const onCheckCommentList = () => {
     if (commentList.length > 0) {
-      return commentList.map((item) => (
-        <Comment key={item.answerId} comment={item} />
-      ));
+      return commentList
+        .reverse()
+        .map((item) => <Comment key={item.answerId} comment={item} />);
     } else {
       return <CommentNone>댓글이 없습니다!</CommentNone>;
     }
@@ -76,16 +77,20 @@ const Detail = () => {
     if (comment.userNickname === "" || comment.comment === "") {
       alert("닉네임과 정답을 입력해주세요!");
     } else {
-      const newComment = {
-        answerId: RESP.COMMENT.result.length + 1,
-        questionId: +id,
-        userNickname: comment.userNickname,
-        comment: comment.comment,
-        createdAt: new Date().toISOString(),
-      };
-      dispatch(addComment(newComment));
-      console.log("enroll", commentList);
-      setComment({ userNickname: "", comment: "" });
+      if (comment.comment.length > 5) {
+        alert("정답을 5글자 이내로 적어주세요!");
+      } else {
+        const newComment = {
+          answerId: commentAllList.length + 1,
+          questionId: +id,
+          userNickname: comment.userNickname,
+          comment: comment.comment,
+          createdAt: new Date().toISOString(),
+        };
+        dispatch(addComment(newComment));
+        console.log("enroll", commentList);
+        setComment({ userNickname: "", comment: "" });
+      }
     }
   };
 
@@ -93,13 +98,23 @@ const Detail = () => {
     <DetailWrap>
       <Header />
       <DetailContainer>
-        <DetailHeader>
-          <button onClick={() => navigate(-1)}>뒤로가기</button>
-          <button onClick={() => navigate(`/Posting/${id}`)}>수정하기</button>
-        </DetailHeader>
+        <DetailHeaderWrap>
+          <Button id="backBtn" onClick={() => navigate(-1)}></Button>
+          <DetailHeader>
+            <span>닉네임: {question.userNickname}</span>
+            <Button
+              id="editPostingBtn"
+              onClick={() => navigate(`/Posting/${id}`)}
+            >
+              수정
+            </Button>
+          </DetailHeader>
+        </DetailHeaderWrap>
         <DetailContent>
           <img src={question.imageUrl} alt="" />
-          <button onClick={onClickHinkHandler}>{hint}</button>
+          <Button id="hintBtn" onClick={onClickHinkHandler}>
+            {hint}
+          </Button>
         </DetailContent>
         <div>
           <CommentWrite>
@@ -116,18 +131,26 @@ const Detail = () => {
               <input
                 type="text"
                 value={comment.comment}
+                placeholder="5글자 제한"
                 onChange={(e) => {
                   setComment({ ...comment, comment: e.target.value });
                 }}
               />
             </div>
-            <button onClick={onClickEnrollCommentHandler}>등록</button>
+            <Button id="enrollCommentBtn" onClick={onClickEnrollCommentHandler}>
+              등록
+            </Button>
           </CommentWrite>
           <CommentListContainer>
-            <CommentShowBtn onClick={onClickShowCommentListHandler}>
-              {visibleCommentList ? "댓글 접기 △" : "댓글 보기 ▽"}
-            </CommentShowBtn>
-            {visibleCommentList && onCheckCommentList()}
+            <CommentList>
+              <Button
+                id="showCommentBtn"
+                onClick={onClickShowCommentListHandler}
+              >
+                {visibleCommentList ? "댓글 접기 △" : "댓글 보기 ▽"}
+              </Button>
+              {visibleCommentList && onCheckCommentList()}
+            </CommentList>
           </CommentListContainer>
         </div>
       </DetailContainer>
