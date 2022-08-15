@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import "./Login.styled.js";
 import Header from "../../components/header/Header";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,6 +8,7 @@ import {
   StButtonGroup,
   StInput,
 } from "./Login.styled.js";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Login = () => {
   const [user, setUser] = useState("");
   const [pw, setPw] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -28,24 +28,34 @@ const Login = () => {
   useEffect(() => {
     setErrMsg("");
   }, [user, pw]);
-
+  
+ //로그인 정보 전송하고 값을 받음
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user, pw);
+    axios.post(
+      "http://13.125.59.80/api/members/login",
+      {email: user, password: pw,},
+    )
+    .then((res)=> {
+     console.log(res);
+     console.log(res.data.data.accessToken);
+     console.log("성공")
+    })
+    .catch(error=>{
+      console.log(error);
+      alert("아이디와 비밀번호를 확인해 주세요");
+    });
+
     setUser("");
     setPw("");
-    setSuccess(true);
+    // alert("로그인에 성공하였습니다");
+    // navigate("/");
   };
+
 
   return (
     <>
-      {success ? (
-        <section>
-          {alert("로그인에 성공하였습니다")}
-          {navigate("/")}
-        </section>
-      ):(
-      <>
       <Header></Header>
       <StSection>
         <StLoginDivFull>
@@ -55,9 +65,7 @@ const Login = () => {
             </p>
             <h1 style={{ marginTop: "0px", marginBottom: "80px" }}>LOG IN</h1>
             <form onSubmit={handleSubmit}>
-              <label htmlFor="username">
-                E-mail :&nbsp;&nbsp;&nbsp;&nbsp;
-              </label>
+              <label htmlFor="username">E-mail :&nbsp;&nbsp;&nbsp;&nbsp;</label>
               <StInput
                 placeholder="email을 입력해주세요..!"
                 type="text"
@@ -67,7 +75,7 @@ const Login = () => {
                 value={user}
                 required
               />
-              <br/>
+              <br />
               <label htmlFor="password">
                 Password :&nbsp;&nbsp;&nbsp;&nbsp;
               </label>
@@ -92,8 +100,6 @@ const Login = () => {
           </StLoginDivBox>
         </StLoginDivFull>
       </StSection>
-      </>
-      )}
     </>
   );
 };

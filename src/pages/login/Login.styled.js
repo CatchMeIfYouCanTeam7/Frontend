@@ -7,14 +7,13 @@ export const StLoginDivFull = styled.div`
   text-align: center;
   margin: auto;
   display: flex;
-
 `;
 
 export const StSection = styled.section`
-width: 99.655%;
-height: 100px;
-display: flex;
-align-items: center;
+  width: 99.655%;
+  height: 100px;
+  display: flex;
+  align-items: center;
 `;
 
 export const StLoginDivBox = styled.div`
@@ -29,7 +28,7 @@ export const StLoginDivBox = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 0px 30px 30px 30px;
- `;
+`;
 
 export const StButtonGroup = styled.div`
   margin-top: 70px;
@@ -48,5 +47,4 @@ export const StInput = styled.input`
   height: 35px;
   margin-bottom: 8px;
   border: 2px solid black;
-`
-
+`;

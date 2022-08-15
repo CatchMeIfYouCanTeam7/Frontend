@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import Main from "./pages/main/Main";
 import Detail from "./pages/detail/Detail";
@@ -31,7 +30,7 @@ const AppContainer = styled.div`
       transparent 10%,
       #fff 10%
     ),
-    linear-gradient(to right, #5357f6, #5357f6 10%, #fff 10%);
+    linear-gradient(to right, #acafef, #acafef 10%, #fff 10%);
   background-size: 30px 30px;
 `;
 
