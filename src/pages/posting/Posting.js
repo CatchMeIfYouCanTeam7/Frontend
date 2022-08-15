@@ -16,7 +16,7 @@ import {
 	PostingHeader,
 	InputWrap,
 } from './Posting.styled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Posting = () => {
 	const navigate = useNavigate();
