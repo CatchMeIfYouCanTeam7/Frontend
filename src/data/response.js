@@ -38,7 +38,15 @@ export const RESP = {
 				answerId: 3,
 				userNickname: "nick3",
 				comment: "정답3"
-			}
-		]
-	}
+			},
+		],
+	},
+	LOGIN: {
+		ok: true,
+		result: true
+	},
+	SIGNUp: {
+		ok: true,
+		result: true
+	},
 };

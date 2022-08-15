@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../../components/Header";
-import PostingCard from "../../components/PostingCard";
+import Header from "../../components/header/Header";
+import PostingCard from "../../components/postingcard/PostingCard";
 import { RESP } from "../../data/response";
 
 const Main = () => {
