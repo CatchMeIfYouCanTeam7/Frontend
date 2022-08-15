@@ -48,10 +48,19 @@ export const RESP = {
       {
         answerId: 3,
 				questionId: 2,
+
         userNickname: "nick3",
         comment: "정답3",
         createdAt: "2020-04-11T11:12:30.686",
       },
     ],
   },
+	LOGIN: {
+		ok: true,
+		result: true
+	},
+	SIGNUp: {
+		ok: true,
+		result: true
+	},
 };

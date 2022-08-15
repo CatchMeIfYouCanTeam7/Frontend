@@ -6,7 +6,7 @@ const Posting = () => {
 		<div>
 			<Header/>
 			Posting
-			</div>
+		</div>
 	)
 }
 
