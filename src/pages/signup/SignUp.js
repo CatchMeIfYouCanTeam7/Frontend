@@ -4,7 +4,6 @@ import { useNavigate} from "react-router-dom";
 import { StLoginDivFull, StLoginDivBox } from "../login/Login.styled";
 import { StSignUpInput, StSignUpForm, StSignUpDiv } from "./SignUp.styled";
 
-
 const SignUp = () => {
   const navigate = useNavigate();
   const userRef = useRef();
