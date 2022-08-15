@@ -1,84 +1,51 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
-import styled from 'styled-components';
-import Header from '../../components/header/Header';
-import PostingCard from '../../components/postingcard/PostingCard';
-import { RESP } from '../../data/response';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/button/Button";
+
+// components
+import Header from "../../components/header/Header";
+import PostingCard from "../../components/postingcard/PostingCard";
+
+// data
+import { RESP } from "../../data/response";
+
+// styled-componenets
+import {
+  ImageWrap,
+  ListContainer,
+  ListHeader,
+  MainContainer,
+  MainWrap,
+} from "./Main.styled";
 
 const Main = () => {
-	console.log(RESP.QUESTION.result);
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	return (
-		<MainWrap>
-			<Header />
-			<MainContainer>
-				<ListHeader>
-					<h1>그림을 맞춰줘!</h1>
-					<button onClick={() => {navigate('/posting')}}>글 작성</button>
-				</ListHeader>
-				<ListContainer>
-					{Array.from({ length: 4 }, (_, idx) => {
-						return <PostingCard key={idx} />;
-					})}
-				</ListContainer>
-			</MainContainer>
-		</MainWrap>
-	);
+  // 문제 전체 조회
+  const questionList = RESP.QUESTION.result;
+
+  return (
+    <MainWrap>
+      <Header />
+      <MainContainer>
+        <ListHeader>
+          <p>
+            상상력을 발휘해 <br />
+            정답을 맞춰주세요!
+          </p>
+          <Button id="postingBtn" onClick={() => navigate("/Posting")}>
+            글 작성
+          </Button>
+        </ListHeader>
+        <ListContainer>
+          {questionList.map((item) => {
+            return <PostingCard key={item.questionId} question={item} />;
+          })}
+        </ListContainer>
+        <ImageWrap src={require("../../image/pencil.png")} alt="" />
+      </MainContainer>
+    </MainWrap>
+  );
 };
-
-const MainWrap = styled.div`
-	width: 99.655vw;
-	height: 99.655vh;
-	display: flex;
-	flex-direction: column;
-`;
-
-const MainContainer = styled.div`
-	background-color: aliceblue;
-	width: 570px;
-	height: 825px;
-	margin: auto;
-	text-align: center;
-`;
-
-const ListHeader = styled.div`
-	width: 80%;
-	height: 125px;
-	margin: 10px auto;
-	display: flex;
-	justify-content: space-between;
-	position: relative;
-	button {
-		position: absolute;
-		bottom: 0px;
-		right: 0px;
-	}
-`;
-
-const ListContainer = styled.div`
-	background-color: lightgreen;
-	height: 700px;
-
-	// scroll
-	overflow-y: scroll;
-
-	&::-webkit-scrollbar {
-		width: 10px;
-	}
-	&::-webkit-scrollbar-track {
-		box-shadow: inset 0 0 5px grey;
-		border-radius: 10px;
-	}
-	&::-webkit-scrollbar-thumb {
-		background: #888;
-		border-radius: 5px;
-	}
-	&::-webkit-scrollbar-thumb:hover {
-		background: #333;
-		border-radius: 5px;
-	}
-`;
 
 export default Main;
