@@ -11,9 +11,13 @@ export const StSignUpInput = styled.input`
 width: 200px;
 height: 25px;
 border: 2px solid black;
+margin: auto;
 `; 
 
-export const StSignUpTable = styled.table`
+export const StSignUpForm = styled.form`
 height: 400px;
 background-color: gainsboro;
+text-align: center;
+justify-content: space-around;
+
 `;

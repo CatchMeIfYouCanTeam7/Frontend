@@ -48,5 +48,5 @@ export const RESP = {
 	SIGNUp: {
 		ok: true,
 		result: true
-	}
+	},
 };
