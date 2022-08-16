@@ -27,25 +27,25 @@ export const asyncGetOneQuestion = createAsyncThunk(
 		} else {
 			return null;
 		}
-	}
+  },
 );
 
 export const asyncPostQuestion = createAsyncThunk(
-	'posting/postQuestion',
-	async (payload, thunkAPI) => {
-		console.log('action', payload);
-		const response = await axios.post(
-			url + '/auth/questions',
-			payload.formData,
-			{
-				headers: {
-					Authorization: localStorage.getItem('accessToken' + payload.userId),
-					'Content-Type': 'multipart/form-data',
-				},
-			}
-		);
-		console.log(response);
-	}
+  "posting/postQuestion",
+  async (payload, thunkAPI) => {
+    console.log("action", payload);
+    const response = await axios.post(
+      url + "/auth/questions",
+      payload.formData,
+      {
+        headers: {
+          Authorization: localStorage.getItem("accessToken" + payload.userId),
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+    console.log(response);
+  },
 );
 
 const initialState = {
