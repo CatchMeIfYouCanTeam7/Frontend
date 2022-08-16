@@ -38,7 +38,7 @@ const SignUp = () => {
     //태그의 기본 기능으로 리프레쉬 되는 것을 방지.
     event.preventDefault();
 
-    axios.post('http://13.125.59.80/api/mebers/signup', {
+    axios.post(process.env.REACT_APP_URL+'/api/mebers/signup', {
       email: email,
       nickname: nickname,
       password: password,
