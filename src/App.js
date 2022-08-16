@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import Main from "./pages/main/Main";
 import Detail from "./pages/detail/Detail";
@@ -24,15 +23,16 @@ function App() {
 }
 
 const AppContainer = styled.div`
-	/* background-repeat: repeat; */
-	background-image: linear-gradient(
-			to bottom,
-			transparent,
-			transparent 10%,
-			#fff 10%
-		),
-		linear-gradient(to right, #acafef, #acafef 10%, #fff 10%);
-	background-size: 30px 30px;
+
+  /* background-repeat: repeat; */
+  background-image: linear-gradient(
+      to bottom,
+      transparent,
+      transparent 10%,
+      #fff 10%
+    ),
+    linear-gradient(to right, #acafef, #acafef 10%, #fff 10%);
+  background-size: 30px 30px;
 `;
 
 export default App;

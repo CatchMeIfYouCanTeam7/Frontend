@@ -1,7 +1,8 @@
 // React import
-import React from 'react';
+import React from "react";
 
 // Package import
+
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { addPosting } from '../../redux/modules/posting';
@@ -148,6 +149,7 @@ const Posting = () => {
 					</div>
 
 					{/* <React.Fragment>
+
 						<button onClick={handleButtonClick}>파일 업로드</button>
 						<input
 							type="file"
@@ -157,12 +159,13 @@ const Posting = () => {
 						/>
 					</React.Fragment> */}
 
-					{/* <PostingImgUproad>
+          {/* <PostingImgUproad>
 						<img
 							src="http://c2.img.netmarble.kr/web/6N/2011/02/2139/%EA%B0%9C%EB%93%9C%EB%A6%BD_%EC%A0%9C%EC%B2%A0%EC%86%8C.jpg"
 							alt=""
 						/>
 					</PostingImgUproad> */}
+
 					<div>
 						<InputWrap>
 							<label htmlFor="nickname">힌트</label>

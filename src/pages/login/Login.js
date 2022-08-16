@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import "./Login.styled.js";
 import Header from "../../components/header/Header";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,6 +8,7 @@ import {
   StButtonGroup,
   StInput,
 } from "./Login.styled.js";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -29,23 +29,38 @@ const Login = () => {
     setErrMsg("");
   }, [user, pw]);
 
+  //로그인 정보 전송하고 값을 받음
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user, pw);
+    axios
+      .post("http://13.125.59.80/api/members/login", {
+        email: user,
+        password: pw,
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(res.headers.authorization);
+        localStorage.setItem("accessToken", res.headers.authorization);
+        console.log("성공");
+        if (res.headers.authorization) {
+          localStorage.setItem("accessToken", res.headers.authorization);
+          setSuccess(!success);
+          alert("로그인에 성공하였습니다");
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("아이디와 비밀번호를 확인해 주세요");
+      });
+
     setUser("");
     setPw("");
-    setSuccess(true);
   };
 
   return (
     <>
-      {success ? (
-        <section>
-          {alert("로그인에 성공하였습니다")}
-          {navigate("/")}
-        </section>
-      ):(
-      <>
       <Header></Header>
       <StSection>
         <StLoginDivFull>
@@ -55,9 +70,7 @@ const Login = () => {
             </p>
             <h1 style={{ marginTop: "0px", marginBottom: "80px" }}>LOG IN</h1>
             <form onSubmit={handleSubmit}>
-              <label htmlFor="username">
-                E-mail :&nbsp;&nbsp;&nbsp;&nbsp;
-              </label>
+              <label htmlFor="username">E-mail :&nbsp;&nbsp;&nbsp;&nbsp;</label>
               <StInput
                 placeholder="email을 입력해주세요..!"
                 type="text"
@@ -67,7 +80,7 @@ const Login = () => {
                 value={user}
                 required
               />
-              <br/>
+              <br />
               <label htmlFor="password">
                 Password :&nbsp;&nbsp;&nbsp;&nbsp;
               </label>
@@ -80,8 +93,13 @@ const Login = () => {
                 required
               />
               <StButtonGroup>
-                <button style={{ marginRight: "5px" }}>로그인</button>
+                <button 
+                type="submit"
+                style={{ marginRight: "5px" }}>
+                  로그인
+                </button>
                 <button
+                  type="button"
                   style={{ marginLeft: "5px" }}
                   onClick={() => navigate("/SignUp")}
                 >
@@ -92,8 +110,6 @@ const Login = () => {
           </StLoginDivBox>
         </StLoginDivFull>
       </StSection>
-      </>
-      )}
     </>
   );
 };

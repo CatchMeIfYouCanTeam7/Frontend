@@ -37,9 +37,9 @@ const comment = createSlice({
     removeComment: (state, action) => {
       // action.payload -> comment.answerId
       state.comment = state.comment.filter(
-        (item) => item.answerId !== action.payload,
+        (item) => item.answerId !== action.payload
       );
-    }
+    },
   },
 });
 
