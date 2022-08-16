@@ -1,14 +1,12 @@
 // React import
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Package import
-
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { addPosting, asyncPostQuestion } from '../../redux/modules/posting';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useLocation, useNavigate } from "react-router-dom";
+import { addPosting, asyncPostQuestion } from "../../redux/modules/posting";
+import { useDispatch, useSelector } from "react-redux";
 import { useRef } from 'react';
+
 // Component import
 import Header from '../../components/header/Header';
 import Button from '../../components/button/Button';
@@ -27,7 +25,12 @@ const Posting = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const [fileImage, setFileImage] = useState('');
+	// 상세화면에서 수정 버튼 클릭 시 문제 데이터 보냄
+	const location = useLocation();
+	const question = location.state.question;
+	console.log(question);
+
+  const [fileImage, setFileImage] = useState("");
 	const [img, setImg] = useState('');
 	const [hint, setHint] = useState('');
 	const [answer, setAnswer] = useState('');
