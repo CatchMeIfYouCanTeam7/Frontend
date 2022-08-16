@@ -5,10 +5,12 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { addPosting } from '../../redux/modules/posting';
-// import { addPosting } from '../../../public/preview_img.png';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // Component import
 import Header from '../../components/header/Header';
+
 // Styled import
 import {
 	PostingWrap,
@@ -17,16 +19,19 @@ import {
 	InputWrap,
 	Preview,
 } from './Posting.styled';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+
 
 const Posting = () => {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
 	const [fileImage, setFileImage] = useState('');
 	const [hint, setHint] = useState('');
 	const [answer, setAnswer] = useState('');
 
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	// 수정
+	const [newText, setNewText] = useState();
+
 	
 	const QUESTION = useSelector((state) => state.posting.QUESTION);
 	console.log(QUESTION);
@@ -68,7 +73,9 @@ const Posting = () => {
 		dispatch(addPosting(newQuestion));
 	};
 
-	
+	// const onClickEditButton = () => {
+	// 	setEdited(true);	
+	// }
 
 
 	return (
@@ -78,8 +85,10 @@ const Posting = () => {
 				<PostingContainer>
 					<PostingHeader>
 						<button onClick={() => navigate(-1)}>뒤로가기</button>
-						<button>완료</button>
-						<button>취소</button>
+						{/* <EditDoneButton> */}
+							<button>완료</button>
+							<button onClick={() => navigate(-1)}>취소</button>
+						{/* </EditDoneButton> */}
 					</PostingHeader>
 
 					<div
