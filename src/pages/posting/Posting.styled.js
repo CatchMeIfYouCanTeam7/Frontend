@@ -2,19 +2,25 @@ import styled from 'styled-components';
 
 export const PostingWrap = styled.div`
 	width: 100vw;
-	height: 90vh;
+	height: 100vh;
+
 	display: flex;
+	flex-direction: column;
 `;
 
 export const PostingContainer = styled.div`
-	width: 570px;
-	height: 600px;
+	width: 30%;
+	min-width: 500px;
+	height: 70%;
+	min-height: 700px;
 	margin: auto;
-	padding: 20px;
-
 	text-align: center;
 
-	border: 1px solid black;
+	border: 6px solid black;
+	border-radius: 15px;
+
+	background-color: #5357f6;
+	position: relative;
 `;
 
 export const PostingHeader = styled.div`
@@ -49,4 +55,11 @@ export const InputWrap = styled.div`
 		border: 0px solid #ffffff;
 		border-radius: 5px;
 	}
+`;
+
+export const Preview = styled.img`
+	width: 100%;
+	max-width: 400px;
+	height: 260px;
+	border: 6px solid black;
 `;

@@ -40,12 +40,13 @@ const posting = createSlice({
   initialState,
   reducers:{
     addPosting(state, action){
-      state.QUESTION= action.payload.date
-      state.QUESTION.push(action.payload);
+			console.log(action.payload);
+      state.QUESTION.result.push(action.payload);
     },
   },
 });
 console.log("dddd", createSlice);
+
 
 
 
