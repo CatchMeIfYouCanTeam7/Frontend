@@ -34,6 +34,24 @@ export const asyncGetOneQuestion = createAsyncThunk(
   },
 );
 
+export const asyncPostQuestion = createAsyncThunk(
+  "posting/postQuestion",
+  async (payload, thunkAPI) => {
+    console.log("action", payload);
+    const response = await axios.post(
+      url + "/auth/questions",
+      payload.formData,
+      {
+        headers: {
+          Authorization: localStorage.getItem("accessToken" + payload.userId),
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+    console.log(response);
+  },
+);
+
 const initialState = {
   questions: {
     ok: true,
@@ -93,6 +111,9 @@ const posting = createSlice({
     [asyncGetOneQuestion.fulfilled]: (state, action) => {
       // action.paylaod -> one question
       state.question.result = action.payload;
+    },
+    [asyncPostQuestion.fulfilled]: (state, action) => {
+      console.log("reducer", action);
     },
   },
 });
