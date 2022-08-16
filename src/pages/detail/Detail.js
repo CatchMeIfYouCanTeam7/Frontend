@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
-// redux
-import { addComment } from "../../redux/modules/comment";
 
 // components
 import Comment from "../../components/comment/Comment";
 import Header from "../../components/header/Header";
 import Button from "../../components/button/Button";
 
-// data
-import { RESP } from "../../data/response";
+// redux
+import {
+  asyncAddComment,
+  asyncGetCommentByQuestion,
+} from "../../redux/modules/comment";
+import { asyncGetOneQuestion } from "../../redux/modules/posting";
 
 // styled-componenets
 import {
@@ -32,31 +33,40 @@ const Detail = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // questionId
 
-  const [comment, setComment] = useState({
-    userNickname: "",
-    comment: "",
-  });
+  const [inputComment, setInputComment] = useState("");
   const [hint, setHint] = useState("Hint");
   const [visibleCommentList, setVisibleCommentList] = useState(false);
 
+  // 로그인 한 유저 데이터
+  const location = useLocation();
+  const userData = location.state ? location.state.userData : "";
+
   // 문제 하나 조회
-  const question = RESP.QUESTION.result.find((item) => item.questionId === +id);
+  const question = useSelector((item) => item.posting.question.result);
+  const getOneQuestion = (id) => {
+    dispatch(asyncGetOneQuestion(id));
+  };
 
-  // 문제에 따른 댓글 조회
-  // let commentList = RESP.COMMENT.result.filter(
-  //   (item) => item.questionId === +id,
-  // );
-  const commentAllList = useSelector((item) => item.comment.comment);
-  const commentList = commentAllList.filter((item) => item.questionId === +id);
-
-  useEffect(() => {}, [commentList]);
+  // 문제에 따른 댓글 전체 조회
+  let commentList = useSelector((item) => item.comment.comments);
+  const getCommentsByQuestion = (id) => {
+    dispatch(asyncGetCommentByQuestion(id));
+  };
 
   // 댓글 유무 확인 -> 댓글 보여주기
   const onCheckCommentList = () => {
     if (commentList.length > 0) {
-      return commentList
-        .reverse()
-        .map((item) => <Comment key={item.answerId} comment={item} />);
+			// commentList 최신순으로 정렬
+			commentList = commentList.slice().sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf());
+			// console.log(commentList);
+      return commentList.map((item) => (
+        <Comment
+          key={item.id}
+          comment={item}
+          userNickname={userData.nickname}
+          userId={userData.id}
+        />
+      ));
     } else {
       return <CommentNone>댓글이 없습니다!</CommentNone>;
     }
@@ -72,27 +82,37 @@ const Detail = () => {
     setVisibleCommentList(!visibleCommentList);
   };
 
-  // 댓글 작성
+  // 댓글 작성 -> 로그인 한 사람만 댓글 작성 가능
+  const comment = useSelector((item) => item.comment.comment.result);
   const onClickEnrollCommentHandler = () => {
-    if (comment.userNickname === "" || comment.comment === "") {
-      alert("닉네임과 정답을 입력해주세요!");
+    if (inputComment === "") {
+      alert("정답을 입력해주세요!");
+    } else if (inputComment.length > 5) {
+      alert("정답을 5글자 이내로 적어주세요!");
     } else {
-      if (comment.comment.length > 5) {
-        alert("정답을 5글자 이내로 적어주세요!");
-      } else {
+      if (localStorage.getItem("login-token-" + userData.id)) {
         const newComment = {
-          answerId: commentAllList.length + 1,
+          userId: userData.id,
           questionId: +id,
-          userNickname: comment.userNickname,
-          comment: comment.comment,
-          createdAt: new Date().toISOString(),
+          comment: inputComment,
         };
-        dispatch(addComment(newComment));
-        console.log("enroll", commentList);
-        setComment({ userNickname: "", comment: "" });
+        dispatch(asyncAddComment(newComment));
+        setInputComment("");
+      } else {
+        alert("로그인 하고 정답을 맞춰주세요!");
       }
     }
   };
+
+  useEffect(() => {
+    getOneQuestion(+id);
+    getCommentsByQuestion(+id);
+    // console.log(commentList);
+  }, [
+    JSON.stringify(commentList),
+    JSON.stringify(question),
+    JSON.stringify(comment),
+  ]);
 
   return (
     <DetailWrap>
@@ -101,7 +121,7 @@ const Detail = () => {
         <DetailHeaderWrap>
           <Button id="backBtn" onClick={() => navigate(-1)}></Button>
           <DetailHeader>
-            <span>닉네임: {question.userNickname}</span>
+            <span>닉네임: {question.author}</span>
             <Button
               id="editPostingBtn"
               onClick={() => navigate(`/Posting/${id}`)}
@@ -111,7 +131,7 @@ const Detail = () => {
           </DetailHeader>
         </DetailHeaderWrap>
         <DetailContent>
-          <img src={question.imageUrl} alt="" />
+          <img src={question.imgUrl} alt="" />
           <Button id="hintBtn" onClick={onClickHinkHandler}>
             {hint}
           </Button>
@@ -120,20 +140,14 @@ const Detail = () => {
           <CommentWrite>
             <div>
               <label htmlFor="nickname">닉네임</label>
-              <input
-                type="text"
-                value={comment.userNickname}
-                onChange={(e) => {
-                  setComment({ ...comment, userNickname: e.target.value });
-                }}
-              />
+              <span>{userData.nickname ? userData.nickname : '________'}</span>
               <label htmlFor="nickname">정답</label>
               <input
                 type="text"
-                value={comment.comment}
+                value={inputComment}
                 placeholder="5글자 제한"
                 onChange={(e) => {
-                  setComment({ ...comment, comment: e.target.value });
+                  setInputComment(e.target.value);
                 }}
               />
             </div>

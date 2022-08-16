@@ -1,11 +1,45 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+const url = process.env.REACT_APP_URL + '/api';
+
+export const asyncGetAllQuestion = createAsyncThunk(
+  "posting/getAllQuestion",
+  async (payload, thnkAPI) => {
+    const response = await axios.get(
+      url + "/questions",
+    );
+
+    if (response.status === 200 && response.data.success === true) {
+      return response.data.data;
+    } else {
+			return null;
+		}
+  },
+);
+
+export const asyncGetOneQuestion = createAsyncThunk(
+  "posting/getOneQuestion",
+  async (payload, thnkAPI) => {
+    // payload -> question id
+    const response = await axios.get(
+      url + `/questions/${payload}`,
+    );
+
+    if (response.status === 200 && response.data.success === true) {
+      return response.data.data;
+    } else {
+			return null;
+		}
+  },
+);
 
 const initialState = {
-  QUESTION: {
+  questions: {
     ok: true,
     result: [
       {
-        questionId: 1,
+        id: 1,
         userNickname: "nick1",
         imageUrl:
           "http://c2.img.netmarble.kr/web/6N/2011/02/2139/%EA%B0%9C%EB%93%9C%EB%A6%BD_%EC%A0%9C%EC%B2%A0%EC%86%8C.jpg",
@@ -14,7 +48,7 @@ const initialState = {
         createdAt: "2020-04-11T11:12:30.686",
       },
       {
-        questionId: 2,
+        id: 2,
         userNickname: "nick1",
         imageUrl:
           "http://c2.img.netmarble.kr/web/6N/2011/02/2139/%EA%B0%9C%EB%93%9C%EB%A6%BD_%EC%A0%9C%EC%B2%A0%EC%86%8C.jpg",
@@ -23,7 +57,7 @@ const initialState = {
         createdAt: "2020-04-11T11:12:30.686",
       },
       {
-        questionId: 3,
+        id: 3,
         userNickname: "nick1",
         imageUrl:
           "https://img.koreatimes.co.kr/upload/newsV2/images/paint450.jpg/dims/resize/740/optimize",
@@ -33,21 +67,36 @@ const initialState = {
       },
     ],
   },
+  question: {
+    ok: true,
+    result: {},
+  },
 };
 
 const posting = createSlice({
   name: "posting",
   initialState,
-
   reducers: {
     addPosting(state, action) {
       state.QUESTION = action.payload.date;
       state.QUESTION.push(action.payload);
     },
   },
+
+  extraReducers: {
+		// 글 전체 조회
+    [asyncGetAllQuestion.fulfilled]: (state, action) => {
+      // action.payload -> all questions
+      state.questions.result = action.payload;
+    },
+		// 글 하나 조회
+    [asyncGetOneQuestion.fulfilled]: (state, action) => {
+      // action.paylaod -> one question
+      state.question.result = action.payload;
+    },
+  },
 });
 console.log("dddd", createSlice);
-
 
 export const { addPosting } = posting.actions;
 export default posting.reducer;

@@ -55,26 +55,38 @@ export const DetailContent = styled.div`
 `;
 
 export const CommentWrite = styled.div`
-  width: 85%;
-  margin: auto;
+	width: 85%;
+	margin: auto;
+	
+	text-align: left;
+	display: flex;
+	justify-content: space-between;
+	
+	label {
+		font-size: 18px;
+		font-weight: bold;
+	}
+	
+	span {
+		width: 20%;
+		margin: auto 10px;
+		padding: 5px 10px;
 
-  display: flex;
-  justify-content: space-between;
-
-  label {
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  input {
-    width: 25%;
-    margin: auto 10px;
-    padding: 5px 10px;
-
-    background-color: aliceblue;
-    border: 0px solid #ffffff;
-    border-radius: 5px;
-  }
+		display: inline-block;
+	
+		font-size: 18px;
+		font-weight: bold;
+	}
+	
+	input {
+		width: 25%;
+		margin: auto 10px;
+		padding: 5px 10px;
+		
+		background-color: aliceblue;
+		border: 0px solid #ffffff;
+		border-radius: 5px;
+	}
 `;
 
 export const CommentListContainer = styled.div`
@@ -110,4 +122,5 @@ export const CommentList = styled.div`
 
 export const CommentNone = styled.p`
   text-align: center;
+	color: white;
 `;

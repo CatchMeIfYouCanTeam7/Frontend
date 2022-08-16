@@ -10,9 +10,9 @@ export const MainWrap = styled.div`
 
 export const MainContainer = styled.div`
   width: 30%;
-  min-width: 500px;
-  height: 70%;
-  min-height: 700px;
+	min-width: 500px;
+	height: 70%;
+	min-height: 700px;
   margin: auto;
   text-align: center;
 
@@ -72,7 +72,7 @@ export const ListContainer = styled.div`
 `;
 
 export const ImageWrap = styled.img`
-  height: 300px;
+  height: 330px;
   position: absolute;
   right: -90px;
   bottom: -60px;

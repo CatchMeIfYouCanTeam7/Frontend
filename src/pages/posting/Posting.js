@@ -6,8 +6,7 @@ import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { addPosting } from '../../redux/modules/posting';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Component import
 import Header from '../../components/header/Header';
@@ -20,7 +19,6 @@ import {
 	InputWrap,
 	Preview,
 } from './Posting.styled';
-
 
 const Posting = () => {
 	const navigate = useNavigate();

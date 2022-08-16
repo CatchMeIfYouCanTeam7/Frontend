@@ -4,17 +4,19 @@ import { useNavigate } from "react-router-dom";
 // styled-componenets
 import { PostingContainer } from "./PostingCard.styled";
 
-const PostingCard = ({ question }) => {
+const PostingCard = ({ question, userData }) => {
   const navigate = useNavigate();
 
   const onMoveDetailHandler = () => {
-    navigate(`/Detail/${question.questionId}`);
+    navigate(`/Detail/${question.id}`, {
+      state: { userData: userData },
+    });
   };
 
   return (
     <>
       <PostingContainer
-        src={question.imageUrl}
+        src={question.imgUrl}
         alt="cm1"
         onClick={onMoveDetailHandler}
       />
