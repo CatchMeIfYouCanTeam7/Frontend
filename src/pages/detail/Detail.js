@@ -83,14 +83,14 @@ const Detail = () => {
   };
 
   // 댓글 작성 -> 로그인 한 사람만 댓글 작성 가능
-  const comment = useSelector((item) => item.comment.comment.result);
+  const comment = useSelector((item) => item.comment.comment);
   const onClickEnrollCommentHandler = () => {
     if (inputComment === "") {
       alert("정답을 입력해주세요!");
     } else if (inputComment.length > 5) {
       alert("정답을 5글자 이내로 적어주세요!");
     } else {
-      if (localStorage.getItem("login-token-" + userData.id)) {
+      if (localStorage.getItem("accessToken" + userData.id)) {
         const newComment = {
           userId: userData.id,
           questionId: +id,

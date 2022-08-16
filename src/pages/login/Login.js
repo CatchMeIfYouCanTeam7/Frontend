@@ -33,21 +33,21 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post("http://13.125.59.80/api/members/login", {
+    await axios
+      .post(process.env.REACT_APP_URL+"/api/members/login", {
         email: user,
         password: pw,
       })
       .then((res) => {
         console.log(res);
         console.log(res.headers.authorization);
-        localStorage.setItem("accessToken", res.headers.authorization);
+        localStorage.setItem("accessToken" + res.data.data.id, res.headers.authorization);
         console.log("성공");
         if (res.headers.authorization) {
-          localStorage.setItem("accessToken", res.headers.authorization);
+          localStorage.setItem("accessToken" + res.data.data.id, res.headers.authorization);
           setSuccess(!success);
           alert("로그인에 성공하였습니다");
-          navigate("/");
+          navigate("/", {state: {userData: res.data.data}});
         }
       })
       .catch((error) => {

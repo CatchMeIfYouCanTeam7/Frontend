@@ -24,7 +24,7 @@ const Main = () => {
   const dispatch = useDispatch();
 
   const location = useLocation();
-  const userData = location.state ? location.state.userData.data : "";
+  const userData = location.state ? location.state.userData : "";
 
   // 문제 전체 조회
   let questionList = useSelector((state) => state.posting.questions.result);
