@@ -19,7 +19,7 @@ const Login = () => {
   const [user, setUser] = useState("");
   const [pw, setPw] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  // const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -28,31 +28,36 @@ const Login = () => {
   useEffect(() => {
     setErrMsg("");
   }, [user, pw]);
-  
- //로그인 정보 전송하고 값을 받음
-  
+
+  //로그인 정보 전송하고 값을 받음
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post(
-      "http://13.125.59.80/api/members/login",
-      {email: user, password: pw,},
-    )
-    .then((res)=> {
-     console.log(res);
-     console.log(res.data.data.accessToken);
-     console.log("성공")
-    })
-    .catch(error=>{
-      console.log(error);
-      alert("아이디와 비밀번호를 확인해 주세요");
-    });
+    axios
+      .post("http://13.125.59.80/api/members/login", {
+        email: user,
+        password: pw,
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(res.headers.authorization);
+        localStorage.setItem("accessToken", res.headers.authorization);
+        console.log("성공");
+        if (res.headers.authorization) {
+          localStorage.setItem("accessToken", res.headers.authorization);
+          setSuccess(!success);
+          alert("로그인에 성공하였습니다");
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("아이디와 비밀번호를 확인해 주세요");
+      });
 
     setUser("");
     setPw("");
-    // alert("로그인에 성공하였습니다");
-    // navigate("/");
   };
-
 
   return (
     <>
@@ -88,8 +93,13 @@ const Login = () => {
                 required
               />
               <StButtonGroup>
-                <button style={{ marginRight: "5px" }}>로그인</button>
+                <button 
+                type="submit"
+                style={{ marginRight: "5px" }}>
+                  로그인
+                </button>
                 <button
+                  type="button"
                   style={{ marginLeft: "5px" }}
                   onClick={() => navigate("/SignUp")}
                 >

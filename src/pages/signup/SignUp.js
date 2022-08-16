@@ -3,6 +3,7 @@ import Header from "../../components/header/Header";
 import { useNavigate } from "react-router-dom";
 import { StLoginDivFull, StLoginDivBox } from "../login/Login.styled";
 import { StSignUpInput, StSignUpForm, StSignUpDiv } from "./SignUp.styled";
+import axios from "axios";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -17,44 +18,42 @@ const SignUp = () => {
   const [reEnterPassword, setReEnterPassword] = useState("");
 
   // handler 함수들
-  const onEmailHandler = (event) => {
+  const EmailHandler = (event) => {
     setEmail(event.currentTarget.value);
   };
 
-  const onNickNameHandler = (event) => {
+  const NickNameHandler = (event) => {
     setNickName(event.currentTarget.value);
   };
 
-  const onPasswordHandler = (event) => {
+  const PasswordHandler = (event) => {
     setPassword(event.currentTarget.value);
   };
 
-  const onReEnterPasswordHandler = (event) => {
+  const ReEnterPasswordHandler = (event) => {
     setReEnterPassword(event.currentTarget.value);
   };
 
-  const onSubmitHandler = (event) => {
+  const SubmitHandler = (event) => {
     //태그의 기본 기능으로 리프레쉬 되는 것을 방지.
     event.preventDefault();
 
-    // if (Password !== ConfirmPassword) {
-    //   return alert('비밀번호 확인이 일치하지 않습니다.');
-    // }
+    axios.post('http://13.125.59.80/api/mebers/signup', {
+      email: email,
+      nickname: nickname,
+      password: password,
+      passwordCheck: reEnterPassword,
+    })
+    .then((res) => {
+      console.log(res.data.data)
+      console.log(res);
+      console.log('서버연동 성공')
+      alert("회원가입을 축하드립니다^^");
+      navigate("/Login");
+    })
+    .catch((error) => {
 
-    // let body = {
-    //   email: Email,
-    //   name: Name,
-    //   password: Password,
-    // };
-
-    // // action을 dispatch해준다.
-    // dispatch(registerUser(body)).then((response) => {
-    //   if (response.payload.success) {
-    //     props.history.push('/');
-    //   } else {
-    //     alert('회원가입에 실패했습니다.');
-    //   }
-    // });
+    });
   };
 
   return (
@@ -63,15 +62,15 @@ const SignUp = () => {
       <StLoginDivFull>
         <StLoginDivBox>
           <h1>SIGN UP</h1>
-          <StSignUpForm onSubmit={onSubmitHandler}>
+          <StSignUpForm onSubmit={SubmitHandler}>
             <StSignUpDiv>
               <label>E-mail :</label>
               <StSignUpInput
                 placeholder="email을 입력해주세요"
                 type="email"
                 ref={userRef}
-                defaultValue={email}
-                onChanege={onEmailHandler}
+                Value={email}
+                onChange={EmailHandler}
               />
 
               <label>Nickname :</label>
@@ -79,29 +78,32 @@ const SignUp = () => {
                 placeholder="2~8글자"
                 type="text"
                 value={nickname}
-                onChange={onNickNameHandler}
+                onChange={NickNameHandler}
               />
 
               <label className="idPwBtn">Password :</label>
               <StSignUpInput
                 type="password"
                 value={password}
-                onChange={onPasswordHandler}
+                onChange={PasswordHandler}
               />
               <label className="idPwBtn">Re-enter Password :</label>
               <StSignUpInput
                 type="password"
                 value={reEnterPassword}
-                onChange={onReEnterPasswordHandler}
+                onChange={ReEnterPasswordHandler}
               />
             </StSignUpDiv>
             <button
               onClick={() => navigate("/Login")}
               style={{ marginRight: "5px" }}
+              type="button"
             >
               이전
             </button>
-            <button style={{ marginLeft: "5px" }} type="submit">
+            <button 
+            style={{ marginLeft: "5px" }} 
+            type="submit">
               회원가입
             </button>
           </StSignUpForm>
