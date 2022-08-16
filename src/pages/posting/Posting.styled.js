@@ -1,55 +1,58 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const PostingWrap = styled.div`
-
-  width: 100vw;
-  height: 90vh;
-  display: flex;
+	width: 100vw;
+	height: 90vh;
+	display: flex;
 `;
 
 export const PostingContainer = styled.div`
-  width: 570px;
-  height: 600px;
-  margin: auto;
-  padding: 20px;
+	width: 30%;
+	min-width: 500px;
+	height: 60%;
+	min-height: 400px;
+	margin: auto;
+	text-align: center;
 
-  text-align: center;
+	border: 6px solid black;
+	border-radius: 15px;
 
-  border: 1px solid black;
+	background-color: #5357f6;
+	position: relative;
 `;
 
 export const PostingHeader = styled.div`
-  margin: 20px;
-  /* background-color: aqua; */
+	margin: 20px;
+	/* background-color: aqua; */
 
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 `;
 
 export const PostingImgUproad = styled.div`
-  button {
-    margin: 20px;
-  }
+	button {
+		margin: 20px;
+	}
 
-  img {
-    width: 100%;
-  }
+	img {
+		width: 100%;
+	}
 `;
 
 export const InputWrap = styled.div`
-  margin: 30px 10px;
+	margin: 30px 10px;
 
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 
-  input {
-    width: 8rem;
-    margin: auto 10px;
-    padding: 5px;
-    background-color: aliceblue;
-    border: 0px solid #ffffff;
-    border-radius: 5px;
-  }
+	input {
+		width: 8rem;
+		margin: auto 10px;
+		padding: 5px;
+		background-color: aliceblue;
+		border: 0px solid #ffffff;
+		border-radius: 5px;
+	}
 `;
 
 export const Preview = styled.img`
@@ -58,3 +61,23 @@ export const Preview = styled.img`
 	height: 260px;
 	border: 6px solid black;
 `;
+
+export const ImageUproadButton = styled.div`
+	width: 85%;
+	margin: auto;
+
+	text-align: left;
+	display: flex;
+	justify-content: space-between;
+
+	label {
+		padding: 6px 25px;
+		background-color: #ff6600;
+		border-radius: 4px;
+		color: white;
+		cursor: pointer;
+	}
+`;
+// export const input-file-button = styled.div
+// padding: 6px;
+// `;
