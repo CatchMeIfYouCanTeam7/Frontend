@@ -14,13 +14,13 @@ export const DetailContainer = styled.div`
   height: 70%;
   min-height: 700px;
   margin: auto;
-
-  background-color: #5357f6;
-
   text-align: center;
 
   border: 6px solid black;
   border-radius: 15px;
+
+  background-color: #5357f6;
+  position: relative;
 `;
 
 export const DetailHeaderWrap = styled.div`

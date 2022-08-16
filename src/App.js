@@ -23,6 +23,7 @@ function App() {
 }
 
 const AppContainer = styled.div`
+
   /* background-repeat: repeat; */
   background-image: linear-gradient(
       to bottom,

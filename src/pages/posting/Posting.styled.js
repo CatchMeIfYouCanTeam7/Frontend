@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const PostingWrap = styled.div`
+
   width: 100vw;
   height: 90vh;
   display: flex;
@@ -49,4 +50,11 @@ export const InputWrap = styled.div`
     border: 0px solid #ffffff;
     border-radius: 5px;
   }
+`;
+
+export const Preview = styled.img`
+	width: 100%;
+	max-width: 400px;
+	height: 260px;
+	border: 6px solid black;
 `;

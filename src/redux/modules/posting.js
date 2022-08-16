@@ -38,6 +38,7 @@ const initialState = {
 const posting = createSlice({
   name: "posting",
   initialState,
+
   reducers: {
     addPosting(state, action) {
       state.QUESTION = action.payload.date;
@@ -46,6 +47,7 @@ const posting = createSlice({
   },
 });
 console.log("dddd", createSlice);
+
 
 export const { addPosting } = posting.actions;
 export default posting.reducer;
