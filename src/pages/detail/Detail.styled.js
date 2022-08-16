@@ -10,17 +10,17 @@ export const DetailWrap = styled.div`
 
 export const DetailContainer = styled.div`
   width: 30%;
-	min-width: 500px;
-	height: 70%;
-	min-height: 700px;
+  min-width: 500px;
+  height: 70%;
+  min-height: 700px;
   margin: auto;
-
-  background-color: #5357f6;
-
   text-align: center;
 
   border: 6px solid black;
   border-radius: 15px;
+
+  background-color: #5357f6;
+  position: relative;
 `;
 
 export const DetailHeaderWrap = styled.div`

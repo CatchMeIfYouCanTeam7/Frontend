@@ -1,48 +1,41 @@
-
 // React import
-import React from 'react';
+import React from "react";
 
 // Package import
+
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { addPosting } from '../../redux/modules/posting'
+import { addPosting } from '../../redux/modules/posting';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Component import
 import Header from '../../components/header/Header';
+
 // Styled import
 import {
 	PostingWrap,
 	PostingContainer,
 	PostingHeader,
 	InputWrap,
+	Preview,
 } from './Posting.styled';
-import { useDispatch, useSelector } from 'react-redux';
 
 const Posting = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-		const questionList = useSelector((state) => state.posting.postingList);
-		console.log(questionList);
-	//  const onClick = () => {
-	// 		if (window.confirm('정말 삭제합니까?')) {
-	// 			alert('삭제되었습니다.');
-	// 		} else {
-	// 			alert('취소합니다.');
-	// 		}
-	// 	};
 
-	// Img 업로드
-	// const fileInput = React.useRef(null);
-	// const handleButtonClick = (e) => {
-	// 	fileInput.current.click();
-	// };
-	// const handleChange = (e) => {};
-
-	// 추가 테스트
 	const [fileImage, setFileImage] = useState('');
+	const [hint, setHint] = useState('');
+	const [answer, setAnswer] = useState('');
 
+	// 수정
+	const [newText, setNewText] = useState();
+
+	
+	const QUESTION = useSelector((state) => state.posting.QUESTION);
+	console.log(QUESTION);
+	
 	const saveFileImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-		// @ts-ignore
 		setFileImage(URL.createObjectURL(event.target.files[0]));
 	};
 
@@ -51,16 +44,12 @@ const Posting = () => {
 		setFileImage('');
 	};
 
-	const [hint, setHint] = useState('');
-
-	const [answer, setAnswer] = useState('');
-	
-//useSelector는 reducer의 모든 정보를 가져오는 것 
+	//useSelector는 reducer의 모든 정보를 가져오는 것
 	// const posting = useSelector((state) => state.posting.QUESTION.result)
 	// console.log('aaaa', posting);
 
 	// 등록 버튼 click시 confirm
-	const onClickhandle = () => {
+	const onClickHandler = () => {
 		if (hint === '' || answer === '') {
 			window.alert('힌트와 정답 모두 입력해 주세요!');
 		} else {
@@ -68,7 +57,25 @@ const Posting = () => {
 				window.location.href = 'http://localhost:3000/detail';
 			}
 		}
+	console.log(QUESTION.length);
+
+		const newQuestion = {
+			questionId: QUESTION.result.length + 1,
+			userNickname: 'nick1',
+			imageUrl:
+				'http://c2.img.netmarble.kr/web/6N/2011/02/2139/%EA%B0%9C%EB%93%9C%EB%A6%BD_%EC%A0%9C%EC%B2%A0%EC%86%8C.jpg',
+			hint: hint,
+			answer: answer,
+			createdAt: '2020-04-11T11:12:30.686',
+		};
+
+		dispatch(addPosting(newQuestion));
 	};
+
+	// const onClickEditButton = () => {
+	// 	setEdited(true);	
+	// }
+
 
 	return (
 		<>
@@ -77,11 +84,12 @@ const Posting = () => {
 				<PostingContainer>
 					<PostingHeader>
 						<button onClick={() => navigate(-1)}>뒤로가기</button>
-						<button>완료</button>
-						<button>취소</button>
+						{/* <EditDoneButton> */}
+							<button>완료</button>
+							<button onClick={() => navigate(-1)}>취소</button>
+						{/* </EditDoneButton> */}
 					</PostingHeader>
 
-					<h1>이미지 업로드 </h1>
 					<div
 						style={{
 							alignItems: 'center',
@@ -95,13 +103,36 @@ const Posting = () => {
 							onChange={saveFileImage}
 						/>
 					</div>
+
 					<div>
-						<h1>미리보기 이미지</h1>
-					</div>
-					<div>
-						{fileImage && (
-							<img alt="sample" src={fileImage} style={{ margin: 'auto' }} />
-						)}
+						<div>
+							<Preview
+								src={
+									fileImage
+										? fileImage
+										: // : '../../image/preview_img.png'
+										  'preview_img.png'
+								}
+								alt=""
+							/>
+							{/* {fileImage && (
+								<img
+									alt="sample"
+									src={fileImage}
+									// src={
+									// 	fileImage
+									// 		? fileImage
+									// 		: "https://velog.velcdn.com/images/hahbr88/post/67aab3ec-2a82-425e-bd2d-8108805e8389/image.png"
+									// }
+									style={{
+										margin: 'auto',
+										backgroundColor: '#efefef',
+										width: '200px',
+										height: '170px',
+									}}
+								/>
+							)} */}
+						</div>
 						<button
 							style={{
 								width: '50px',
@@ -116,6 +147,7 @@ const Posting = () => {
 					</div>
 
 					{/* <React.Fragment>
+
 						<button onClick={handleButtonClick}>파일 업로드</button>
 						<input
 							type="file"
@@ -125,18 +157,19 @@ const Posting = () => {
 						/>
 					</React.Fragment> */}
 
-					{/* <PostingImgUproad>
+          {/* <PostingImgUproad>
 						<img
 							src="http://c2.img.netmarble.kr/web/6N/2011/02/2139/%EA%B0%9C%EB%93%9C%EB%A6%BD_%EC%A0%9C%EC%B2%A0%EC%86%8C.jpg"
 							alt=""
 						/>
 					</PostingImgUproad> */}
+
 					<div>
 						<InputWrap>
 							<label htmlFor="nickname">힌트</label>
 							<input
 								type="text"
-								placeholder="힌트 입력..."
+								placeholder="8글자 제한"
 								value={hint}
 								onChange={(e) => setHint(e.target.value)}
 								multiple="multiple"
@@ -145,19 +178,13 @@ const Posting = () => {
 							<label htmlFor="comment">정답</label>
 							<input
 								type="answer"
-								placeholder="정답 입력..."
+								placeholder="5글자 제한"
 								value={answer}
 								onChange={(e) => setAnswer(e.target.value)}
 								multiple="multiple"
 							/>
 
-							<button
-								onClick={() => {
-									onClickhandle();
-								}}
-							>
-								등록
-							</button>
+							<button onClick={onClickHandler}>등록</button>
 						</InputWrap>
 					</div>
 				</PostingContainer>
