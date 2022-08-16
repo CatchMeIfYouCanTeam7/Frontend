@@ -15,7 +15,7 @@ const Header = () => {
 			<CatchLogo onClick={() => navigate('/')} />
 			<div style={{ marginLeft: 'auto' }}></div>
 			&nbsp;&nbsp;
-			<h3 className="signUpBox" style={{ marginRight: '20px' }}>
+			<h3 onClick={()=> navigate('/SignUp')} className="signUpBox" style={{ marginRight: '20px' }}>
 				회원가입
 			</h3>
 		</StHeader>

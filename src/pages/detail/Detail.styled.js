@@ -9,8 +9,10 @@ export const DetailWrap = styled.div`
 `;
 
 export const DetailContainer = styled.div`
-  width: 570px;
-  height: 825px;
+  width: 30%;
+  min-width: 500px;
+  height: 70%;
+  min-height: 700px;
   margin: auto;
 
   background-color: #5357f6;
@@ -65,7 +67,7 @@ export const CommentWrite = styled.div`
   }
 
   input {
-    width: 110px;
+    width: 25%;
     margin: auto 10px;
     padding: 5px 10px;
 
