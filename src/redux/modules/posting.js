@@ -45,6 +45,7 @@ export const asyncPostQuestion = createAsyncThunk(
       },
     );
     console.log(response);
+		return response.data.data;
   },
 );
 
