@@ -151,6 +151,7 @@ const SignUp = () => {
 
               <label className="idPwBtn">Password :</label>
               <StSignUpInput
+                placeholder="숫자 문자 혼합 4~8자리"
                 type="password"
                 value={password}
                 onChange={PasswordHandler}
@@ -162,6 +163,7 @@ const SignUp = () => {
               )}
               <label className="idPwBtn">Re-enter Password :</label>
               <StSignUpInput
+                placeholder="비밀번호 확인"
                 type="password"
                 value={passwordConfirm}
                 onChange={ReEnterPasswordHandler}

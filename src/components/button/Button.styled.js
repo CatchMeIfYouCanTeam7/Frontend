@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 export const BtnContainer = styled.button`
   background-color: transparent;
   border: 0;
+  cursor: pointer;
 
   ${({ id }) => {
     switch (id) {
