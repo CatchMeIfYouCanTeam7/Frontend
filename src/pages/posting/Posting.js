@@ -3,7 +3,7 @@ import React from "react";
 
 // Package import
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { addPosting, asyncPostQuestion } from "../../redux/modules/posting";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +23,11 @@ import {
 const Posting = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+	// 상세화면에서 수정 버튼 클릭 시 문제 데이터 보냄
+	const location = useLocation();
+	const question = location.state.question;
+	console.log(question);
 
   const [fileImage, setFileImage] = useState("");
 	const [img, setImg] = useState('');

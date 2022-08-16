@@ -25,7 +25,7 @@ export const MainContainer = styled.div`
 
 export const ListHeader = styled.div`
   width: 80%;
-  height: 125px;
+  height: 15%;
   margin: 10px auto;
 
   display: flex;
@@ -48,7 +48,7 @@ export const ListHeader = styled.div`
 
 export const ListContainer = styled.div`
   /* background-color: lightgreen; */
-  height: 82.5%;
+  height: 80%;
 
   // scroll
   overflow-y: scroll;
@@ -56,12 +56,7 @@ export const ListContainer = styled.div`
   &::-webkit-scrollbar {
     width: 10px;
   }
-  &::-webkit-scrollbar-track {
-    box-shadow: none 10 0 5px grey;
-    border-radius: 10px;
-  }
   &::-webkit-scrollbar-thumb {
-    /* background: #ef8b7c; */
     background: #ffc500;
     border-radius: 5px;
   }

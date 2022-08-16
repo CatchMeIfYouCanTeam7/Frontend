@@ -56,9 +56,14 @@ const Detail = () => {
   // 댓글 유무 확인 -> 댓글 보여주기
   const onCheckCommentList = () => {
     if (commentList.length > 0) {
-			// commentList 최신순으로 정렬
-			commentList = commentList.slice().sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf());
-			// console.log(commentList);
+      // commentList 최신순으로 정렬
+      commentList = commentList
+        .slice()
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
+        );
+      // console.log(commentList);
       return commentList.map((item) => (
         <Comment
           key={item.id}
@@ -104,6 +109,10 @@ const Detail = () => {
     }
   };
 
+  const onMovePostingHandler = () => {
+    navigate(`/Posting/${id}`, { state: { question: question } });
+  };
+
   useEffect(() => {
     getOneQuestion(+id);
     getCommentsByQuestion(+id);
@@ -122,10 +131,7 @@ const Detail = () => {
           <Button id="backBtn" onClick={() => navigate(-1)}></Button>
           <DetailHeader>
             <span>닉네임: {question.author}</span>
-            <Button
-              id="editPostingBtn"
-              onClick={() => navigate(`/Posting/${id}`)}
-            >
+            <Button id="editPostingBtn" onClick={onMovePostingHandler}>
               수정
             </Button>
           </DetailHeader>
@@ -140,7 +146,7 @@ const Detail = () => {
           <CommentWrite>
             <div>
               <label htmlFor="nickname">닉네임</label>
-              <span>{userData.nickname ? userData.nickname : '________'}</span>
+              <span>{userData.nickname ? userData.nickname : "________"}</span>
               <label htmlFor="nickname">정답</label>
               <input
                 type="text"
