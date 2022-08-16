@@ -34,7 +34,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios
-      .post(process.env.REACT_APP_URL+"/api/members/login",{
+      .post(process.env.REACT_APP_URL+"/api/members/login", {
         email: user,
         password: pw,
       })

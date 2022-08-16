@@ -27,12 +27,15 @@ export const asyncAddComment = createAsyncThunk(
       },
       {
         headers: {
-          Authorization: localStorage.getItem("login-token-" + payload.userId),
+          Authorization: localStorage.getItem("accessToken" + payload.userId),
         },
       },
     );
 		
 		if(response.status === 200 && response.data.success === true) {
+			// 정답 확인
+			response.data.data.trueOrFalse ? alert('정답입니다!') : alert('정답이 아닙니다!');
+
 			return response.data.data;
 		} else {
 			return null;
@@ -47,7 +50,7 @@ export const asyncRemoveComment = createAsyncThunk(
       url + `/auth/comments/${payload.commentId}`,
       {
         headers: {
-          Authorization: localStorage.getItem("login-token-" + payload.userId),
+          Authorization: localStorage.getItem("accessToken" + payload.userId),
         },
       },
     );
