@@ -31,6 +31,7 @@ export const DetailHeaderWrap = styled.div`
 `;
 
 export const DetailHeader = styled.div`
+	height: 40px;
   margin: 10px auto;
 
   display: flex;
@@ -99,10 +100,6 @@ export const CommentListContainer = styled.div`
 
   &::-webkit-scrollbar {
     width: 10px;
-  }
-  &::-webkit-scrollbar-track {
-    box-shadow: none 10 0 5px grey;
-    border-radius: 10px;
   }
   &::-webkit-scrollbar-thumb {
     background: #ffc500;
