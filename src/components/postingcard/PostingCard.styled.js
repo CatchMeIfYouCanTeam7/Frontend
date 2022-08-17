@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const PostingContainer = styled.img`
   width: 80%;
-  height: 300px;
+  height: 260px;
   margin: 20px auto;
 
   border: 6px solid black;
