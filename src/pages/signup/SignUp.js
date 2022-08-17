@@ -117,23 +117,31 @@ const SignUp = () => {
         params: { email: email },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.success);
+        if(res.data.success===true){
+        alert(res.data.data)
+        }else
+        alert(res.data.error.message)
       })
       .catch((error) => {
-        console.log(error.message);
+        alert(error.message)
       });
   };
 
-  const nickNameCheck = async () => {
+  const nickNameCheck = async() => {
     await axios
       .get(process.env.REACT_APP_URL + "/api/members/nickname-check", {
         params: { nickname: nickname },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.success);
+        if(res.data.success===true){
+        alert(res.data.data)
+        }else
+        alert(res.data.error.message)
       })
       .catch((error) => {
-        console.log(error.message);
+        alert(error.message)
       });
   };
 

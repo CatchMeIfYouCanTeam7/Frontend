@@ -5,10 +5,10 @@ import {
   StSection,
   StLoginDivFull,
   StLoginDivBox,
-  StButtonGroup,
   StInput,
 } from "./Login.styled.js";
 import axios from "axios";
+import Button from "../../components/button/Button";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,7 +19,6 @@ const Login = () => {
   const [user, setUser] = useState("");
   const [pw, setPw] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -41,9 +40,8 @@ const Login = () => {
       .then((res) => {
         console.log(res);
 
-        console.log(res.data.data);
+        console.log(res.data.success);
         console.log(res.headers.authorization);
-        console.log("성공");
         if (res.headers.authorization) {
           localStorage.setItem(
             "accessToken" + res.data.data.id,
@@ -52,37 +50,34 @@ const Login = () => {
               expireTime: +res.headers["access-token-expire-time"],
             })
           );
-
-          setSuccess(!success);
           alert("로그인에 성공하였습니다");
           navigate("/", { state: { userData: res.data.data } });
+        }
+        else if(res.data.success===false){
+          alert(res.data.error.message)
         }
       })
       .catch((error) => {
         console.log(error);
         alert("아이디와 비밀번호를 확인해 주세요");
       });
-
-    setUser("");
-    setPw("");
   };
 
   return (
     <>
-      <Header></Header>
+      <Header/>
       <StSection>
         <StLoginDivFull>
           <StLoginDivBox>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>
               {errMsg}
             </p>
-            <h1 style={{ marginTop: "0px", marginBottom: "80px" }}>LOG IN</h1>
+            <h1 style={{ marginTop: "0px", marginBottom: "30px" }}>LOGIN</h1>
             <form onSubmit={handleSubmit}>
-              <label htmlFor="username">E-mail :&nbsp;&nbsp;&nbsp;&nbsp;</label>
+              <label htmlFor="username" style={{textaligt:"left", widrh:"264px"}} >E-mail</label>
+              <br />
               <StInput
-                placeholder="email을 입력해주세요..!"
                 type="text"
-                style={{ marginBottom: "30px" }}
                 ref={userRef}
                 onChange={(e) => setUser(e.target.value)}
                 value={user}
@@ -90,28 +85,26 @@ const Login = () => {
               />
               <br />
               <label htmlFor="password">
-                Password :&nbsp;&nbsp;&nbsp;&nbsp;
+                Password
               </label>
+              <br />
               <StInput
-                placeholder="password를 입력해주세요..!"
                 type="password"
-                style={{ marginRight: "20px" }}
                 onChange={(e) => setPw(e.target.value)}
                 value={pw}
                 required
               />
-              <StButtonGroup>
-                <button type="submit" style={{ marginRight: "5px" }}>
-                  로그인
-                </button>
-                <button
+              <br/>
+                <Button type="submit" style={{marginTop:"16px"}}>
+                  LOGIN
+                </Button>
+                <p
                   type="button"
-                  style={{ marginLeft: "5px" }}
-                  onClick={() => navigate("/signup")}
-                >
-                  회원가입
-                </button>
-              </StButtonGroup>
+
+                  // style={{width:"270px"}}
+                  onClick={() => navigate("/SignUp")}
+                >회원가입</p>
+
             </form>
           </StLoginDivBox>
         </StLoginDivFull>
