@@ -124,7 +124,7 @@ const SignUp = () => {
       });
   };
 
-  const nickNameCheck = async() => {
+  const nickNameCheck = async () => {
     await axios
       .get(process.env.REACT_APP_URL + "/api/members/nickname-check", {
         params: { nickname: nickname },

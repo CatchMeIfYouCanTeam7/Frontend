@@ -12,9 +12,7 @@ const Header = ({ userId }) => {
   console.log({ userId });
 
   const LogoutHandler = () => {
-		console.log(JSON.parse(
-			localStorage.getItem("accessToken" + userId)
-		))
+    console.log(JSON.parse(localStorage.getItem("accessToken" + userId)));
     axios
       .get(process.env.REACT_APP_URL + "/api/auth/members/logout", {
         headers: {
@@ -29,7 +27,7 @@ const Header = ({ userId }) => {
       .catch((error) => {
         console.log(error);
       });
-			localStorage.clear();
+    localStorage.clear();
     alert("로그아웃 하였습니다!");
   };
 

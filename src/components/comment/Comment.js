@@ -30,7 +30,7 @@ const Comment = ({ comment, userNickname, userId }) => {
       asyncRemoveComment({
         userId: userId,
         commentId: commentId,
-      }),
+      })
     );
   };
 
