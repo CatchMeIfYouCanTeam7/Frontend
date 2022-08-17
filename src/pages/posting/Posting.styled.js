@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const PostingWrap = styled.div`
 	width: 100vw;
-	height: 90vh;
+	height: 100vh;
 	display: flex;
 `;
 
@@ -62,10 +62,11 @@ export const InputWrap = styled.div`
 `;
 
 export const Preview = styled.img`
-	width: 100%;
-	max-width: 400px;
-	height: 260px;
+	width: 85%;
+	height: 300px;
+
 	border: 6px solid black;
+	border-radius: 9.5px;
 `;
 
 export const ImageUproadButton = styled.div`
@@ -78,12 +79,9 @@ export const ImageUproadButton = styled.div`
 
 	label {
 		padding: 6px 25px;
-		background-color: #ffc500;
+		background-color: black;
 		border-radius: 4px;
 		color: white;
 		cursor: pointer;
 	}
 `;
-// export const input-file-button = styled.div
-// padding: 6px;
-// `;
