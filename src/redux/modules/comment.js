@@ -27,7 +27,7 @@ export const asyncAddComment = createAsyncThunk(
       },
       {
         headers: {
-          Authorization: localStorage.getItem("accessToken" + payload.userId),
+          Authorization: JSON.parse(localStorage.getItem("accessToken" + payload.userId)).auth,
         },
       },
     );
@@ -50,7 +50,7 @@ export const asyncRemoveComment = createAsyncThunk(
       url + `/auth/comments/${payload.commentId}`,
       {
         headers: {
-          Authorization: localStorage.getItem("accessToken" + payload.userId),
+          Authorization: JSON.parse(localStorage.getItem("accessToken" + payload.userId)).auth,
         },
       },
     );

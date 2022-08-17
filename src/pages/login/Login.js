@@ -107,7 +107,7 @@ const Login = () => {
                 <button
                   type="button"
                   style={{ marginLeft: "5px" }}
-                  onClick={() => navigate("/SignUp")}
+                  onClick={() => navigate("/signup")}
                 >
                   회원가입
                 </button>
