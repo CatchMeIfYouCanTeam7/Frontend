@@ -19,7 +19,6 @@ const Login = () => {
   const [user, setUser] = useState("");
   const [pw, setPw] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -41,9 +40,8 @@ const Login = () => {
       .then((res) => {
         console.log(res);
 
-        console.log(res.data.data);
+        console.log(res.data.success);
         console.log(res.headers.authorization);
-        console.log("성공");
         if (res.headers.authorization) {
           localStorage.setItem(
             "accessToken" + res.data.data.id,
@@ -52,19 +50,17 @@ const Login = () => {
               expireTime: +res.headers["access-token-expire-time"],
             })
           );
-
-          setSuccess(!success);
           alert("로그인에 성공하였습니다");
           navigate("/", { state: { userData: res.data.data } });
+        }
+        else if(res.data.success===false){
+          alert(res.data.error.message)
         }
       })
       .catch((error) => {
         console.log(error);
         alert("아이디와 비밀번호를 확인해 주세요");
       });
-
-    setUser("");
-    setPw("");
   };
 
   return (
