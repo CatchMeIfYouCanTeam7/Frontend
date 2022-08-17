@@ -1,10 +1,10 @@
-import { Route, Routes } from "react-router-dom";
-import Main from "./pages/main/Main";
-import Detail from "./pages/detail/Detail";
-import Login from "./pages/login/Login";
-import SignUp from "./pages/signup/SignUp";
-import Posting from "./pages/posting/Posting";
-import styled from "styled-components";
+import { Route, Routes } from 'react-router-dom';
+import Main from './pages/main/Main';
+import Detail from './pages/detail/Detail';
+import Login from './pages/login/Login';
+import SignUp from './pages/signup/SignUp';
+import Posting from './pages/posting/Posting';
+import styled from 'styled-components';
 
 function App() {
   return (
@@ -23,14 +23,17 @@ function App() {
 }
 
 const AppContainer = styled.div`
-  background-image: linear-gradient(
-      to bottom,
-      transparent,
-      transparent 10%,
-      #fff 10%
-    ),
-    linear-gradient(to right, #acafef, #acafef 10%, #fff 10%);
-  background-size: 30px 30px;
+	font-family: 'Jua', sans-serif;
+
+	/* background-repeat: repeat; */
+	background-image: linear-gradient(
+			to bottom,
+			transparent,
+			transparent 10%,
+			#fff 10%
+		),
+		linear-gradient(to right, #acafef, #acafef 10%, #fff 10%);
+	background-size: 30px 30px;
 `;
 
 export default App;

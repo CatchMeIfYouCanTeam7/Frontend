@@ -1,5 +1,5 @@
 // React import
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 // Package import
 import { useLocation, useNavigate } from "react-router-dom";
@@ -9,22 +9,20 @@ import { useRef } from "react";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 // Component import
-import Header from "../../components/header/Header";
-import Button from "../../components/button/Button";
+import Header from '../../components/header/Header';
+import Button from '../../components/button/Button';
 
 // Styled import
 import {
-  PostingWrap,
-  PostingContainer,
-  PostingHeader,
-  InputWrap,
-  Preview,
-  ImageUproadButton,
-} from "./Posting.styled";
+	PostingWrap,
+	PostingContainer,
+	PostingHeader,
+	InputWrap,
+	Preview,
+	ImageUproadButton,
+} from './Posting.styled';
 
-
-import previewImg from '../../image/preview_img.png'
-
+import previewImg from '../../image/preview_img.png';
 
 const Posting = () => {
   const navigate = useNavigate();
@@ -189,13 +187,20 @@ const Posting = () => {
       <Header userId={userData.id} />
       <PostingWrap>
         <PostingContainer>
-          <PostingHeader>
-            <Button id="backBtn" onClick={() => navigate(-1)}></Button>
-            {/* <EditDoneButton> */}
-            <button>완료</button>
-						{question ? <button onClick={onRemoveQuestionHandler}>글 삭제</button> : null}
-            {/* </EditDoneButton> */}
-          </PostingHeader>
+					<PostingHeader>
+						<Button id="backBtn" onClick={() => navigate(-1)}></Button>
+						{/* <EditDoneButton> */}
+						{/* //소나수정 */}
+						<div>
+              {question ? <Button id="editPageBtn" onClick={onRemoveQuestionHandler}>글 삭제</Button> : null}
+							<Button id="editPageBtn" 
+							onClick={() => navigate(-1)}
+							style={{backgroundColor:'#bababa'}}>
+								취소
+							</Button>
+						</div>
+						{/* </EditDoneButton> */}
+					</PostingHeader>
 
           <ImageUproadButton>
             <div
@@ -244,17 +249,18 @@ const Posting = () => {
 							)} */}
           </div>
 
-          <Button
-            style={{
-              cursor: "pointer",
-            }}
-            id="editPostingBtn"
+					<Button
+						style={{
+							cursor: 'pointer',
 
-            onClick={deleteFileImage}
-
-          >
-            삭제
-          </Button>
+							//소나수정
+							marginTop: '20px',
+						}}
+						id="editPostingBtn"
+						onClick={deleteFileImage}
+					>
+						삭제
+					</Button>
 
           {/* <React.Fragment>
 

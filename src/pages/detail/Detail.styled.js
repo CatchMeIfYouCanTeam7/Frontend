@@ -48,7 +48,7 @@ export const DetailHeader = styled.div`
 export const DetailContent = styled.div`
   img {
     width: 85%;
-    height: 350px;
+    height: 300px;
 
     border: 6px solid black;
     border-radius: 9.5px;
