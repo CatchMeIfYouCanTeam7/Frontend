@@ -139,7 +139,7 @@ const SignUp = () => {
 
   return (
     <>
-      <Header>SIGN UP</Header>
+      <Header/>
       <StLoginDivFull>
         <StLoginDivBox>
           <h1>SIGN UP</h1>

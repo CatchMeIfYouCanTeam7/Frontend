@@ -5,10 +5,10 @@ import {
   StSection,
   StLoginDivFull,
   StLoginDivBox,
-  StButtonGroup,
   StInput,
 } from "./Login.styled.js";
 import axios from "axios";
+import Button from "../../components/button/Button";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -69,20 +69,19 @@ const Login = () => {
 
   return (
     <>
-      <Header></Header>
+      <Header/>
       <StSection>
         <StLoginDivFull>
           <StLoginDivBox>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>
               {errMsg}
             </p>
-            <h1 style={{ marginTop: "0px", marginBottom: "80px" }}>LOG IN</h1>
+            <h1 style={{ marginTop: "0px", marginBottom: "30px" }}>LOGIN</h1>
             <form onSubmit={handleSubmit}>
-              <label htmlFor="username">E-mail :&nbsp;&nbsp;&nbsp;&nbsp;</label>
+              <label htmlFor="username" style={{textaligt:"left", widrh:"264px"}} >E-mail</label>
+              <br />
               <StInput
-                placeholder="email을 입력해주세요..!"
                 type="text"
-                style={{ marginBottom: "30px" }}
                 ref={userRef}
                 onChange={(e) => setUser(e.target.value)}
                 value={user}
@@ -90,28 +89,24 @@ const Login = () => {
               />
               <br />
               <label htmlFor="password">
-                Password :&nbsp;&nbsp;&nbsp;&nbsp;
+                Password
               </label>
+              <br />
               <StInput
-                placeholder="password를 입력해주세요..!"
                 type="password"
-                style={{ marginRight: "20px" }}
                 onChange={(e) => setPw(e.target.value)}
                 value={pw}
                 required
               />
-              <StButtonGroup>
-                <button type="submit" style={{ marginRight: "5px" }}>
-                  로그인
-                </button>
-                <button
+              <br/>
+                <Button type="submit" style={{marginTop:"16px"}}>
+                  LOGIN
+                </Button>
+                <p
                   type="button"
-                  style={{ marginLeft: "5px" }}
+                  // style={{width:"270px"}}
                   onClick={() => navigate("/SignUp")}
-                >
-                  회원가입
-                </button>
-              </StButtonGroup>
+                >회원가입</p>
             </form>
           </StLoginDivBox>
         </StLoginDivFull>

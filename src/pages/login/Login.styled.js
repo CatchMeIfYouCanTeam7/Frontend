@@ -3,14 +3,14 @@ import styled from "styled-components";
 export const StLoginDivFull = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: white;
   text-align: center;
   margin: auto;
   display: flex;
+  background-color: #5357f6;
 `;
 
 export const StSection = styled.section`
-  width: 99.655%;
+  width: 100%;
   height: 100px;
   display: flex;
   align-items: center;
@@ -18,10 +18,8 @@ export const StSection = styled.section`
 
 export const StLoginDivBox = styled.div`
   width: 95%;
-  max-width: 400px;
+  max-width: 264px;
   height: 500px;
-  background-color: whitesmoke;
-  border: 2px solid black;
   margin: auto;
   margin-top: 150px;
   display: flex;
@@ -30,21 +28,15 @@ export const StLoginDivBox = styled.div`
   padding: 0px 30px 30px 30px;
 `;
 
-export const StButtonGroup = styled.div`
-  margin-top: 70px;
-`;
 
-// .buttonGroup > button{
-//   margin-left: 10px;
-//   margin-right: 10px;
-//   border-radius: 2px;
-//   width: 100px;
-//   height: 30px;
-// }
 
 export const StInput = styled.input`
-  width: 200px;
+  width: 250px;
   height: 35px;
   margin-bottom: 8px;
-  border: 2px solid black;
+  border: 5px solid black;
+  border-radius: 10px;
+  font-size: 16px;
+  margin-bottom: "30px";
 `;
+
