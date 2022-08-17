@@ -3,12 +3,10 @@ import React, { useEffect, useState } from "react";
 
 // Package import
 import { useLocation, useNavigate } from "react-router-dom";
-import { addPosting, asyncPostQuestion } from "../../redux/modules/posting";
+import { addPosting, asyncEditQuestion, asyncPostQuestion, asyncRemoveQuestion } from "../../redux/modules/posting";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
-
 import { unwrapResult } from "@reduxjs/toolkit";
-
 
 // Component import
 import Header from "../../components/header/Header";
@@ -36,8 +34,8 @@ const Posting = () => {
   const location = useLocation();
 
   const question = location.state.question ? location.state.question : "";
-  const userId = location.state.userId;
-  console.log(question, userId);
+  const userData = location.state.userData;
+  // console.log(question, userData);
 
   const [fileImage, setFileImage] = useState(question ? question.imgUrl : "");
   const [img, setImg] = useState("");
@@ -52,7 +50,7 @@ const Posting = () => {
   const [newText, setNewText] = useState();
 
   const QUESTION = useSelector((state) => state.posting.questions);
-  console.log(QUESTION);
+  // console.log(QUESTION);
 
 
   // const questionOne = useSelector((state) => state.posting.quesiton);
@@ -84,6 +82,15 @@ const Posting = () => {
     fileInput.current.value = "";
   };
 
+	const onRemoveQuestionHandler = () => {
+		dispatch(asyncRemoveQuestion({
+			questionId: question.id,
+			userId: userData.id
+		}));
+		alert('글이 삭제되었습니다.');
+		navigate('/', { state: { userData: userData }});
+	}
+
 
   // useEffect(() => {
 
@@ -91,7 +98,7 @@ const Posting = () => {
 
 
   //useSelector는 reducer의 모든 정보를 가져오는 것
-  // const posting = useSelector((state) => state.posting.QUESTION.result)
+  // const posting = useSelector((state) => state.posting.QUESTION)
   // console.log('aaaa', posting);
 
   // 등록 버튼 click시 confirm
@@ -100,8 +107,6 @@ const Posting = () => {
       window.alert("힌트와 정답 이미지를 모두 입력해 주세요!");
     } else {
       if (window.confirm("등록하시겠습니까?")) {
-        // window.location.href = 'http://localhost:3000/detail';
-
         let formData = new FormData();
 
         const data = {
@@ -128,35 +133,42 @@ const Posting = () => {
         // 	hint: hint,
         // 	answer: answer
         // }
-
-
-        dispatch(
-          asyncPostQuestion({
+				
+				if (question) {
+					dispatch(asyncEditQuestion({
+						formData: formData,
+						userId: userData.id,
+						questonId: question.id
+					}));
+				} else {
+	        dispatch(asyncPostQuestion({
             formData: formData,
-            userId: userId,
-          }),
-        )
-          .then(unwrapResult)
-          .catch((rejectedErr) => {
-            console.log("fail posting", rejectedErr);
-            console.log(localStorage.getItem("accessToken" + userId));
-            if (
-              rejectedErr.status === 401 &&
-              localStorage.getItem("accessToken" + userId)
-            ) {
-              alert("로그인이 만료되었습니다. 재로그인이 필요합니다.");
-            } else {
-              alert(rejectedErr.data.error.message);
-            }
-          });
+            userId: userData.id
+          }));
+				}
+				// .then(unwrapResult)
+        //   .catch((rejectedErr) => {
+        //     console.log("fail posting", rejectedErr);
+        //     console.log(localStorage.getItem("accessToken" + userId));
+        //     if (
+        //       rejectedErr.status !== 200 &&
+        //       localStorage.getItem("accessToken" + userId)
+        //     ) {
+        //       alert("로그인이 만료되었습니다. 재로그인이 필요합니다.");
+        //     } else {
+				// 			console.log(rejectedErr);
+        //       // alert(rejectedErr.data.error.message);
+        //     }
+        //   });
 
         console.log("finish dispatch post question");
+				navigate('/', { state: { userData: userData }});
       }
     }
     // console.log(QUESTION.length);
 
     const newQuestion = {
-      questionId: QUESTION.result.length + 1,
+      questionId: QUESTION.length + 1,
       userNickname: "nick1",
       imageUrl:
         "http://c2.img.netmarble.kr/web/6N/2011/02/2139/%EA%B0%9C%EB%93%9C%EB%A6%BD_%EC%A0%9C%EC%B2%A0%EC%86%8C.jpg",
@@ -174,16 +186,14 @@ const Posting = () => {
 
   return (
     <>
-
-      <Header userId={userId} />
-
+      <Header userId={userData.id} />
       <PostingWrap>
         <PostingContainer>
           <PostingHeader>
             <Button id="backBtn" onClick={() => navigate(-1)}></Button>
             {/* <EditDoneButton> */}
             <button>완료</button>
-            <button onClick={() => navigate(-1)}>취소</button>
+						{question ? <button onClick={onRemoveQuestionHandler}>글 삭제</button> : null}
             {/* </EditDoneButton> */}
           </PostingHeader>
 
@@ -213,10 +223,8 @@ const Posting = () => {
           </ImageUproadButton>
 
           <div>
-
 						{/* <img src="react.png" alt="" /> */}
             <Preview src={fileImage ? fileImage : previewImg} alt="" />
-
             {/* {fileImage && (
                 <img
                 alt="sample"
@@ -291,7 +299,6 @@ const Posting = () => {
               />
 
               <button onClick={onClickHandler}>{question ? "저장" : "등록"}</button>
-
             </InputWrap>
           </div>
         </PostingContainer>

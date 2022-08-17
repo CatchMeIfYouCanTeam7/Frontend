@@ -44,7 +44,7 @@ const Detail = () => {
   const userData = location.state ? location.state.userData : "";
 
   // 문제 하나 조회
-  const question = useSelector((item) => item.posting.question.result);
+  const question = useSelector((item) => item.posting.question);
   const getOneQuestion = (id) => {
     dispatch(asyncGetOneQuestion(id));
   };
@@ -125,7 +125,7 @@ const Detail = () => {
 		// access token 여부 확인 -> 로그인 기록 여부 확인
     if (accessToken) {
 			if (new Date(accessToken.expireTime).valueOf() > Date.now().valueOf()) {
-      	navigate(`/Posting/${id}`, { state: { userId: userData.id, question: question } });
+      	navigate(`/Posting/${id}`, { state: { userData: userData, question: question } });
 			} else {
 				alert('로그인 기한이 만료되었습니다. 다시 로그인 해주세요!');
 			}
