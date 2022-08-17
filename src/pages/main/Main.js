@@ -52,7 +52,7 @@ const Main = () => {
 						상상력을 발휘해 <br />
 						정답을 맞춰주세요!
 					</p>
-					<Button id="postingBtn" onClick={() => navigate('/Posting')}>
+					<Button id="postingBtn" onClick={() => navigate("/Posting", { state: { userId: userData.id } })}>
 						글 작성
 					</Button>
 				</ListHeader>

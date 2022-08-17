@@ -110,7 +110,10 @@ const Detail = () => {
 	};
 
   const onMovePostingHandler = () => {
-    navigate(`/Posting/${id}`, { state: { question: question } });
+   navigate('/Posting', { state: { userId: userData.id } });
+		navigate(`/Posting/${id}`, {
+			state: { userId: userData.id, question: question },
+		});
   };
 
   useEffect(() => {
