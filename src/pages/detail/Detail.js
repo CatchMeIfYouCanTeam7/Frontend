@@ -53,29 +53,29 @@ const Detail = () => {
 		dispatch(asyncGetCommentByQuestion(id));
 	};
 
-	// 댓글 유무 확인 -> 댓글 보여주기
-	const onCheckCommentList = () => {
-		if (commentList.length > 0) {
-			// commentList 최신순으로 정렬
-			commentList = commentList
-				.slice()
-				.sort(
-					(a, b) =>
-						new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
-				);
-			// console.log(commentList);
-			return commentList.map((item) => (
-				<Comment
-					key={item.id}
-					comment={item}
-					userNickname={userData.nickname}
-					userId={userData.id}
-				/>
-			));
-		} else {
-			return <CommentNone>댓글이 없습니다!</CommentNone>;
-		}
-	};
+  // 댓글 유무 확인 -> 댓글 보여주기
+  const onCheckCommentList = () => {
+    if (commentList.length > 0) {
+      // commentList 최신순으로 정렬
+      commentList = commentList
+        .slice()
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
+        );
+      // console.log(commentList);
+      return commentList.map((item) => (
+        <Comment
+          key={item.id}
+          comment={item}
+          userNickname={userData.nickname}
+          userId={userData.id}
+        />
+      ));
+    } else {
+      return <CommentNone>댓글이 없습니다!</CommentNone>;
+    }
+  };
 
 	// hint 버튼 클릭 -> hint 보여주기
 	const onClickHinkHandler = () => {
@@ -109,72 +109,73 @@ const Detail = () => {
 		}
 	};
 
-	useEffect(() => {
-		getOneQuestion(+id);
-		getCommentsByQuestion(+id);
-		// console.log(commentList);
-	}, [
-		JSON.stringify(commentList),
-		JSON.stringify(question),
-		JSON.stringify(comment),
-	]);
+  const onMovePostingHandler = () => {
+    navigate(`/Posting/${id}`, { state: { question: question } });
+  };
 
-	return (
-		<DetailWrap>
-			<Header />
-			<DetailContainer>
-				<DetailHeaderWrap>
-					<Button id="backBtn" onClick={() => navigate(-1)}></Button>
-					<DetailHeader>
-						<span>닉네임: {question.author}</span>
-						<Button
-							id="editPostingBtn"
-							onClick={() => navigate(`/Posting/${id}`)}
-						>
-							수정
-						</Button>
-					</DetailHeader>
-				</DetailHeaderWrap>
-				<DetailContent>
-					<img src={question.imgUrl} alt="" />
-					<Button id="hintBtn" onClick={onClickHinkHandler}>
-						{hint}
-					</Button>
-				</DetailContent>
-				<div>
-					<CommentWrite>
-						<div>
-							<label htmlFor="nickname">닉네임</label>
-							<span>{userData.nickname ? userData.nickname : '________'}</span>
-							<label htmlFor="nickname">정답</label>
-							<input
-								type="text"
-								value={inputComment}
-								placeholder="5글자 제한"
-								onChange={(e) => {
-									setInputComment(e.target.value);
-								}}
-							/>
-						</div>
-						<Button id="enrollCommentBtn" onClick={onClickEnrollCommentHandler}>
-							등록
-						</Button>
-					</CommentWrite>
-					<CommentListContainer>
-						<CommentList>
-							<Button
-								id="showCommentBtn"
-								onClick={onClickShowCommentListHandler}
-							>
-								{visibleCommentList ? '댓글 접기 △' : '댓글 보기 ▽'}
-							</Button>
-							{visibleCommentList && onCheckCommentList()}
-						</CommentList>
-					</CommentListContainer>
-				</div>
-			</DetailContainer>
-		</DetailWrap>
-	);
+  useEffect(() => {
+    getOneQuestion(+id);
+    getCommentsByQuestion(+id);
+    // console.log(commentList);
+  }, [
+    JSON.stringify(commentList),
+    JSON.stringify(question),
+    JSON.stringify(comment),
+  ]);
+
+  return (
+    <DetailWrap>
+      <Header />
+      <DetailContainer>
+        <DetailHeaderWrap>
+          <Button id="backBtn" onClick={() => navigate(-1)}></Button>
+          <DetailHeader>
+            <span>닉네임: {question.author}</span>
+            <Button id="editPostingBtn" onClick={onMovePostingHandler}>
+              수정
+            </Button>
+          </DetailHeader>
+        </DetailHeaderWrap>
+        <DetailContent>
+          <img src={question.imgUrl} alt="" />
+          <Button id="hintBtn" onClick={onClickHinkHandler}>
+            {hint}
+          </Button>
+        </DetailContent>
+        <div>
+          <CommentWrite>
+            <div>
+              <label htmlFor="nickname">닉네임</label>
+              <span>{userData.nickname ? userData.nickname : "________"}</span>
+              <label htmlFor="nickname">정답</label>
+              <input
+                type="text"
+                value={inputComment}
+                placeholder="5글자 제한"
+                onChange={(e) => {
+                  setInputComment(e.target.value);
+                }}
+              />
+            </div>
+            <Button id="enrollCommentBtn" onClick={onClickEnrollCommentHandler}>
+              등록
+            </Button>
+          </CommentWrite>
+          <CommentListContainer>
+            <CommentList>
+              <Button
+                id="showCommentBtn"
+                onClick={onClickShowCommentListHandler}
+              >
+                {visibleCommentList ? "댓글 접기 △" : "댓글 보기 ▽"}
+              </Button>
+              {visibleCommentList && onCheckCommentList()}
+            </CommentList>
+          </CommentListContainer>
+        </div>
+      </DetailContainer>
+    </DetailWrap>
+  );
 };
 
 export default Detail;

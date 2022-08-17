@@ -31,36 +31,31 @@ const Login = () => {
 
 	//로그인 정보 전송하고 값을 받음
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		await axios
-			.post(process.env.REACT_APP_URL + '/api/members/login', {
-				email: user,
-				password: pw,
-			})
-			.then((res) => {
-				console.log(res);
-        console.log(res.data.data);
-				console.log(res.headers.authorization);
-				localStorage.setItem(
-					'accessToken' + res.data.data.id,
-					res.headers.authorization
-				);
-				console.log('성공');
-				if (res.headers.authorization) {
-					localStorage.setItem(
-						'accessToken' + res.data.data.id,
-						res.headers.authorization
-					);
-					setSuccess(!success);
-					alert('로그인에 성공하였습니다');
-					navigate('/', { state: { userData: res.data.data } });
-				}
-			})
-			.catch((error) => {
-				console.log(error);
-				alert('아이디와 비밀번호를 확인해 주세요');
-			});
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await axios
+      .post(process.env.REACT_APP_URL+"/api/members/login", {
+        email: user,
+        password: pw,
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data.data)
+        console.log(res.headers.authorization);
+        localStorage.setItem("accessToken" + res.data.data.id, res.headers.authorization);
+        console.log("성공");
+        if (res.headers.authorization) {
+          localStorage.setItem("accessToken" + res.data.data.id, res.headers.authorization);
+          setSuccess(!success);
+          alert("로그인에 성공하였습니다");
+          navigate("/", {state: {userData: res.data.data}});
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("아이디와 비밀번호를 확인해 주세요");
+      });
+
 
 		setUser('');
 		setPw('');

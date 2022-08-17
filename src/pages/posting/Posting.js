@@ -1,14 +1,12 @@
 // React import
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Package import
-
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { addPosting, asyncPostQuestion } from '../../redux/modules/posting';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useRef } from 'react';
+
 // Component import
 import Header from '../../components/header/Header';
 import Button from '../../components/button/Button';
@@ -26,6 +24,11 @@ import {
 const Posting = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+
+	// 상세화면에서 수정 버튼 클릭 시 문제 데이터 보냄
+	const location = useLocation();
+	const question = location.state ? location.state.question : '';
+	console.log(question);
 
 	const [fileImage, setFileImage] = useState('');
 	const [img, setImg] = useState('');
@@ -124,11 +127,16 @@ const Posting = () => {
 			<Header />
 			<PostingWrap>
 				<PostingContainer>
+
 					<PostingHeader>
 						<Button id="backBtn" onClick={() => navigate(-1)}></Button>
 						{/* <EditDoneButton> */}
-						<button>완료</button>
-						<button onClick={() => navigate(-1)}>취소</button>
+						<Button id="editPostingBtn">완료</Button>
+						<Button 
+            style={{
+              backgroundColor:"gray",
+              color:"white"}}
+            onClick={() => navigate(-1)}>취소</Button>
 						{/* </EditDoneButton> */}
 					</PostingHeader>
 
@@ -141,7 +149,7 @@ const Posting = () => {
 							}}
 						>
 							<label className="input file-button" for="input-file">
-								...이미지업로드
+								...이미지업로드⬆️
 							</label>
 							<input
 								id="input-file"
@@ -157,23 +165,6 @@ const Posting = () => {
 
 					<div>
 						<Preview src={fileImage ? fileImage : 'preview_img.png'} alt="" />
-						{/* {fileImage && (
-                <img
-                alt="sample"
-                src={fileImage}
-                // src={
-                  // 	fileImage
-									// 		? fileImage
-									// 		: "https://velog.velcdn.com/images/hahbr88/post/67aab3ec-2a82-425e-bd2d-8108805e8389/image.png"
-									// }
-									style={{
-										margin: 'auto',
-										backgroundColor: '#efefef',
-										width: '200px',
-										height: '170px',
-									}}
-								/>
-							)} */}
 					</div>
 
 					<Button
@@ -186,34 +177,16 @@ const Posting = () => {
 						삭제
 					</Button>
 
-					{/* <React.Fragment>
-
-						<button onClick={handleButtonClick}>파일 업로드</button>
-						<input
-							type="file"
-							ref={fileInput}
-							onChange={handleChange}
-							style={{ display: 'none' }}
-						/>
-					</React.Fragment> */}
-
-					{/* <PostingImgUproad>
-						<img
-							src="http://c2.img.netmarble.kr/web/6N/2011/02/2139/%EA%B0%9C%EB%93%9C%EB%A6%BD_%EC%A0%9C%EC%B2%A0%EC%86%8C.jpg"
-							alt=""
-						/>
-					</PostingImgUproad> */}
-
 					<div>
 						<InputWrap>
 							<label htmlFor="nickname">힌트</label>
 							<input
 								type="text"
-								placeholder="8글자 제한"
+								placeholder="10글자 제한"
 								value={hint}
 								onChange={(e) => setHint(e.target.value)}
 								multiple="multiple"
-								maxLength="8"
+								maxLength="10"
 							/>
 
 							<label htmlFor="comment">정답</label>

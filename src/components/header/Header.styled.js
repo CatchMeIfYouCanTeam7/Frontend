@@ -2,11 +2,10 @@ import styled from 'styled-components';
 import CMIYC_Logo from '../../image/CMIYC_Logo_Color.png';
 
 export const StHeader = styled.div`
-	width: 99.655%;
+	width: 100%;
 	height: 100px;
 	display: flex;
 	align-items: center;
-	border: 2px solid black;
 `;
 
 export const CatchLogo = styled.div`

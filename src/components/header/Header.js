@@ -15,9 +15,13 @@ const Header = () => {
 			<CatchLogo onClick={() => navigate('/')} />
 			<div style={{ marginLeft: 'auto' }}></div>
 			&nbsp;&nbsp;
+			<h3 onClick={()=> navigate('/Login')} className="signUpBox" style={{ marginRight: '20px' }}>
+				로그인
+			</h3>
 			<h3 onClick={()=> navigate('/SignUp')} className="signUpBox" style={{ marginRight: '20px' }}>
 				회원가입
 			</h3>
+			
 		</StHeader>
 	);
 };
