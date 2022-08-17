@@ -27,7 +27,7 @@ const Posting = () => {
 
 	// 상세화면에서 수정 버튼 클릭 시 문제 데이터 보냄
 	const location = useLocation();
-	const question = location.state.question;
+	const question = location.state ? location.state.question: "";
 	console.log(question);
 
   const [fileImage, setFileImage] = useState("");
