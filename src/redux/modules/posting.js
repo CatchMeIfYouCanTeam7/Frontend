@@ -27,7 +27,7 @@ export const asyncGetOneQuestion = createAsyncThunk(
 		} else {
 			return null;
 		}
-  },
+	}
 );
 
 export const asyncPostQuestion = createAsyncThunk(
@@ -99,6 +99,7 @@ const posting = createSlice({
 			state.question.message = action.payload.data;
 		}
 	},
+
 });
 console.log('dddd', createSlice);
 

@@ -250,11 +250,11 @@ const Posting = () => {
               <label htmlFor="nickname">힌트</label>
               <input
                 type="text"
-                placeholder="8글자 제한"
+                placeholder="10글자 제한"
                 value={hint}
                 onChange={(e) => setHint(e.target.value)}
                 multiple="multiple"
-                maxLength="8"
+                maxLength="10"
               />
 
               <label htmlFor="comment">정답</label>
