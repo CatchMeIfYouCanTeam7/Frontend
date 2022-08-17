@@ -44,7 +44,7 @@ const Detail = () => {
   const userData = location.state ? location.state.userData : "";
 
   // 문제 하나 조회
-  const question = useSelector((item) => item.posting.question.result);
+  const question = useSelector((item) => item.posting.question);
   const getOneQuestion = (id) => {
     dispatch(asyncGetOneQuestion(id));
   };
@@ -92,7 +92,6 @@ const Detail = () => {
   // 댓글 작성 -> 로그인 한 사람만 댓글 작성 가능
   const comment = useSelector((item) => item.comment.comment);
   const onClickEnrollCommentHandler = () => {
-
 		const accessToken = JSON.parse(localStorage.getItem("accessToken" + userData.id));
 
 		// access token 여부 확인 -> 로그인 기록 여부 확인
@@ -111,11 +110,15 @@ const Detail = () => {
 					dispatch(asyncAddComment(newComment));
 					setInputComment("");
 				} else {
-					alert('로그인 기한이 만료되었습니다. 다시 로그인 해주세요!');
+					if (window.confirm('로그인 기한이 만료되었습니다.\n 로그인 화면으로 이동하시겠습니까?')) {
+						navigate('/login');
+					}
 				}
 			}
 		} else {
-			alert("로그인 하고 정답을 맞춰주세요!");
+			if (window.confirm('로그인 후 정답을 맞춰주세요!\n로그인 화면으로 이동하시겠습니까?')) {
+				navigate('/login');
+			}
 		}
   };
 	
@@ -125,12 +128,16 @@ const Detail = () => {
 		// access token 여부 확인 -> 로그인 기록 여부 확인
     if (accessToken) {
 			if (new Date(accessToken.expireTime).valueOf() > Date.now().valueOf()) {
-      	navigate(`/Posting/${id}`, { state: { userId: userData.id, question: question } });
+      	navigate(`/Posting/${id}`, { state: { userData: userData, question: question } });
 			} else {
-				alert('로그인 기한이 만료되었습니다. 다시 로그인 해주세요!');
+				if (window.confirm('로그인 기한이 만료되었습니다.\n 로그인 화면으로 이동하시겠습니까?')) {
+					navigate('/login');
+				}
 			}
     } else {
-			alert('로그인하고 글을 작성해주세요!');
+			if (window.confirm('로그인 후 글을 작성해주세요!\n로그인 화면으로 이동하시겠습니까?')) {
+				navigate('/login');
+			}
 		}
   };
 

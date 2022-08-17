@@ -101,7 +101,7 @@ const SignUp = () => {
         console.log("서버연동 성공");
         if (res.data.success === true) {
           alert("회원가입을 축하드립니다^^");
-          navigate("/Login");
+          navigate("/login");
         } else {
           alert("회원가입을 실패하였습니다");
         }
@@ -224,7 +224,7 @@ const SignUp = () => {
               )}
             </StSignUpDiv>
             <button
-              onClick={() => navigate("/Login")}
+              onClick={() => navigate("/login")}
               style={{ marginRight: "5px" }}
               type="button"
             >

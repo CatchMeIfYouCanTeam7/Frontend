@@ -9,8 +9,9 @@ import { CatchLogo, StHeader } from "./Header.styled";
 const Header = ({ userId }) => {
   const navigate = useNavigate();
 
+
   const LogoutHandler = () => {
-    console.log(JSON.parse(localStorage.getItem("accessToken" + userId)));
+    // console.log(JSON.parse(localStorage.getItem("accessToken" + userId)));
     axios
       .get(process.env.REACT_APP_URL + "/api/auth/members/logout", {
         headers: {
@@ -25,7 +26,9 @@ const Header = ({ userId }) => {
       .catch((error) => {
         console.log(error);
       });
+
     localStorage.removeItem("accessToken" + userId);
+
     alert("로그아웃 하였습니다!");
     navigate('/')
   };

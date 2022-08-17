@@ -44,26 +44,63 @@ export const asyncPostQuestion = createAsyncThunk(
 					},
 				},
 			);
-			console.log('reducer', response);
+
 			return thunkAPI.fulfillWithValue(response.data.data);
 		} catch (err) {
 			// console.log('err', err);
-			return thunkAPI.rejectWithValue({status: err.response.status, data: err.response.data});
+			return thunkAPI.rejectWithValue();
 		}
   },
 );
 
+export const asyncRemoveQuestion = createAsyncThunk(
+	"posting/removeQuestion",
+	async (payload, thunkAPI) => {
+		const response = await axios.delete(
+			url + `/auth/questions/${payload.questionId}`,
+			{
+				headers: {
+					Authorization: JSON.parse(localStorage.getItem("accessToken" + payload.userId)).auth
+				}
+			}
+		)
+		// console.log(response);
+		
+		if (response.status === 200 && response.data.success === true) {
+			return payload.questionId;
+		} else {
+			return null;
+		}
+	}
+);
+
+export const asyncEditQuestion = createAsyncThunk(
+	"posting/editQuestion",
+	async (payload, thunkAPI) => {
+		console.log(payload);
+		const response = await axios.put(
+			url + `/auth/questions/${payload.questonId}`,
+			payload.formData,
+			{
+				headers: {
+					Authorization: JSON.parse(localStorage.getItem("accessToken" + payload.userId)).auth,
+					"Content-Type": "multipart/form-data",
+				},
+			}
+		);
+		
+		if (response.status === 200 && response.data.success === true) {
+			console.log(response);
+			return response.data.data;
+		} else {
+			return null;
+		}
+	}
+)
+
 const initialState = {
-	questions: {
-		result: [],
-		status: 200,
-		data: {}
-	},
-	question: {
-		result: {},
-		status: 200,
-		data: {}
-	},
+	questions: {},
+	question: {},
 };
 
 const posting = createSlice({
@@ -72,7 +109,7 @@ const posting = createSlice({
 	reducers: {
 		addPosting(state, action) {
 			state.questions = action.payload.date;
-			state.qusetions.push(action.payload);
+			state.questions.push(action.payload);
 		},
 	},
 
@@ -80,23 +117,38 @@ const posting = createSlice({
 		// 글 전체 조회
 		[asyncGetAllQuestion.fulfilled]: (state, action) => {
 			// action.payload -> all questions
-			state.questions.result = action.payload;
+			state.questions = action.payload;
 		},
 		// 글 하나 조회
 		[asyncGetOneQuestion.fulfilled]: (state, action) => {
 			// action.paylaod -> one question
-			state.question.result = action.payload;
+			state.question = action.payload;
 		},
 
 		// 글 작성
 		[asyncPostQuestion.fulfilled]: (state, action) => {
-			// console.log('reducer', action);
-			state.question.result.push(action.paylaod);
+			console.log('reducer', action);
+			state.questions.push(action.payload);
 		},
-		[asyncPostQuestion.rejected]: (state, action) => {
-			// console.log('post question fail', action.payload);
-			state.question.status = action.payload.status;
-			state.question.message = action.payload.data;
+		// [asyncPostQuestion.rejected]: (state, action) => {
+		// 	// console.log('post question fail', action.payload);
+		// 	state.question.status = action.payload.status;
+		// 	state.question.message = action.payload.data;
+		// }
+
+		// 글 삭제
+		[asyncRemoveQuestion.fulfilled]: (state, action) => {
+			// action.payload -> question id
+			state.questions.filter((item) => item.id !== action.payload);
+		},
+		[asyncEditQuestion.fulfilled]: (state, action) => {
+			state.questions = state.questions.map((item) => {
+				if (item.id === action.payload.id) {
+					return action.payload;
+				} else {
+					return item;
+				}
+			});
 		}
 	},
 

@@ -100,9 +100,11 @@ const Login = () => {
                 </Button>
                 <p
                   type="button"
+
                   // style={{width:"270px"}}
                   onClick={() => navigate("/SignUp")}
                 >회원가입</p>
+
             </form>
           </StLoginDivBox>
         </StLoginDivFull>
