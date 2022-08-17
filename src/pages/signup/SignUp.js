@@ -57,15 +57,12 @@ const SignUp = () => {
   };
 
   const PasswordHandler = (event) => {
-    const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,8}$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,8}$/;
     const passwordCurrent = event.target.value;
     setPassword(passwordCurrent);
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage(
-        "숫자와 문자를 혼합하여 4~8자리로 입력해주세요!"
-      );
+      setPasswordMessage("숫자와 문자를 혼합하여 4~8자리로 입력해주세요!");
       setIsPassword(false);
     } else {
       setPasswordMessage("안전한 비밀번호에요 : )");
@@ -114,6 +111,32 @@ const SignUp = () => {
       });
   };
 
+  const emailCheck = () => {
+    axios
+      .get(process.env.REACT_APP_URL + "/api/members/email-check", {
+        params: { email: email },
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  const nickNameCheck = async() => {
+    await axios
+      .get(process.env.REACT_APP_URL + "/api/members/nickname-check", {
+        params: { nickname: nickname },
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <>
       <Header>SIGN UP</Header>
@@ -130,6 +153,13 @@ const SignUp = () => {
                 Value={email}
                 onChange={EmailHandler}
               />
+              <button
+                type="button"
+                onClick={emailCheck}
+                style={{ width: "80px" }}
+              >
+                중복확인
+              </button>
               {email.length > 0 && (
                 <span className={`message ${isEmail ? "success" : "error"}`}>
                   {emailMessage}
@@ -143,6 +173,13 @@ const SignUp = () => {
                 value={nickname}
                 onChange={NickNameHandler}
               />
+              <button
+                type="button"
+                onClick={nickNameCheck}
+                style={{ width: "80px" }}
+              >
+                중복확인
+              </button>
               {nickname.length > 0 && (
                 <span className={`message ${isNickName ? "success" : "error"}`}>
                   {nickNameMessage}

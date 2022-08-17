@@ -125,7 +125,7 @@ const Detail = () => {
 
   return (
     <DetailWrap>
-      <Header />
+      <Header userId={userData.id} />
       <DetailContainer>
         <DetailHeaderWrap>
           <Button id="backBtn" onClick={() => navigate(-1)}></Button>
