@@ -11,20 +11,18 @@ function App() {
     <AppContainer className="App">
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/Posting" element={<Posting />} />
-        <Route path="/Posting/:id" element={<Posting />} />
-        <Route path="/Detail" element={<Detail />} />
-        <Route path="/Detail/:id" element={<Detail />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/posting" element={<Posting />} />
+        <Route path="/posting/:id" element={<Posting />} />
+        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </AppContainer>
   );
 }
 
 const AppContainer = styled.div`
-
-  /* background-repeat: repeat; */
   background-image: linear-gradient(
       to bottom,
       transparent,

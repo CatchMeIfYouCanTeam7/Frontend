@@ -10,6 +10,7 @@ import {
   CommentContainer,
   CommentContentWrap,
   CommentNicknameWrap,
+	CommentShowCorrect,
 } from "./Comment.styled";
 
 const Comment = ({ comment, userNickname, userId }) => {
@@ -17,6 +18,8 @@ const Comment = ({ comment, userNickname, userId }) => {
 
   // 본인이 작성한 댓글인지 확인
   const [isUser, setIsUser] = useState(false);
+
+	const [isAnswer, setIsAnswer] = useState(comment.trueOrFalse);
 
   useEffect(() => {
     if (userNickname === comment.author) {
@@ -41,7 +44,8 @@ const Comment = ({ comment, userNickname, userId }) => {
         <hr />
       </CommentNicknameWrap>
       <CommentContentWrap>
-        <span>{comment.comment}</span>
+        <span>{isAnswer ? '*'.repeat(comment.comment.length) : comment.comment}</span>
+				<CommentShowCorrect>{isAnswer ? "정답!" : ""}</CommentShowCorrect>
         {isUser ? (
           <Button
             id="removeCommentBtn"

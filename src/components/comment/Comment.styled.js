@@ -18,6 +18,10 @@ export const CommentContainer = styled.div`
   }
 `;
 
+export const CommentShowCorrect = styled.span`
+	color: white;
+`;
+
 export const CommentNicknameWrap = styled.div`
   width: 25%;
 `;

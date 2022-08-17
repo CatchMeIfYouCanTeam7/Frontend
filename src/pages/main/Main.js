@@ -49,12 +49,16 @@ const Main = () => {
     if (accessToken) {
 			console.log(new Date(accessToken.expireTime));
 			if (new Date(accessToken.expireTime).valueOf() > Date.now().valueOf()) {
-      	navigate("/Posting", { state: { userData: userData } });
+      	navigate("/posting", { state: { userData: userData } });
 			} else {
-				alert('로그인 기한이 만료되었습니다. 다시 로그인 해주세요!');
+				if (window.confirm('로그인 기한이 만료되었습니다.\n 로그인 화면으로 이동하시겠습니까?')) {
+					navigate('/login');
+				}
 			}
     } else {
-			alert('로그인하고 글을 작성해주세요!');
+			if (window.confirm('로그인 후 글을 작성해주세요!\n로그인 화면으로 이동하시겠습니까?')) {
+				navigate('/login');
+			}
 		}
   };
 

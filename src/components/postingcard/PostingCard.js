@@ -8,7 +8,7 @@ const PostingCard = ({ question, userData }) => {
   const navigate = useNavigate();
 
   const onMoveDetailHandler = () => {
-    navigate(`/Detail/${question.id}`, {
+    navigate(`/detail/${question.id}`, {
       state: { userData: userData },
     });
   };
@@ -17,7 +17,6 @@ const PostingCard = ({ question, userData }) => {
     <>
       <PostingContainer
         src={question.imgUrl}
-        alt="cm1"
         onClick={onMoveDetailHandler}
       />
     </>
