@@ -36,6 +36,7 @@ const Detail = () => {
   const [inputComment, setInputComment] = useState("");
   const [hint, setHint] = useState("Hint");
   const [visibleCommentList, setVisibleCommentList] = useState(false);
+
 	const [checkAuthor, setCheckAuthor] = useState(false);
 
   // 로그인 한 유저 데이터
@@ -62,7 +63,7 @@ const Detail = () => {
         .slice()
         .sort(
           (a, b) =>
-            new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
+            new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
         );
       // console.log(commentList);
       return commentList.map((item) => (
@@ -91,6 +92,7 @@ const Detail = () => {
   // 댓글 작성 -> 로그인 한 사람만 댓글 작성 가능
   const comment = useSelector((item) => item.comment.comment);
   const onClickEnrollCommentHandler = () => {
+
 		const accessToken = JSON.parse(localStorage.getItem("accessToken" + userData.id));
 
 		// access token 여부 확인 -> 로그인 기록 여부 확인
@@ -146,7 +148,7 @@ const Detail = () => {
 
   return (
     <DetailWrap>
-      <Header />
+      <Header userId={userData.id} />
       <DetailContainer>
         <DetailHeaderWrap>
           <Button id="backBtn" onClick={() => navigate(-1)}></Button>

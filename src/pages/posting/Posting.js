@@ -6,7 +6,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { addPosting, asyncPostQuestion } from "../../redux/modules/posting";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
+
 import { unwrapResult } from "@reduxjs/toolkit";
+
 
 // Component import
 import Header from "../../components/header/Header";
@@ -22,7 +24,9 @@ import {
   ImageUproadButton,
 } from "./Posting.styled";
 
+
 import previewImg from '../../image/preview_img.png'
+
 
 const Posting = () => {
   const navigate = useNavigate();
@@ -30,6 +34,7 @@ const Posting = () => {
 
   // 상세화면에서 수정 버튼 클릭 시 문제 데이터 보냄
   const location = useLocation();
+
   const question = location.state.question ? location.state.question : "";
   const userId = location.state.userId;
   console.log(question, userId);
@@ -39,6 +44,7 @@ const Posting = () => {
   const [hint, setHint] = useState(question ? question.hint : "");
   const [answer, setAnswer] = useState(question ? question.answer : "");
 
+
   //[] 업데이트 딱 한번만 한다. 그 빈배열 안에 값을 집어 넣으면 그 값이 변경될 때 마다 업데이트 함
   //fileImage를 지워줬으니까 바로 적용시켜!
 
@@ -47,6 +53,7 @@ const Posting = () => {
 
   const QUESTION = useSelector((state) => state.posting.questions);
   console.log(QUESTION);
+
 
   // const questionOne = useSelector((state) => state.posting.quesiton);
   // console.log(questionOne);
@@ -77,9 +84,11 @@ const Posting = () => {
     fileInput.current.value = "";
   };
 
+
   // useEffect(() => {
 
   // }, [fileImage]);
+
 
   //useSelector는 reducer의 모든 정보를 가져오는 것
   // const posting = useSelector((state) => state.posting.QUESTION.result)
@@ -106,7 +115,9 @@ const Posting = () => {
           "questionRequestDto",
           new Blob([JSON.stringify(data)], {
             type: "application/json",
+
           }),
+
         );
 
         for (const keyValue of formData) console.log(keyValue); // ["img", File] File은 객체
@@ -117,6 +128,7 @@ const Posting = () => {
         // 	hint: hint,
         // 	answer: answer
         // }
+
 
         dispatch(
           asyncPostQuestion({
@@ -137,6 +149,7 @@ const Posting = () => {
               alert(rejectedErr.data.error.message);
             }
           });
+
         console.log("finish dispatch post question");
       }
     }
@@ -161,7 +174,9 @@ const Posting = () => {
 
   return (
     <>
+
       <Header userId={userId} />
+
       <PostingWrap>
         <PostingContainer>
           <PostingHeader>
@@ -180,7 +195,9 @@ const Posting = () => {
                 margin: "0px 160px 13px 0px",
               }}
             >
+
               <label className="input file-button" htmlFor="input-file">
+
                 ...이미지업로드
               </label>
               <input
@@ -196,8 +213,10 @@ const Posting = () => {
           </ImageUproadButton>
 
           <div>
+
 						{/* <img src="react.png" alt="" /> */}
             <Preview src={fileImage ? fileImage : previewImg} alt="" />
+
             {/* {fileImage && (
                 <img
                 alt="sample"
@@ -222,7 +241,9 @@ const Posting = () => {
               cursor: "pointer",
             }}
             id="editPostingBtn"
+
             onClick={deleteFileImage}
+
           >
             삭제
           </Button>
@@ -250,11 +271,13 @@ const Posting = () => {
               <label htmlFor="nickname">힌트</label>
               <input
                 type="text"
+
                 placeholder="10글자 제한"
                 value={hint}
                 onChange={(e) => setHint(e.target.value)}
                 multiple="multiple"
                 maxLength="10"
+
               />
 
               <label htmlFor="comment">정답</label>
@@ -268,6 +291,7 @@ const Posting = () => {
               />
 
               <button onClick={onClickHandler}>{question ? "저장" : "등록"}</button>
+
             </InputWrap>
           </div>
         </PostingContainer>

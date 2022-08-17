@@ -32,12 +32,15 @@ const Main = () => {
     .slice()
     .sort(
       (a, b) =>
+
         new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
+
     );
 
   const getAllPosting = () => {
     dispatch(asyncGetAllQuestion());
   };
+
 
   const onMovePostingHandler = () => {
 		const accessToken = JSON.parse(localStorage.getItem("accessToken" + userData.id));
@@ -62,13 +65,16 @@ const Main = () => {
   return (
     <MainWrap>
       <Header />
+
       <MainContainer>
         <ListHeader>
           <p>
             상상력을 발휘해 <br />
             정답을 맞춰주세요!
           </p>
+
           <Button id="postingBtn" onClick={onMovePostingHandler}>
+
             글 작성
           </Button>
         </ListHeader>
