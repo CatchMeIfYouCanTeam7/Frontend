@@ -19,6 +19,7 @@ import {
 	InputWrap,
 	Preview,
 	ImageUproadButton,
+	PostingHeaderWrap,
 } from './Posting.styled';
 
 const Posting = () => {
@@ -27,19 +28,34 @@ const Posting = () => {
 
 	// 상세화면에서 수정 버튼 클릭 시 문제 데이터 보냄
 	const location = useLocation();
-	const question = location.state ? location.state.question : '';
+  console.log(location);
+  // location.state가 값이 있다면 question을 questIon이라는 변수에 넣은것.
+	const question = location.state.question ? location.state.question : '';
+	const userId = location.state.userId;
 	console.log(question);
 
 	const [fileImage, setFileImage] = useState('');
 	const [img, setImg] = useState('');
 	const [hint, setHint] = useState('');
 	const [answer, setAnswer] = useState('');
-
+  const [isEditMode, setIsEditMode] = useState(false);
+	const [updatedPost, setUpdatedPost] = useState('');
 	//[] 업데이트 딱 한번만 한다. 그 빈배열 안에 값을 집어 넣으면 그 값이 변경될 때 마다 업데이트 함
 	//fileImage를 지워줬으니까 바로 적용시켜!
 
 	// 수정
-	const [newText, setNewText] = useState();
+	const [modify, setModify] = useState(false);
+	function onClickHide() {
+		setModify((modify) => !modify);
+	}
+
+  const hintRef = useRef();
+	const answertRef = useRef();
+
+
+    const onMoveDetailHandler = () => {
+			navigate(`/Posting/`, { state: { question: question } });
+		};
 
 	const QUESTION = useSelector((state) => state.posting.questions);
 	console.log(QUESTION);
@@ -92,17 +108,12 @@ const Posting = () => {
 
 				for (const keyValue of formData) console.log(keyValue); // ["img", File] File은 객체
 
-				// const newQuestion = {
-				// 	formData: formData,
-				// 	userId: 2,
-				// 	hint: hint,
-				// 	answer: answer
-				// }
-
 				dispatch(asyncPostQuestion({ formData: formData, userId: 2 }));
 				console.log('finish dispatch post question');
 			}
 		}
+
+
 		// console.log(QUESTION.length);
 
 		const newQuestion = {
@@ -118,6 +129,26 @@ const Posting = () => {
 		// dispatch(addPosting(newQuestion));
 	};
 
+
+  const changeStatus = () => {
+		if (modify) {
+			hintRef.current.style.backgroundColor = '#e66a2f';
+			hintRef.current.style.color = '#f7f6f1';
+		} else {
+			hintRef.current.style.backgroundColor = '#f7f6f1';
+			hintRef.current.style.color = '#000000';
+		}
+		hintRef.current.disabled = !hintRef.current.disabled;
+		// answerRef.current.disabled = !answerRef.current.disabled;
+		setModify(!modify);
+	};
+
+   const newInputData = {
+			imageUrl:
+				'http://c2.img.netmarble.kr/web/6N/2011/02/2139/%EA%B0%9C%EB%93%9C%EB%A6%BD_%EC%A0%9C%EC%B2%A0%EC%86%8C.jpg',
+			hint: hint,
+			answer: answer,
+		};
 	// const onClickEditButton = () => {
 	// 	setEdited(true);
 	// }
@@ -127,18 +158,14 @@ const Posting = () => {
 			<Header />
 			<PostingWrap>
 				<PostingContainer>
-
-					<PostingHeader>
+					<PostingHeaderWrap>
 						<Button id="backBtn" onClick={() => navigate(-1)}></Button>
-						{/* <EditDoneButton> */}
-						<Button id="editPostingBtn">완료</Button>
-						<Button 
-            style={{
-              backgroundColor:"gray",
-              color:"white"}}
-            onClick={() => navigate(-1)}>취소</Button>
-						{/* </EditDoneButton> */}
-					</PostingHeader>
+						<PostingHeader>
+							{/* <EditDoneButton> */}
+							<span>닉네임: {question.author}</span>
+
+						</PostingHeader>
+					</PostingHeaderWrap>
 
 					<ImageUproadButton>
 						<div
@@ -159,6 +186,7 @@ const Posting = () => {
 								accept="image/*"
 								onChange={saveFileImage}
 								ref={fileInput}
+                
 							/>
 						</div>
 					</ImageUproadButton>

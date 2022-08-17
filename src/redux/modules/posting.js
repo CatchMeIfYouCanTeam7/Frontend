@@ -113,6 +113,7 @@ const posting = createSlice({
 			console.log('reducer', action);
 		},
 	},
+
 });
 console.log('dddd', createSlice);
 

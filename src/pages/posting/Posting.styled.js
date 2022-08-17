@@ -28,6 +28,13 @@ export const PostingHeader = styled.div`
 	justify-content: space-between;
 `;
 
+export const PostingHeaderWrap = styled.div`
+	margin: 20px auto;
+	width: 85%;
+
+	text-align: start;
+`;
+
 export const PostingImgUproad = styled.div`
 	button {
 		margin: 20px;
