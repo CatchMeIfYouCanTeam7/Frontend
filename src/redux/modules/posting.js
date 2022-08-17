@@ -33,58 +33,36 @@ export const asyncGetOneQuestion = createAsyncThunk(
 export const asyncPostQuestion = createAsyncThunk(
   "posting/postQuestion",
   async (payload, thunkAPI) => {
-    console.log("action", payload);
-    const response = await axios.post(
-      url + "/auth/questions",
-      payload.formData,
-      {
-        headers: {
-          Authorization: localStorage.getItem("accessToken" + payload.userId),
-          "Content-Type": "multipart/form-data",
-        },
-      },
-    );
-    console.log(response);
-		return response.data.data;
+		try {
+			const response = await axios.post(
+				url + "/auth/questions",
+				payload.formData,
+				{
+					headers: {
+						Authorization: JSON.parse(localStorage.getItem("accessToken" + payload.userId)).auth,
+						"Content-Type": "multipart/form-data",
+					},
+				},
+			);
+			console.log('reducer', response);
+			return thunkAPI.fulfillWithValue(response.data.data);
+		} catch (err) {
+			// console.log('err', err);
+			return thunkAPI.rejectWithValue({status: err.response.status, data: err.response.data});
+		}
   },
 );
 
 const initialState = {
 	questions: {
-		ok: true,
-		result: [
-			{
-				id: 1,
-				userNickname: 'nick1',
-				imageUrl:
-					'http://c2.img.netmarble.kr/web/6N/2011/02/2139/%EA%B0%9C%EB%93%9C%EB%A6%BD_%EC%A0%9C%EC%B2%A0%EC%86%8C.jpg',
-				hint: '힌트1',
-				answer: '정답1',
-				createdAt: '2020-04-11T11:12:30.686',
-			},
-			{
-				id: 2,
-				userNickname: 'nick1',
-				imageUrl:
-					'http://c2.img.netmarble.kr/web/6N/2011/02/2139/%EA%B0%9C%EB%93%9C%EB%A6%BD_%EC%A0%9C%EC%B2%A0%EC%86%8C.jpg',
-				hint: '힌트2',
-				answer: '정답2',
-				createdAt: '2020-04-11T11:12:30.686',
-			},
-			{
-				id: 3,
-				userNickname: 'nick1',
-				imageUrl:
-					'https://img.koreatimes.co.kr/upload/newsV2/images/paint450.jpg/dims/resize/740/optimize',
-				hint: '힌트3',
-				answer: '정답3',
-				createdAt: '2020-04-11T11:12:30.686',
-			},
-		],
+		result: [],
+		status: 200,
+		data: {}
 	},
 	question: {
-		ok: true,
 		result: {},
+		status: 200,
+		data: {}
 	},
 };
 
@@ -109,9 +87,17 @@ const posting = createSlice({
 			// action.paylaod -> one question
 			state.question.result = action.payload;
 		},
+
+		// 글 작성
 		[asyncPostQuestion.fulfilled]: (state, action) => {
-			console.log('reducer', action);
+			// console.log('reducer', action);
+			state.question.result.push(action.paylaod);
 		},
+		[asyncPostQuestion.rejected]: (state, action) => {
+			// console.log('post question fail', action.payload);
+			state.question.status = action.payload.status;
+			state.question.message = action.payload.data;
+		}
 	},
 });
 console.log('dddd', createSlice);

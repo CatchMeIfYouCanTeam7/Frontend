@@ -40,12 +40,18 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
-        console.log(res.data.data)
+				// console.log(res.headers['access-token-expire-time']);
+				// const date = new Date(+res.headers['access-token-expire-time']);
+				// console.log(date);
+        // console.log(res.data.data)
         console.log(res.headers.authorization);
-        localStorage.setItem("accessToken" + res.data.data.id, res.headers.authorization);
+        // localStorage.setItem("accessToken" + res.data.data.id, res.headers.authorization);
         console.log("성공");
         if (res.headers.authorization) {
-          localStorage.setItem("accessToken" + res.data.data.id, res.headers.authorization);
+          // localStorage.setItem("accessToken" + res.data.data.id, JSON.stringify({
+					// 	auth: res.headers.authorization,
+					// 	expireTime: +res.headers['access-token-expire-time']
+					// }));
           setSuccess(!success);
           alert("로그인에 성공하였습니다");
           navigate("/", {state: {userData: res.data.data}});

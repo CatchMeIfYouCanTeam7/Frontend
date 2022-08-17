@@ -42,6 +42,10 @@ export const BtnContainer = styled.button`
 
           border: 6px solid black;
           border-radius: 8px;
+
+					&:active {
+						width: 300px;
+					}
         `;
 
       case "showCommentBtn":
