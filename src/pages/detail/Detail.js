@@ -37,6 +37,8 @@ const Detail = () => {
   const [hint, setHint] = useState("Hint");
   const [visibleCommentList, setVisibleCommentList] = useState(false);
 
+	const [checkAuthor, setCheckAuthor] = useState(false);
+
   // 로그인 한 유저 데이터
   const location = useLocation();
   const userData = location.state ? location.state.userData : "";
@@ -90,33 +92,54 @@ const Detail = () => {
   // 댓글 작성 -> 로그인 한 사람만 댓글 작성 가능
   const comment = useSelector((item) => item.comment.comment);
   const onClickEnrollCommentHandler = () => {
-    if (inputComment === "") {
-      alert("정답을 입력해주세요!");
-    } else if (inputComment.length > 5) {
-      alert("정답을 5글자 이내로 적어주세요!");
+
+		const accessToken = JSON.parse(localStorage.getItem("accessToken" + userData.id));
+
+		// access token 여부 확인 -> 로그인 기록 여부 확인
+		if (accessToken) {
+			// 정답 입력창 값 여부 확인
+			if (inputComment === "") {
+				alert("정답을 입력해주세요!");
+			} else {
+				// access token 유효시간과 현재 시간 확인
+				if (new Date(accessToken.expireTime).valueOf() > Date.now().valueOf()) {
+					const newComment = {
+						userId: userData.id,
+						questionId: +id,
+						comment: inputComment,
+					};
+					dispatch(asyncAddComment(newComment));
+					setInputComment("");
+				} else {
+					alert('로그인 기한이 만료되었습니다. 다시 로그인 해주세요!');
+				}
+			}
+		} else {
+			alert("로그인 하고 정답을 맞춰주세요!");
+		}
+  };
+	
+  const onMovePostingHandler = () => {
+		const accessToken = JSON.parse(localStorage.getItem("accessToken" + userData.id));
+
+		// access token 여부 확인 -> 로그인 기록 여부 확인
+    if (accessToken) {
+			if (new Date(accessToken.expireTime).valueOf() > Date.now().valueOf()) {
+      	navigate(`/Posting/${id}`, { state: { userId: userData.id, question: question } });
+			} else {
+				alert('로그인 기한이 만료되었습니다. 다시 로그인 해주세요!');
+			}
     } else {
-      if (localStorage.getItem("accessToken" + userData.id)) {
-        const newComment = {
-          userId: userData.id,
-          questionId: +id,
-          comment: inputComment,
-        };
-        dispatch(asyncAddComment(newComment));
-        setInputComment("");
-      } else {
-        alert("로그인 하고 정답을 맞춰주세요!");
-      }
-    }
+			alert('로그인하고 글을 작성해주세요!');
+		}
   };
 
-  const onMovePostingHandler = () => {
-    navigate(`/Posting/${id}`, { state: { question: question } });
-  };
 
   useEffect(() => {
     getOneQuestion(+id);
     getCommentsByQuestion(+id);
     // console.log(commentList);
+		question.author === userData.nickname ? setCheckAuthor(true) : setCheckAuthor(false);
   }, [
     JSON.stringify(commentList),
     JSON.stringify(question),
@@ -131,9 +154,16 @@ const Detail = () => {
           <Button id="backBtn" onClick={() => navigate(-1)}></Button>
           <DetailHeader>
             <span>닉네임: {question.author}</span>
-            <Button id="editPostingBtn" onClick={onMovePostingHandler}>
-              수정
-            </Button>
+            {checkAuthor ? (
+							<Button
+							id="editPostingBtn"
+							onClick={onMovePostingHandler}
+						>
+							수정
+						</Button>
+						) : (
+							null
+						)}
           </DetailHeader>
         </DetailHeaderWrap>
         <DetailContent>
@@ -152,6 +182,7 @@ const Detail = () => {
                 type="text"
                 value={inputComment}
                 placeholder="5글자 제한"
+                maxLength="5"
                 onChange={(e) => {
                   setInputComment(e.target.value);
                 }}

@@ -9,7 +9,7 @@ export const PostingWrap = styled.div`
 export const PostingContainer = styled.div`
 	width: 30%;
 	min-width: 500px;
-	height: 60%;
+	height: 70%;
 	min-height: 400px;
 	margin: auto;
 	text-align: center;
@@ -23,10 +23,16 @@ export const PostingContainer = styled.div`
 
 export const PostingHeader = styled.div`
 	margin: 20px;
-	/* background-color: aqua; */
 
 	display: flex;
 	justify-content: space-between;
+`;
+
+export const PostingHeaderWrap = styled.div`
+	margin: 20px auto;
+	width: 85%;
+
+	text-align: start;
 `;
 
 export const PostingImgUproad = styled.div`
@@ -72,7 +78,7 @@ export const ImageUproadButton = styled.div`
 
 	label {
 		padding: 6px 25px;
-		background-color: #ff6600;
+		background-color: #ffc500;
 		border-radius: 4px;
 		color: white;
 		cursor: pointer;

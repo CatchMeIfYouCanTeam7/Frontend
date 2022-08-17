@@ -32,11 +32,30 @@ const Main = () => {
     .slice()
     .sort(
       (a, b) =>
-        new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
+
+        new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf(),
+
     );
 
   const getAllPosting = () => {
     dispatch(asyncGetAllQuestion());
+  };
+
+
+  const onMovePostingHandler = () => {
+		const accessToken = JSON.parse(localStorage.getItem("accessToken" + userData.id));
+		
+		// access token 여부 확인 -> 로그인 기록 여부 확인
+    if (accessToken) {
+			console.log(new Date(accessToken.expireTime));
+			if (new Date(accessToken.expireTime).valueOf() > Date.now().valueOf()) {
+      	navigate("/Posting", { state: { userId: userData.id } });
+			} else {
+				alert('로그인 기한이 만료되었습니다. 다시 로그인 해주세요!');
+			}
+    } else {
+			alert('로그인하고 글을 작성해주세요!');
+		}
   };
 
   useEffect(() => {
@@ -45,14 +64,17 @@ const Main = () => {
 
   return (
     <MainWrap>
-      <Header userId={userData.id} />
+      <Header />
+
       <MainContainer>
         <ListHeader>
           <p>
             상상력을 발휘해 <br />
             정답을 맞춰주세요!
           </p>
-          <Button id="postingBtn" onClick={() => navigate("/Posting")}>
+
+          <Button id="postingBtn" onClick={onMovePostingHandler}>
+
             글 작성
           </Button>
         </ListHeader>

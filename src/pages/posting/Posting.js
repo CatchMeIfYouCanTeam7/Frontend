@@ -7,6 +7,9 @@ import { addPosting, asyncPostQuestion } from "../../redux/modules/posting";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 
+import { unwrapResult } from "@reduxjs/toolkit";
+
+
 // Component import
 import Header from "../../components/header/Header";
 import Button from "../../components/button/Button";
@@ -21,19 +24,26 @@ import {
   ImageUproadButton,
 } from "./Posting.styled";
 
+
+import previewImg from '../../image/preview_img.png'
+
+
 const Posting = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // 상세화면에서 수정 버튼 클릭 시 문제 데이터 보냄
   const location = useLocation();
-  const question = location.state ? location.state.question : "";
-  console.log(question);
 
-  const [fileImage, setFileImage] = useState("");
+  const question = location.state.question ? location.state.question : "";
+  const userId = location.state.userId;
+  console.log(question, userId);
+
+  const [fileImage, setFileImage] = useState(question ? question.imgUrl : "");
   const [img, setImg] = useState("");
-  const [hint, setHint] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [hint, setHint] = useState(question ? question.hint : "");
+  const [answer, setAnswer] = useState(question ? question.answer : "");
+
 
   //[] 업데이트 딱 한번만 한다. 그 빈배열 안에 값을 집어 넣으면 그 값이 변경될 때 마다 업데이트 함
   //fileImage를 지워줬으니까 바로 적용시켜!
@@ -43,6 +53,18 @@ const Posting = () => {
 
   const QUESTION = useSelector((state) => state.posting.questions);
   console.log(QUESTION);
+
+
+  // const questionOne = useSelector((state) => state.posting.quesiton);
+  // console.log(questionOne);
+
+  // useEffect(() => {
+  // 	// if (question) {
+  // 	// 	setHint(question.hint);
+  // 	// }
+  // 	// console.log(hint);
+
+  // }, [questionOne]);
 
   // const saveFileImage = (event: React.ChangeEvent<HTMLInputElement>) => {
   // 	setFileImage(URL.createObjectURL(event.target.files[0]));
@@ -61,6 +83,12 @@ const Posting = () => {
     setFileImage("");
     fileInput.current.value = "";
   };
+
+
+  // useEffect(() => {
+
+  // }, [fileImage]);
+
 
   //useSelector는 reducer의 모든 정보를 가져오는 것
   // const posting = useSelector((state) => state.posting.QUESTION.result)
@@ -87,7 +115,9 @@ const Posting = () => {
           "questionRequestDto",
           new Blob([JSON.stringify(data)], {
             type: "application/json",
-          })
+
+          }),
+
         );
 
         for (const keyValue of formData) console.log(keyValue); // ["img", File] File은 객체
@@ -99,7 +129,27 @@ const Posting = () => {
         // 	answer: answer
         // }
 
-        dispatch(asyncPostQuestion({ formData: formData, userId: 2 }));
+
+        dispatch(
+          asyncPostQuestion({
+            formData: formData,
+            userId: userId,
+          }),
+        )
+          .then(unwrapResult)
+          .catch((rejectedErr) => {
+            console.log("fail posting", rejectedErr);
+            console.log(localStorage.getItem("accessToken" + userId));
+            if (
+              rejectedErr.status === 401 &&
+              localStorage.getItem("accessToken" + userId)
+            ) {
+              alert("로그인이 만료되었습니다. 재로그인이 필요합니다.");
+            } else {
+              alert(rejectedErr.data.error.message);
+            }
+          });
+
         console.log("finish dispatch post question");
       }
     }
@@ -124,7 +174,9 @@ const Posting = () => {
 
   return (
     <>
-      <Header />
+
+      <Header userId={userId} />
+
       <PostingWrap>
         <PostingContainer>
           <PostingHeader>
@@ -143,7 +195,9 @@ const Posting = () => {
                 margin: "0px 160px 13px 0px",
               }}
             >
-              <label className="input file-button" for="input-file">
+
+              <label className="input file-button" htmlFor="input-file">
+
                 ...이미지업로드
               </label>
               <input
@@ -159,7 +213,10 @@ const Posting = () => {
           </ImageUproadButton>
 
           <div>
-            <Preview src={fileImage ? fileImage : "preview_img.png"} alt="" />
+
+						{/* <img src="react.png" alt="" /> */}
+            <Preview src={fileImage ? fileImage : previewImg} alt="" />
+
             {/* {fileImage && (
                 <img
                 alt="sample"
@@ -184,7 +241,9 @@ const Posting = () => {
               cursor: "pointer",
             }}
             id="editPostingBtn"
-            onClick={() => deleteFileImage()}
+
+            onClick={deleteFileImage}
+
           >
             삭제
           </Button>
@@ -212,11 +271,13 @@ const Posting = () => {
               <label htmlFor="nickname">힌트</label>
               <input
                 type="text"
-                placeholder="8글자 제한"
+
+                placeholder="10글자 제한"
                 value={hint}
                 onChange={(e) => setHint(e.target.value)}
                 multiple="multiple"
-                maxLength="8"
+                maxLength="10"
+
               />
 
               <label htmlFor="comment">정답</label>
@@ -229,7 +290,8 @@ const Posting = () => {
                 maxLength="5"
               />
 
-              <button onClick={onClickHandler}>등록</button>
+              <button onClick={onClickHandler}>{question ? "저장" : "등록"}</button>
+
             </InputWrap>
           </div>
         </PostingContainer>

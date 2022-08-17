@@ -40,6 +40,7 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
+
         console.log(res.data.data);
         console.log(res.headers.authorization);
         console.log("성공");
@@ -51,6 +52,7 @@ const Login = () => {
               expireTime: +res.headers["access-token-expire-time"],
             })
           );
+
           setSuccess(!success);
           alert("로그인에 성공하였습니다");
           navigate("/", { state: { userData: res.data.data } });
