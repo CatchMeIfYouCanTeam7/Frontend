@@ -1,13 +1,26 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import Button from "../button/Button";
-import axios from "axios";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import Button from '../button/Button';
+import axios from 'axios';
 
 // Style import
-import { CatchLogo, StHeader } from "./Header.styled";
+import { CatchLogo, StHeader } from './Header.styled';
 
-const Header = ({ userId }) => {
+const Header = ({ userData }) => {
   const navigate = useNavigate();
+  
+	const LogoutHandler = () => {
+		// console.log(JSON.parse(localStorage.getItem("accessToken" + userId)));
+		axios
+			.get(process.env.REACT_APP_URL + '/api/auth/members/logout', {
+				headers: {
+					Authorization: JSON.parse(
+						localStorage.getItem('accessToken' + userId)
+					).auth,
+				},
+			})
+			.then((res) => {})
+			.catch((error) => {});
 
 
   const LogoutHandler = () => {
@@ -16,7 +29,7 @@ const Header = ({ userId }) => {
       .get(process.env.REACT_APP_URL + "/api/auth/members/logout", {
         headers: {
           Authorization: JSON.parse(
-            localStorage.getItem("accessToken" + userId)
+            localStorage.getItem("accessToken" + userData.id)
           ).auth,
         },
       })
@@ -25,40 +38,49 @@ const Header = ({ userId }) => {
       .catch((error) => {
       });
 
-    localStorage.removeItem("accessToken" + userId);
+    localStorage.removeItem("accessToken" + userData.id);
 
     alert("로그아웃 하였습니다!");
-    navigate('/')
+		navigate('/', { state: { userData: userData } });
   };
-
-  return (
-    <StHeader>
-      <CatchLogo onClick={() => navigate("/")} />
-      <div style={{ marginLeft: "auto" }}></div>
-      &nbsp;&nbsp;
-      {localStorage.length>0 ?
-      <Button
-        onClick={LogoutHandler}
-        className="signUpBox"
-        style={{ marginRight: "20px", width: "100px" }}
-      >
-        로그아웃
-      </Button> :
-      <><Button
-          onClick={() => navigate("/Login")}
-          className="signUpBox"
-          style={{ marginRight: "20px", width: "100px" }}
-        >
-          로그인
-        </Button><Button
-          onClick={() => navigate("/SignUp")}
-          className="signUpBox"
-          style={{ marginRight: "20px", width: "100px" }}
-        >
-            회원가입
-          </Button></>};
-    </StHeader>
-  );
+  
+	return (
+		<StHeader>
+      <CatchLogo onClick={() => navigate("/", { state: { userData: userData } })} />
+			<div style={{ marginLeft: 'auto' }}></div>
+			&nbsp;&nbsp;
+			{localStorage.length > 0 ? (
+				<Button
+					id="SignUpBtn"
+					onClick={LogoutHandler}
+					className="signUpBox"
+					style={{ marginRight: '20px', width: '100px' }}
+				>
+					LOG OUT
+				</Button>
+			) : (
+				<>
+					<Button
+						id="logInBtn"
+						onClick={() => navigate('/Login')}
+						className="signUpBox"
+						style={{ marginRight: '20px', width: '100px' }}
+					>
+						LOG IN
+					</Button>
+					<Button
+						id="signUpBtn"
+						onClick={() => navigate('/SignUp')}
+						className="signUpBox"
+						style={{ marginRight: '20px', width: '100px' }}
+					>
+						SIGN UP
+					</Button>
+				</>
+			)}
+			;
+		</StHeader>
+	);
 };
 
 export default Header;
