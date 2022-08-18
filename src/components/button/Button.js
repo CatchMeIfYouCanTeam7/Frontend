@@ -23,6 +23,9 @@ const Button = (props) => {
       case "postingBtn":
       case "hintBtn":
       case "editPageBtn":
+      case 'logInBtn':
+      case 'signUpBtn':
+      case 'dupBtn':
       default:
         return props.children;
     }

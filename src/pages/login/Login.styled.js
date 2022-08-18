@@ -35,7 +35,7 @@ align-items: flex-start;
 
 export const StInput = styled.input`
   width: 235px;
-  height: 35px;
+  height: 25px;
   margin-bottom: 8px;
   border: 5px solid black;
   border-radius: 12px;

@@ -43,7 +43,7 @@ const SignUp = () => {
     setEmail(emailCurrent);
 
     if (!emailRegex.test(emailCurrent)) {
-      setEmailMessage("이메일 형식이 틀렸어요! 다시 확인해주세요 ㅜ ㅜ");
+      setEmailMessage("이메일 형식이 틀려요!  ㅜ ㅜ");
       setIsEmail(false);
     } else {
       setEmailMessage("올바른 이메일 형식이에요 : )");
@@ -68,7 +68,7 @@ const SignUp = () => {
     setPassword(passwordCurrent);
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage("숫자와 문자를 혼합하여 4~8자리로 입력해주세요!");
+      setPasswordMessage("숫자,문자를 혼합하여 4~8자리에요!");
       setIsPassword(false);
     } else {
       setPasswordMessage("안전한 비밀번호에요 : )");
@@ -84,7 +84,7 @@ const SignUp = () => {
       setPasswordConfirmMessage("비밀번호를 똑같이 입력했어요 : )");
       setIsPasswordConfirm(true);
     } else {
-      setPasswordConfirmMessage("비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ");
+      setPasswordConfirmMessage("비밀번호가 일치하지 않아요 ㅜ ㅜ");
       setIsPasswordConfirm(false);
     }
   };
@@ -150,12 +150,13 @@ const SignUp = () => {
         }}
       />
       <StLoginDivFull>
-        <StLoginDivBox>
+        <StLoginDivBox style={{marginTop:"150px"}}>
           <StTitle>SIGN UP</StTitle>
           <StSignUpForm onSubmit={SubmitHandler}>
             <StSignUpDiv>
-              <label>E-mail</label>
-              <div>
+              <label
+                style={{color:"white"}}>E-mail</label>
+              <div style={{display:"flex"}}>
                 <StInput
                   placeholder="email을 입력해주세요"
                   type="email"
@@ -164,25 +165,25 @@ const SignUp = () => {
                   onChange={EmailHandler}
                 />
                 <Button
+                  id="dupBtn"
                   type="button"
                   onClick={emailCheck}
                   style={{
-                    width: "80px",
-                    hegiht: "20px",
-                    position: "absolute",
                   }}
                 >
                   중복확인
                 </Button>
-                {email.length > 0 && (
+              </div>
+              {email.length > 0 && (
                   <span className={`message ${isEmail ? "success" : "error"}`}>
                     {emailMessage}
                   </span>
                 )}
-              </div>
 
-              <label>Nickname</label>
-              <div>
+              <label
+              style={{color:"white"}}>Nickname</label>
+              <div style={{display:"flex"
+               }}>
                 <StInput
                   placeholder="2~8글자"
                   type="text"
@@ -190,21 +191,26 @@ const SignUp = () => {
                   onChange={NickNameHandler}
                 />
                 <Button
+                  id="dupBtn"
                   type="button"
                   onClick={nickNameCheck}
-                  style={{ width: "80px", position: "absolute" }}
+                  style={{
+
+                  }}
                 >
                   중복확인
                 </Button>
-                {nickname.length > 0 && (
-                  <span
+              </div>
+              {nickname.length > 0 && (
+                  <span style= {{marginTop:"0px"}}
                     className={`message ${isNickName ? "success" : "error"}`}
                   >
                     {nickNameMessage}
                   </span>
                 )}
-              </div>
-              <label className="idPwBtn">Password</label>
+              <label 
+              style={{color:"white"}}
+              className="idPwBtn">Password</label>
               <StInput
                 placeholder="숫자 문자 혼합 4~8자리"
                 type="password"
@@ -216,7 +222,9 @@ const SignUp = () => {
                   {passwordMessage}
                 </span>
               )}
-              <label className="idPwBtn">Re-enter Password</label>
+              <label
+              style={{color:"white"}} 
+              className="idPwBtn">Re-enter Password</label>
               <StInput
                 placeholder="비밀번호 확인"
                 type="password"
@@ -234,23 +242,27 @@ const SignUp = () => {
               )}
             </StSignUpDiv>
            <div
-           style={{marginTop:"20px",
+           style={{marginTop:"30px",
            width:"264px"}}>
-            <Button
-              onClick={() => navigate("/login")}
-              style={{ marginRight: "10px",
+            <Button id="signUpBtn" 
+              style={{ marginRight: "11px",
               width:"120px",
-              hegiht:"80px",
-              fontFamily: 'Rammetto One, cursive'}}
+              height: "60px",
+              border: "6px solid black",
+              }} type="submit">
+              SIGN UP
+            </Button>
+            <Button id="logInBtn"
+              onClick={() => navigate("/login")}
+              style={{ 
+              marginLeft: "11px",
+              height: "60px",
+              width:"120px",
+              border: "6px solid black"
+              }}
               type="button"
             >
               LOG IN
-            </Button>
-            <Button style={{ marginLeft: "10px",
-              width:"120px",
-              hegiht:"80px",
-              fontFamily: 'Rammetto One, cursive' }} type="submit">
-              SIGN UP
             </Button>
             </div>
           </StSignUpForm>
