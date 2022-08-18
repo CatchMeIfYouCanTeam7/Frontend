@@ -10,9 +10,8 @@ export const DetailWrap = styled.div`
 
 export const DetailContainer = styled.div`
   width: 30%;
-  min-width: 500px;
-  height: 70%;
-  min-height: 700px;
+  min-width: 30em;
+	max-width: 40em;
   margin: auto;
   text-align: center;
 
@@ -21,6 +20,9 @@ export const DetailContainer = styled.div`
 
   background-color: #5357f6;
   position: relative;
+
+	display: flex;
+	flex-direction: column;
 `;
 
 export const DetailHeaderWrap = styled.div`
@@ -31,24 +33,29 @@ export const DetailHeaderWrap = styled.div`
 `;
 
 export const DetailHeader = styled.div`
-	height: 40px;
-  margin: 10px auto;
+	height: 50px;
+  margin: auto;
 
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
 
   span {
     color: white;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 20px;
   }
+`;
+
+export const DetailHeaderUsername = styled.span`
+	font-size: 32px;
+	color: #ffc500;
 `;
 
 export const DetailContent = styled.div`
   img {
     width: 85%;
-    height: 300px;
+		height: 18em;
 
     border: 6px solid black;
     border-radius: 9.5px;
@@ -57,14 +64,19 @@ export const DetailContent = styled.div`
 
 export const CommentWrite = styled.div`
 	width: 85%;
-	margin: auto;
+	margin: 20px auto;
 	
 	text-align: left;
 	display: flex;
-	justify-content: space-between;
-	
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+
 	label {
-		font-size: 18px;
+		margin: auto;
+		display: inline-block;
+
+		font-size: 20px;
 		font-weight: bold;
 	}
 	
@@ -80,44 +92,64 @@ export const CommentWrite = styled.div`
 	}
 	
 	input {
-		width: 25%;
+		width: 50%;
 		margin: auto 10px;
 		padding: 5px 10px;
-		
-		background-color: aliceblue;
-		border: 0px solid #ffffff;
-		border-radius: 5px;
+
+		font-family: 'Jua', sans-serif;
+
+		background-color: white;
+		border: 4px solid black;
+		border-radius: 10px;
+		outline: none;
 	}
 `;
 
 export const CommentListContainer = styled.div`
   width: 100%;
-  height: 150px;
   margin: 30px auto;
+`;
 
+export const CommentListWrap = styled.div`
+  width: 87%;
+  text-align: left;
+  margin: auto;
+`;
+
+export const ButtonText = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
+export const CommentList = styled.div`
+	height: 200px;
+	background-color: #d3d3d3;
+	border: 6px solid black;
+	padding: 20px;
+	border-radius: 20px;
+	
   // scroll
-  overflow-y: scroll;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     width: 10px;
   }
+	&::-webkit-scrollbar-track {
+		margin: 8px auto;
+	}
   &::-webkit-scrollbar-thumb {
-    background: #ffc500;
+    /* background: #ffc500; */
+		background: #ef8b7c;
     border-radius: 5px;
   }
   &::-webkit-scrollbar-thumb:hover {
-    background: #ef8b7c;
     border-radius: 5px;
   }
-`;
-
-export const CommentList = styled.div`
-  width: 85%;
-  text-align: left;
-  margin: auto;
 `;
 
 export const CommentNone = styled.p`
   text-align: center;
 	color: white;
 `;
+

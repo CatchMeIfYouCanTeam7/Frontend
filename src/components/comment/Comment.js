@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
+// components
+import Button from "../button/Button";
+
 // redux
 import { asyncRemoveComment } from "../../redux/modules/comment";
-import Button from "../button/Button";
 
 // styled-componenets
 import {
@@ -18,8 +20,6 @@ const Comment = ({ comment, userNickname, userId }) => {
 
   // 본인이 작성한 댓글인지 확인
   const [isUser, setIsUser] = useState(false);
-
-	const [isAnswer, setIsAnswer] = useState(comment.trueOrFalse);
 
   useEffect(() => {
     if (userNickname === comment.author) {
@@ -44,8 +44,8 @@ const Comment = ({ comment, userNickname, userId }) => {
         <hr />
       </CommentNicknameWrap>
       <CommentContentWrap>
-        <span>{isAnswer ? '*'.repeat(comment.comment.length) : comment.comment}</span>
-				<CommentShowCorrect>{isAnswer ? "정답!" : ""}</CommentShowCorrect>
+        {comment.trueOrFalse ? null : <span>{comment.comment}</span>}
+				<CommentShowCorrect>{comment.trueOrFalse ? "정답 축하합니다! 🎉" : ""}</CommentShowCorrect>
         {isUser ? (
           <Button
             id="removeCommentBtn"

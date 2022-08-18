@@ -7,6 +7,7 @@ const store = configureStore({
 		comment: comment,
 		posting: posting
 	},
+	devTools: process.env.NODE_ENV !== 'production',
 });
 
 export default store;

@@ -42,7 +42,7 @@ const Main = () => {
     dispatch(asyncGetAllQuestion());
   };
 
-
+	// 글 작성 화면으로 이동 
   const onMovePostingHandler = () => {
 		const accessToken = JSON.parse(localStorage.getItem("accessToken" + userData.id));
 		
@@ -65,13 +65,11 @@ const Main = () => {
 
   useEffect(() => {
     getAllPosting();
-		// console.log(questionList);
   }, [JSON.stringify(questionList)]);
 
   return (
     <MainWrap>
       <Header userId={userData.id}/>
-
       <MainContainer>
         <ListHeader>
           <p>
@@ -79,7 +77,6 @@ const Main = () => {
             정답을 맞춰주세요!
           </p>
           <Button id="postingBtn" onClick={onMovePostingHandler}>
-
             글 작성
           </Button>
         </ListHeader>

@@ -80,16 +80,15 @@ const Posting = () => {
     fileInput.current.value = "";
   };
 
-  const onRemoveQuestionHandler = () => {
-
-    if ( window.confirm('삭제하시겠습니까?') ){
-    dispatch(asyncRemoveQuestion({
-    questionId: question.id,
-    userId: userData.id
-    }));
-    navigate('/', { state: { userData: userData }});
-    }
-    }
+	const onRemoveQuestionHandler = () => {
+		if (window.confirm('삭제하시겠습니까?')) {
+			dispatch(asyncRemoveQuestion({
+				questionId: question.id,
+				userId: userData.id
+			}));
+			navigate('/', { state: { userData: userData }});
+		}
+	}
 
 
   // useEffect(() => {
