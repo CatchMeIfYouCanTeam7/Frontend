@@ -15,11 +15,11 @@ export const StSignUpDiv = styled.div`
   }
 
 	label {
-		margin-top: 10px;
-		margin-left: 2px;
+		margin-top: 16px;
+		margin-left: 4px;
 	}
   span {
-    margin-top: 5px;
+    margin-top: 2px;
     font-size: 15px;
     margin-left: 2px;
   }

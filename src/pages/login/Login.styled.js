@@ -80,7 +80,7 @@ export const StSpan = styled.span`
 `;
 export const StTitle = styled.h1`
 	margin-top: 0px;
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 	font-size: 47px;
 	color: #ffc500;
 	font-family: 'Rammetto One', cursive;

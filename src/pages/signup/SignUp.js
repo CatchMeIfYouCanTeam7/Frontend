@@ -68,7 +68,7 @@ const SignUp = () => {
 		setPassword(passwordCurrent);
 
 		if (!passwordRegex.test(passwordCurrent)) {
-			setPasswordMessage('숫자,문자를 혼합하여 4~8자리');
+			setPasswordMessage('숫자 문자 혼합 4~8자리를 입력해주세요');
 			setIsPassword(false);
 		} else {
 			setPasswordMessage('안전한 비밀번호에요 : )');
@@ -173,9 +173,11 @@ const SignUp = () => {
 											position: 'absolute',
 											borderRadius: '0 10px 10px 0',
 											border: 'solid black',
-											borderWidth: '2px 4px 3.5px 1px',
+											borderWidth: '2px 4px 3.5px 5px',
 											marginLeft: '184px',
 											marginTop: '3.4px',
+											fontSize: '15px',
+											fontFamily: 'Jua, sans-serif',
 										}}
 									>
 										중복확인
@@ -206,9 +208,11 @@ const SignUp = () => {
 											position: 'absolute',
 											borderRadius: '0 10px 10px 0',
 											border: 'solid black',
-											borderWidth: '1px 4px 3.5px 1px',
+											borderWidth: '2px 4px 3.5px 5px',
 											marginLeft: '184px',
 											marginTop: '3.5px',
+											fontSize: '15px',
+											fontFamily: 'Jua, sans-serif',
 										}}
 									>
 										중복확인
@@ -228,7 +232,7 @@ const SignUp = () => {
 									Password
 								</label>
 								<StInput
-									placeholder="숫자 문자 혼합 4~8자리"
+									placeholder="문자,숫자 혼합 4~8자리"
 									type="password"
 									value={password}
 									onChange={PasswordHandler}
@@ -264,7 +268,38 @@ const SignUp = () => {
 								)}
 							</div>
 						</StSignUpDiv>
-						<div style={{ marginTop: '20px', width: '264px' }}>
+
+						<div style={{ marginTop: '10px', width: '264px' }}>
+							<Button
+								id="signUpBtn"
+								style={{
+									marginRight: '11px',
+									width: '120px',
+									height: '60px',
+									border: '6px solid black',
+									borderRadius: '14px',
+								}}
+								type="submit"
+							>
+								SIGN UP
+							</Button>
+							<Button
+								id="logInBtn"
+								onClick={() => navigate('/login')}
+								style={{
+									marginLeft: '11px',
+									height: '60px',
+									width: '120px',
+									border: '6px solid black',
+									borderRadius: '14px',
+								}}
+								type="button"
+							>
+								LOG IN
+							</Button>
+						</div>
+
+						{/* <div style={{ marginTop: '20px', width: '264px' }}>
 							<Button
 								id="signUpBtn"
 								style={{
@@ -290,7 +325,7 @@ const SignUp = () => {
 							>
 								LOG IN
 							</Button>
-						</div>
+						</div> */}
 					</StSignUpForm>
 				</StLoginDivBox>
 			</StLoginDivFull>
