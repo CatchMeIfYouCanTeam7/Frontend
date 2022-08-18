@@ -191,10 +191,10 @@ const Detail = () => {
           <DetailHeader>
             <Button id="backBtn" onClick={() => navigate(-1)}></Button>
             <div>
-              <span style={{ fontSize: "32px", color: "#ffc500" }}>
-                '{question.author}'
+              <span style={{ fontSize: "32px", color: "#ffc500", marginLeft:"22px"}}>
+                {question.author} 
               </span>
-              <span>님의 문제!</span>
+              <span style={{marginLeft: "10px"}}>님의 문제입니다!</span>
             </div>
             {checkAuthor ? (
               <Button id="editPostingBtn" onClick={onMovePostingHandler}>
@@ -213,8 +213,8 @@ const Detail = () => {
         </DetailContent>
         <div>
           <CommentWrite>
-            <div>
-              <label htmlFor="nickname">정답</label>
+            <div style={{ display:"flex", alignItem:"center" }}>
+              <label style={{ marginBottom:"0" }} htmlFor="nickname">정답:</label>
               <input
                 type="text"
                 value={inputComment}

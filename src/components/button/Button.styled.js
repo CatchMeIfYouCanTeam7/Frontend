@@ -55,9 +55,12 @@ export const BtnContainer = styled.button`
 					font-weight: bold;
 
 					hr {
+						width: 83px;
 						background-color: white;
 						height: 2px;
 						border: 0;
+						margin: 1px 0px 0px 5px;
+						
 					}
 				`;
 
@@ -94,17 +97,42 @@ export const BtnContainer = styled.button`
 					border-radius: 8px;
 				`;
 
+			case 'logInBtn':
+				return css`
+					width: 90px;
+					height: 40px;
+					font-size: 18px;
+					font-weight: bold;
+					color: #5337f6;
+					background-color: #f9f9f9;
+					border: 4px solid black;
+					border-radius: 7px;
+					font-family: 'Rammetto One', cursive;
+				`;
+
+			case 'signUpBtn':
+				return css`
+					width: 90px;
+					height: 40px;
+					font-size: 16px;
+					font-weight: bold;
+					color: #f9f9f9;
+					background-color: #5337f6;
+					border: 4px solid black;
+					border-radius: 7px;
+					font-family: 'Rammetto One', cursive;
+				`;
+
 			default:
 				return css`
 					width: 80px;
 					height: 40px;
 					font-size: 18px;
 					font-weight: bold;
-
 					background-color: #ffc500;
-
 					border: 4px solid black;
 					border-radius: 7px;
+					font-family: 'Rammetto One', cursive;
 				`;
 		}
 	}}
