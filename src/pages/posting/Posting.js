@@ -81,7 +81,6 @@ const Posting = () => {
   };
 
 	const onRemoveQuestionHandler = () => {
-		// alert('글이 삭제되었습니다.');
 		if (window.confirm('삭제하시겠습니까?')) {
 			dispatch(asyncRemoveQuestion({
 				questionId: question.id,

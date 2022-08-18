@@ -1,8 +1,14 @@
 import { useState, useRef, useEffect } from "react";
-import Header from "../../components/header/Header";
 import { useNavigate } from "react-router-dom";
-import { StLoginDivFull, StLoginDivBox } from "../login/Login.styled";
-import { StSignUpInput, StSignUpForm, StSignUpDiv } from "./SignUp.styled";
+import {
+  StLoginDivFull,
+  StLoginDivBox,
+  StCatchLogo,
+  StInput,
+  StTitle
+} from "../login/Login.styled";
+import { StSignUpForm, StSignUpDiv } from "./SignUp.styled";
+import Button from "../../components/button/Button";
 import axios from "axios";
 
 const SignUp = () => {
@@ -86,7 +92,6 @@ const SignUp = () => {
   const SubmitHandler = async (event) => {
     //태그의 기본 기능으로 리프레쉬 되는 것을 방지.
     event.preventDefault();
-    console.log(email, nickname, password, passwordConfirm);
     await axios
       .post(process.env.REACT_APP_URL + "/api/members/signup", {
         email: email,
@@ -95,10 +100,6 @@ const SignUp = () => {
         passwordConfirm: passwordConfirm,
       })
       .then((res) => {
-        // console.log(res);
-        // console.log(res.data.success);
-        // console.log(typeof(res.data.success))
-        console.log("서버연동 성공");
         if (res.data.success === true) {
           alert("회원가입을 축하드립니다^^");
           navigate("/login");
@@ -117,85 +118,94 @@ const SignUp = () => {
         params: { email: email },
       })
       .then((res) => {
-        console.log(res.data.success);
-        if(res.data.success===true){
-        alert(res.data.data)
-        }else
-        alert(res.data.error.message)
+        if (res.data.success === true) {
+          alert(res.data.data);
+        } else alert(res.data.error.message);
       })
       .catch((error) => {
-        alert(error.message)
+        alert(error.message);
       });
   };
 
-  const nickNameCheck = async() => {
+  const nickNameCheck = async () => {
     await axios
       .get(process.env.REACT_APP_URL + "/api/members/nickname-check", {
         params: { nickname: nickname },
       })
       .then((res) => {
-        console.log(res.data.success);
-        if(res.data.success===true){
-        alert(res.data.data)
-        }else
-        alert(res.data.error.message)
+        if (res.data.success === true) {
+          alert(res.data.data);
+        } else alert(res.data.error.message);
       })
       .catch((error) => {
-        alert(error.message)
+        alert(error.message);
       });
   };
 
   return (
     <>
-      <Header>SIGN UP</Header>
+      <StCatchLogo
+        onClick={() => {
+          navigate("/");
+        }}
+      />
       <StLoginDivFull>
         <StLoginDivBox>
-          <h1>SIGN UP</h1>
+          <StTitle>SIGN UP</StTitle>
           <StSignUpForm onSubmit={SubmitHandler}>
             <StSignUpDiv>
-              <label>E-mail :</label>
-              <StSignUpInput
-                placeholder="email을 입력해주세요"
-                type="email"
-                ref={userRef}
-                Value={email}
-                onChange={EmailHandler}
-              />
-              <button
-                type="button"
-                onClick={emailCheck}
-                style={{ width: "80px" }}
-              >
-                중복확인
-              </button>
-              {email.length > 0 && (
-                <span className={`message ${isEmail ? "success" : "error"}`}>
-                  {emailMessage}
-                </span>
-              )}
+              <label>E-mail</label>
+              <div>
+                <StInput
+                  placeholder="email을 입력해주세요"
+                  type="email"
+                  ref={userRef}
+                  Value={email}
+                  onChange={EmailHandler}
+                />
+                <Button
+                  type="button"
+                  onClick={emailCheck}
+                  style={{
+                    width: "80px",
+                    hegiht: "20px",
+                    position: "absolute",
+                  }}
+                >
+                  중복확인
+                </Button>
+                {email.length > 0 && (
+                  <span className={`message ${isEmail ? "success" : "error"}`}>
+                    {emailMessage}
+                  </span>
+                )}
+              </div>
 
-              <label>Nickname :</label>
-              <StSignUpInput
-                placeholder="2~8글자"
-                type="text"
-                value={nickname}
-                onChange={NickNameHandler}
-              />
-              <button
-                type="button"
-                onClick={nickNameCheck}
-                style={{ width: "80px" }}
-              >
-                중복확인
-              </button>
-              {nickname.length > 0 && (
-                <span className={`message ${isNickName ? "success" : "error"}`}>
-                  {nickNameMessage}
-                </span>
-              )}
-
-              <label className="idPwBtn">Password :</label>
-              <StSignUpInput
+              <label>Nickname</label>
+              <div>
+                <StInput
+                  placeholder="2~8글자"
+                  type="text"
+                  value={nickname}
+                  onChange={NickNameHandler}
+                />
+                <Button
+                  type="button"
+                  onClick={nickNameCheck}
+                  style={{ width: "80px", position: "absolute" }}
+                >
+                  중복확인
+                </Button>
+                {nickname.length > 0 && (
+                  <span
+                    className={`message ${isNickName ? "success" : "error"}`}
+                  >
+                    {nickNameMessage}
+                  </span>
+                )}
+              </div>
+              <label className="idPwBtn">Password</label>
+              <StInput
                 placeholder="숫자 문자 혼합 4~8자리"
                 type="password"
                 value={password}
@@ -206,8 +216,8 @@ const SignUp = () => {
                   {passwordMessage}
                 </span>
               )}
-              <label className="idPwBtn">Re-enter Password :</label>
-              <StSignUpInput
+              <label className="idPwBtn">Re-enter Password</label>
+              <StInput
                 placeholder="비밀번호 확인"
                 type="password"
                 value={passwordConfirm}
@@ -223,16 +233,26 @@ const SignUp = () => {
                 </span>
               )}
             </StSignUpDiv>
-            <button
+           <div
+           style={{marginTop:"20px",
+           width:"264px"}}>
+            <Button
               onClick={() => navigate("/login")}
-              style={{ marginRight: "5px" }}
+              style={{ marginRight: "10px",
+              width:"120px",
+              hegiht:"80px",
+              fontFamily: 'Rammetto One, cursive'}}
               type="button"
             >
-              이전
-            </button>
-            <button style={{ marginLeft: "5px" }} type="submit">
-              회원가입
-            </button>
+              SIGN UP
+            </Button>
+            <Button style={{ marginLeft: "10px",
+              width:"120px",
+              hegiht:"80px",
+              fontFamily: 'Rammetto One, cursive' }} type="submit">
+              LOG IN
+            </Button>
+            </div>
           </StSignUpForm>
         </StLoginDivBox>
       </StLoginDivFull>
