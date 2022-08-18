@@ -1,11 +1,14 @@
 import { useState, useRef, useEffect } from "react";
-import Header from "../../components/header/Header";
-import { useNavigate } from "react-router-dom";
+import { createPath, useNavigate } from "react-router-dom";
 import {
   StSection,
   StLoginDivFull,
   StLoginDivBox,
   StInput,
+  StCatchLogo,
+  StLabel,
+  StSpan,
+  StTitle
 } from "./Login.styled.js";
 import axios from "axios";
 import Button from "../../components/button/Button";
@@ -38,10 +41,7 @@ const Login = () => {
         password: pw,
       })
       .then((res) => {
-        console.log(res);
 
-        console.log(res.data.success);
-        console.log(res.headers.authorization);
         if (res.headers.authorization) {
           localStorage.setItem(
             "accessToken" + res.data.data.id,
@@ -58,24 +58,27 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
         alert("아이디와 비밀번호를 확인해 주세요");
       });
   };
 
   return (
     <>
-      <Header/>
+    <StCatchLogo onClick ={()=>{navigate("/")}}/>
       <StSection>
         <StLoginDivFull>
           <StLoginDivBox>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>
               {errMsg}
             </p>
-            <h1 style={{ marginTop: "0px", marginBottom: "30px" }}>LOGIN</h1>
+            <StTitle className="title">LOGIN</StTitle>
             <form onSubmit={handleSubmit}>
-              <label htmlFor="username" style={{textaligt:"left", widrh:"264px"}} >E-mail</label>
-              <br />
+              <StLabel htmlFor="username"
+              style={{color:"white",
+              marginBottom:"3px",
+              marginLeft:"5px"}} >
+              E-mail
+                </StLabel>
               <StInput
                 type="text"
                 ref={userRef}
@@ -84,10 +87,13 @@ const Login = () => {
                 required
               />
               <br />
-              <label htmlFor="password">
-                Password
-              </label>
-              <br />
+              <StLabel htmlFor="password"
+              style={{color:"white",
+              marginBottom:"3px",
+              marginLeft:"5px"
+              }}>
+              Password
+              </StLabel>
               <StInput
                 type="password"
                 onChange={(e) => setPw(e.target.value)}
@@ -95,15 +101,22 @@ const Login = () => {
                 required
               />
               <br/>
-                <Button type="submit" style={{marginTop:"16px"}}>
+                <Button type="submit" 
+                style={{marginTop:"16px"
+                ,width:"264px"
+                ,height: "60px"
+                ,color: "#5357f6"
+                ,fontSize: "23px"
+                ,border: "6px solid black"
+                ,borderRadius: "12px"
+                ,fontFamily: 'Rammetto One, cursive' 
+                }}>
                   LOGIN
                 </Button>
-                <p
+                <StSpan
                   type="button"
-
-                  // style={{width:"270px"}}
                   onClick={() => navigate("/SignUp")}
-                >회원가입</p>
+                >회원가입</StSpan>
 
             </form>
           </StLoginDivBox>
