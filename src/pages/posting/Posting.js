@@ -1,165 +1,221 @@
-
 // React import
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 // Package import
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { addPosting } from '../../redux/modules/posting'
+import { useLocation, useNavigate } from 'react-router-dom';
+import {
+	asyncEditQuestion,
+	asyncPostQuestion,
+	asyncRemoveQuestion,
+} from '../../redux/modules/posting';
+import { useDispatch, useSelector } from 'react-redux';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 // Component import
 import Header from '../../components/header/Header';
+import Button from '../../components/button/Button';
+
 // Styled import
 import {
 	PostingWrap,
 	PostingContainer,
 	PostingHeader,
 	InputWrap,
+	Preview,
+	ImageUproadButton,
 } from './Posting.styled';
-import { useSelector } from 'react-redux';
+
+import previewImg from '../../image/preview_img.png';
 
 const Posting = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-		const questionList = useSelector((state) => state.posting.postingList);
-		console.log(questionList);
-	//  const onClick = () => {
-	// 		if (window.confirm('정말 삭제합니까?')) {
-	// 			alert('삭제되었습니다.');
-	// 		} else {
-	// 			alert('취소합니다.');
-	// 		}
-	// 	};
 
-	// Img 업로드
-	// const fileInput = React.useRef(null);
-	// const handleButtonClick = (e) => {
-	// 	fileInput.current.click();
-	// };
-	// const handleChange = (e) => {};
+	// 상세화면에서 수정 버튼 클릭 시 문제 데이터 보냄
+	const location = useLocation();
 
-	// 추가 테스트
-	const [fileImage, setFileImage] = useState('');
+	const question = location.state.question ? location.state.question : '';
+	const userData = location.state.userData;
 
-	const saveFileImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-		// @ts-ignore
-		setFileImage(URL.createObjectURL(event.target.files[0]));
+	const [fileImage, setFileImage] = useState(question ? question.imgUrl : '');
+	const [img, setImg] = useState('');
+	const [hint, setHint] = useState(question ? question.hint : '');
+	const [answer, setAnswer] = useState(question ? question.answer : '');
+
+	const QUESTION = useSelector((state) => state.posting.questions);
+
+	const fileInput = useRef();
+
+	const saveFileImage = (e) => {
+		const img = e.target.files[0];
+		setFileImage(URL.createObjectURL(img));
+		setImg(img);
 	};
 
 	const deleteFileImage = () => {
 		URL.revokeObjectURL(fileImage);
 		setFileImage('');
+		fileInput.current.value = '';
 	};
 
-	const [hint, setHint] = useState('');
-
-	const [answer, setAnswer] = useState('');
-	
-//useSelector는 reducer의 모든 정보를 가져오는 것 
-	// const posting = useSelector((state) => state.posting.QUESTION.result)
-	// console.log('aaaa', posting);
-
-	// 등록 버튼 click시 confirm
-	const onClickhandle = () => {
-		if (hint === '' || answer === '') {
-			window.alert('힌트와 정답 모두 입력해 주세요!');
-		} else {
-			if (window.confirm('등록하시겠습니까?')) {
-				window.location.href = 'http://localhost:3000/detail';
-			}
+	const onRemoveQuestionHandler = () => {
+		if (window.confirm('삭제하시겠습니까?')) {
+			dispatch(
+				asyncRemoveQuestion({
+					questionId: question.id,
+					userId: userData.id,
+				})
+			);
+			navigate('/', { state: { userData: userData } });
 		}
 	};
 
+	const onClickHandler = () => {
+		if (hint === '' || answer === '' || fileImage === '') {
+			window.alert('힌트와 정답 이미지를 모두 입력해 주세요!');
+		} else {
+			if (window.confirm('등록하시겠습니까?')) {
+				let formData = new FormData();
+
+				const data = {
+					hint: hint,
+					answer: answer,
+				};
+
+				// console.log(hint, answer);
+				formData.append('multipartFile', img);
+				formData.append(
+					'questionRequestDto',
+					new Blob([JSON.stringify(data)], {
+						type: 'application/json',
+					})
+				);
+
+				// for (const keyValue of formData) console.log(keyValue); 
+
+				if (question) {
+					dispatch(
+						asyncEditQuestion({
+							formData: formData,
+							userId: userData.id,
+							questonId: question.id,
+						})
+					);
+				} else {
+					dispatch(
+						asyncPostQuestion({
+							formData: formData,
+							userId: userData.id,
+						})
+					);
+				}
+
+				// console.log('finish dispatch post question');
+				navigate('/', { state: { userData: userData } });
+			}
+		}
+		// console.log(QUESTION.length);
+
+		const newQuestion = {
+			questionId: QUESTION.length + 1,
+			userNickname: 'nick1',
+			imageUrl:
+				'http://c2.img.netmarble.kr/web/6N/2011/02/2139/%EA%B0%9C%EB%93%9C%EB%A6%BD_%EC%A0%9C%EC%B2%A0%EC%86%8C.jpg',
+			hint: hint,
+			answer: answer,
+			createdAt: '2020-04-11T11:12:30.686',
+		};
+	};
 	return (
 		<>
-			<Header />
+			<Header userId={userData.id} />
 			<PostingWrap>
 				<PostingContainer>
 					<PostingHeader>
-						<button onClick={() => navigate(-1)}>뒤로가기</button>
-						<button>완료</button>
-						<button>취소</button>
+						<Button id="backBtn" onClick={() => navigate(-1)}></Button>
+
+						<div>
+							{question ? (
+								<Button id="editPageBtn" onClick={onRemoveQuestionHandler}>
+									글 삭제
+								</Button>
+							) : null}
+							<Button
+								id="editPageBtn"
+								onClick={() => navigate(-1)}
+								style={{ backgroundColor: '#bababa' }}
+							>
+								취소
+							</Button>
+						</div>
 					</PostingHeader>
 
-					<h1>이미지 업로드 </h1>
-					<div
-						style={{
-							alignItems: 'center',
-							justifyContent: 'center',
-						}}
-					>
+					<div>
+						<Preview src={fileImage ? fileImage : previewImg} alt="" />
+					</div>
+					
+					<ImageUproadButton style={{ marginTop: '10px' }}>
+						<label
+							style={{
+								backgroundColor: '#ef8b7c',
+								color: '#000000',
+								border: '5px solid black',
+								borderRadius: '12px',
+								fontSize: '17px',
+								width: '78px',
+								height: '20px',
+								margin: '0 auto',
+								textAlign: 'center',
+								lineHeight: '23px',
+							}}
+							className="input file-button"
+							htmlFor="input-file"
+						>
+							파일 선택...
+						</label>
 						<input
-							name="imggeUpload"
+							id="input-file"
+							style={{ color: 'white', display: 'none' }}
+							name="imgUpload"
 							type="file"
 							accept="image/*"
 							onChange={saveFileImage}
-						/>
-					</div>
-					<div>
-						<h1>미리보기 이미지</h1>
-					</div>
-					<div>
-						{fileImage && (
-							<img alt="sample" src={fileImage} style={{ margin: 'auto' }} />
-						)}
-						<button
-							style={{
-								width: '50px',
-								height: '30px',
-								cursor: 'pointer',
-							}}
-							onClick={() => deleteFileImage()}
-						>
-							{' '}
-							삭제{' '}
-						</button>
-					</div>
-
-					{/* <React.Fragment>
-						<button onClick={handleButtonClick}>파일 업로드</button>
-						<input
-							type="file"
 							ref={fileInput}
-							onChange={handleChange}
-							style={{ display: 'none' }}
 						/>
-					</React.Fragment> */}
-
-					{/* <PostingImgUproad>
-						<img
-							src="http://c2.img.netmarble.kr/web/6N/2011/02/2139/%EA%B0%9C%EB%93%9C%EB%A6%BD_%EC%A0%9C%EC%B2%A0%EC%86%8C.jpg"
-							alt=""
-						/>
-					</PostingImgUproad> */}
-					<div>
-						<InputWrap>
-							<label htmlFor="nickname">힌트</label>
+					</ImageUproadButton>
+					<InputWrap>
+						<span>
+							<label htmlFor="nickname">힌트:</label>
 							<input
 								type="text"
-								placeholder="힌트 입력..."
+								placeholder="10글자 제한"
 								value={hint}
 								onChange={(e) => setHint(e.target.value)}
 								multiple="multiple"
+								maxLength="10"
 							/>
-
-							<label htmlFor="comment">정답</label>
+						</span>
+						<span>
+							<label htmlFor="comment">정답:</label>
 							<input
 								type="answer"
-								placeholder="정답 입력..."
+								placeholder="5글자 제한"
 								value={answer}
 								onChange={(e) => setAnswer(e.target.value)}
 								multiple="multiple"
+								maxLength="5"
 							/>
-
-							<button
-								onClick={() => {
-									onClickhandle();
-								}}
+						</span>
+						<span>
+							<Button
+								id="PostingBtn"
+								onClick={onClickHandler}
+								style={{ width: '55px', height: '34px', fontSize: '18px' }}
 							>
-								등록
-							</button>
-						</InputWrap>
-					</div>
+								{question ? '저장' : '등록'}
+							</Button>
+						</span>
+					</InputWrap>
 				</PostingContainer>
 			</PostingWrap>
 		</>

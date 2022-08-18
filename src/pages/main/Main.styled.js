@@ -9,8 +9,10 @@ export const MainWrap = styled.div`
 `;
 
 export const MainContainer = styled.div`
-  width: 570px;
-  height: 825px;
+  width: 30%;
+	min-width: 500px;
+	height: 70%;
+	min-height: 700px;
   margin: auto;
   text-align: center;
 
@@ -23,7 +25,7 @@ export const MainContainer = styled.div`
 
 export const ListHeader = styled.div`
   width: 80%;
-  height: 125px;
+  height: 15%;
   margin: 10px auto;
 
   display: flex;
@@ -46,7 +48,7 @@ export const ListHeader = styled.div`
 
 export const ListContainer = styled.div`
   /* background-color: lightgreen; */
-  height: 82.5%;
+  height: 80%;
 
   // scroll
   overflow-y: scroll;
@@ -54,12 +56,7 @@ export const ListContainer = styled.div`
   &::-webkit-scrollbar {
     width: 10px;
   }
-  &::-webkit-scrollbar-track {
-    box-shadow: none 10 0 5px grey;
-    border-radius: 10px;
-  }
   &::-webkit-scrollbar-thumb {
-    /* background: #ef8b7c; */
     background: #ffc500;
     border-radius: 5px;
   }
@@ -70,7 +67,7 @@ export const ListContainer = styled.div`
 `;
 
 export const ImageWrap = styled.img`
-  height: 300px;
+  height: 330px;
   position: absolute;
   right: -90px;
   bottom: -60px;

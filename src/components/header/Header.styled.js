@@ -1,12 +1,11 @@
 import styled from 'styled-components';
-import CMIYC_Logo from './CMIYC_Logo.png';
+import CMIYC_Logo from '../../image/CMIYC_Logo_Color.png';
 
 export const StHeader = styled.div`
-	width: 99.655%;
+	width: 100%;
 	height: 100px;
 	display: flex;
 	align-items: center;
-	border: 2px solid black;
 `;
 
 export const CatchLogo = styled.div`
@@ -14,7 +13,7 @@ export const CatchLogo = styled.div`
 	background-image: url(${CMIYC_Logo});
 	background-size: contain;
 	background-repeat: no-repeat;
-	top: 30px;
+	top: 23px;
 	left: 50px;
 	width: 240px;
 	height: 100px;
