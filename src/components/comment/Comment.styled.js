@@ -19,7 +19,7 @@ export const CommentContainer = styled.div`
 `;
 
 export const CommentShowCorrect = styled.span`
-	color: white;
+	color: #da6865;
 `;
 
 export const CommentNicknameWrap = styled.div`

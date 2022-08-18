@@ -5,11 +5,11 @@ const url = process.env.REACT_APP_URL + '/api';
 
 export const asyncGetAllQuestion = createAsyncThunk(
 	'posting/getAllQuestion',
-	async (payload, thnkAPI) => {
+	async (payload, thunkAPI) => {
 		const response = await axios.get(url + '/questions');
 
 		if (response.status === 200 && response.data.success === true) {
-			return response.data.data;
+			return thunkAPI.fulfillWithValue(response.data.data);
 		} else {
 			return null;
 		}
@@ -18,12 +18,12 @@ export const asyncGetAllQuestion = createAsyncThunk(
 
 export const asyncGetOneQuestion = createAsyncThunk(
 	'posting/getOneQuestion',
-	async (payload, thnkAPI) => {
+	async (payload, thunkAPI) => {
 		// payload -> question id
 		const response = await axios.get(url + `/questions/${payload}`);
 
 		if (response.status === 200 && response.data.success === true) {
-			return response.data.data;
+			return thunkAPI.fulfillWithValue(response.data.data);
 		} else {
 			return null;
 		}
@@ -47,7 +47,6 @@ export const asyncPostQuestion = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(response.data.data);
 		} catch (err) {
-			// console.log('err', err);
 			return thunkAPI.rejectWithValue();
 		}
   },
@@ -64,10 +63,9 @@ export const asyncRemoveQuestion = createAsyncThunk(
 				}
 			}
 		)
-		// console.log(response);
 		
 		if (response.status === 200 && response.data.success === true) {
-			return payload.questionId;
+			return thunkAPI.fulfillWithValue(payload.questionId);
 		} else {
 			return null;
 		}
@@ -77,7 +75,6 @@ export const asyncRemoveQuestion = createAsyncThunk(
 export const asyncEditQuestion = createAsyncThunk(
 	"posting/editQuestion",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		const response = await axios.put(
 			url + `/auth/questions/${payload.questonId}`,
 			payload.formData,
@@ -90,8 +87,7 @@ export const asyncEditQuestion = createAsyncThunk(
 		);
 		
 		if (response.status === 200 && response.data.success === true) {
-			console.log(response);
-			return response.data.data;
+			return thunkAPI.fulfillWithValue(response.data.data);
 		} else {
 			return null;
 		}
@@ -119,6 +115,7 @@ const posting = createSlice({
 			// action.payload -> all questions
 			state.questions = action.payload;
 		},
+
 		// 글 하나 조회
 		[asyncGetOneQuestion.fulfilled]: (state, action) => {
 			// action.paylaod -> one question
@@ -127,21 +124,19 @@ const posting = createSlice({
 
 		// 글 작성
 		[asyncPostQuestion.fulfilled]: (state, action) => {
-			console.log('reducer', action);
+			// action.payload -> question
 			state.questions.push(action.payload);
 		},
-		// [asyncPostQuestion.rejected]: (state, action) => {
-		// 	// console.log('post question fail', action.payload);
-		// 	state.question.status = action.payload.status;
-		// 	state.question.message = action.payload.data;
-		// }
 
 		// 글 삭제
 		[asyncRemoveQuestion.fulfilled]: (state, action) => {
 			// action.payload -> question id
-			state.questions=state.questions.filter((item) => item.id !== action.payload);
+			state.questions = state.questions.filter((item) => item.id !== action.payload);
 		},
+
+		// 글 수정
 		[asyncEditQuestion.fulfilled]: (state, action) => {
+			// action.payload -> question
 			state.questions = state.questions.map((item) => {
 				if (item.id === action.payload.id) {
 					return action.payload;
@@ -150,10 +145,8 @@ const posting = createSlice({
 				}
 			});
 		}
-	},
-
+	}
 });
-console.log('dddd', createSlice);
 
 export const { addPosting } = posting.actions;
 export default posting.reducer;

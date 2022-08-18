@@ -21,10 +21,8 @@ const Header = ({ userId }) => {
         },
       })
       .then((res) => {
-        console.log(res);
       })
       .catch((error) => {
-        console.log(error);
       });
 
     localStorage.removeItem("accessToken" + userId);

@@ -82,7 +82,7 @@ const Posting = () => {
 					answer: answer,
 				};
 
-				console.log(hint, answer);
+				// console.log(hint, answer);
 				formData.append('multipartFile', img);
 				formData.append(
 					'questionRequestDto',
@@ -91,7 +91,7 @@ const Posting = () => {
 					})
 				);
 
-				for (const keyValue of formData) console.log(keyValue); 
+				// for (const keyValue of formData) console.log(keyValue); 
 
 				if (question) {
 					dispatch(
@@ -110,7 +110,7 @@ const Posting = () => {
 					);
 				}
 
-				console.log('finish dispatch post question');
+				// console.log('finish dispatch post question');
 				navigate('/', { state: { userData: userData } });
 			}
 		}

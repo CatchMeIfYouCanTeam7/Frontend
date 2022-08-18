@@ -12,7 +12,6 @@ export const BtnContainer = styled.button`
 				return css`
 					img {
 						width: 50px;
-						object-fit: ;
 					}
 				`;
 
@@ -25,7 +24,7 @@ export const BtnContainer = styled.button`
 					font-weight: bold;
 
 					color: #5337f6;
-					background-color: #ffc500;
+					background-color: white;
 
 					border: 4px solid black;
 					border-radius: 7px;
@@ -35,7 +34,7 @@ export const BtnContainer = styled.button`
 				return css`
 					width: 300px;
 					height: 50px;
-					margin: 20px;
+					margin-bottom: 20px;
 					font-size: 27px;
 					font-weight: bold;
 

@@ -25,7 +25,7 @@ const Main = () => {
 
   const location = useLocation();
   const userData = location.state ? location.state.userData : "";
-  console.log(userData);
+  
   // 문제 전체 조회
   let questionList = useSelector((state) => state.posting.questions);
 	if (questionList > 0) {
@@ -41,13 +41,13 @@ const Main = () => {
     dispatch(asyncGetAllQuestion());
   };
 
-
+	// 글 작성 화면으로 이동 
   const onMovePostingHandler = () => {
 		const accessToken = JSON.parse(localStorage.getItem("accessToken" + userData.id));
 		
 		// access token 여부 확인 -> 로그인 기록 여부 확인
     if (accessToken) {
-			console.log(new Date(accessToken.expireTime));
+			// console.log(new Date(accessToken.expireTime));
 			if (new Date(accessToken.expireTime).valueOf() > Date.now().valueOf()) {
       	navigate("/posting", { state: { userData: userData } });
 			} else {
@@ -64,13 +64,11 @@ const Main = () => {
 
   useEffect(() => {
     getAllPosting();
-		// console.log(questionList);
   }, [JSON.stringify(questionList)]);
 
   return (
     <MainWrap>
       <Header userId={userData.id}/>
-
       <MainContainer>
         <ListHeader>
           <p>
@@ -78,7 +76,6 @@ const Main = () => {
             정답을 맞춰주세요!
           </p>
           <Button id="postingBtn" onClick={onMovePostingHandler}>
-
             글 작성
           </Button>
         </ListHeader>
