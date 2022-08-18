@@ -128,7 +128,7 @@ const Posting = () => {
 	};
 	return (
 		<>
-			<Header userId={userData.id} />
+			<Header userData={userData} />
 			<PostingWrap>
 				<PostingContainer>
 					<PostingHeader>
@@ -210,7 +210,12 @@ const Posting = () => {
 							<Button
 								id="PostingBtn"
 								onClick={onClickHandler}
-								style={{ width: '55px', height: '34px', fontSize: '18px' }}
+								style={{
+									width: '55px',
+									height: '34px',
+									fontSize: '16px',
+									fontFamily: 'Jua, sans-serif',
+								}}
 							>
 								{question ? '저장' : '등록'}
 							</Button>

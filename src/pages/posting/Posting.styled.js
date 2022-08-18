@@ -9,8 +9,6 @@ export const PostingWrap = styled.div`
 export const PostingContainer = styled.div`
 	width: 30%;
 	min-width: 500px;
-	height: 70%;
-	min-height: 400px;
 	margin: auto;
 	text-align: center;
 

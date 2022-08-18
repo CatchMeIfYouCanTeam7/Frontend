@@ -73,10 +73,10 @@ export const CommentWrite = styled.div`
 	text-align: center;
 
 	label {
-		margin: auto;
+		margin: auto 0;
 		display: inline-block;
 
-		font-size: 20px;
+		font-size: 22px;
 		font-weight: bold;
 	}
 	
@@ -92,8 +92,8 @@ export const CommentWrite = styled.div`
 	}
 	
 	input {
-		width: 50%;
-		margin: auto 10px;
+		width: 60%;
+		margin: auto 7px;
 		padding: 5px 10px;
 
 		font-family: 'Jua', sans-serif;

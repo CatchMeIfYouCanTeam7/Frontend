@@ -29,7 +29,7 @@ const AppContainer = styled.div`
 		radial-gradient(circle at 1.5px 1.5px, #acafef, 1.5px, transparent 0);
 		/* linear-gradient(to bottom, transparent, transparent 10%,#fff 10%),
 		linear-gradient(to right, #acafef, #acafef 10%, #fff 10%); */
-	background-size: 28px 28px;
+	background-size: 27px 27px;
 `;
 
 export default App;
