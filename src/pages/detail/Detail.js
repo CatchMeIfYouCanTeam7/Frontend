@@ -185,7 +185,7 @@ const Detail = () => {
 
   return (
     <DetailWrap>
-      <Header userId={userData.id} />
+      <Header userData={userData} />
       <DetailContainer>
         <DetailHeaderWrap>
           <DetailHeader>

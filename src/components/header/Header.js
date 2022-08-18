@@ -6,7 +6,7 @@ import axios from "axios";
 // Style import
 import { CatchLogo, StHeader } from "./Header.styled";
 
-const Header = ({ userId }) => {
+const Header = ({ userData }) => {
   const navigate = useNavigate();
 
 
@@ -16,7 +16,7 @@ const Header = ({ userId }) => {
       .get(process.env.REACT_APP_URL + "/api/auth/members/logout", {
         headers: {
           Authorization: JSON.parse(
-            localStorage.getItem("accessToken" + userId)
+            localStorage.getItem("accessToken" + userData.id)
           ).auth,
         },
       })
@@ -25,15 +25,15 @@ const Header = ({ userId }) => {
       .catch((error) => {
       });
 
-    localStorage.removeItem("accessToken" + userId);
+    localStorage.removeItem("accessToken" + userData.id);
 
     alert("로그아웃 하였습니다!");
-    navigate('/')
+		navigate('/', { state: { userData: userData } });
   };
 
   return (
     <StHeader>
-      <CatchLogo onClick={() => navigate("/")} />
+      <CatchLogo onClick={() => navigate("/", { state: { userData: userData } })} />
       <div style={{ marginLeft: "auto" }}></div>
       &nbsp;&nbsp;
       {localStorage.length>0 ?
