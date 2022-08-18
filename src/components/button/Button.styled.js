@@ -129,10 +129,10 @@ export const BtnContainer = styled.button`
 				position: absolute;
 				border-radius:0 10px 10px 0;
 				border: solid black;
-				border-width: 2px 4px 3.5px 5px;
+				border-width: "2px 4px 3.5px 5px"
 				margin-left: 184px;
 				margin-top: 3.5px;
-				font-family: "Jua" ,sans-serif;
+				font-family: "Jua, sans-serif";
 				font-size: "14px";
 				background-color: #ffc500;
 			`;
