@@ -75,7 +75,6 @@ export const asyncRemoveQuestion = createAsyncThunk(
 export const asyncEditQuestion = createAsyncThunk(
 	"posting/editQuestion",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		const response = await axios.put(
 			url + `/auth/questions/${payload.questonId}`,
 			payload.formData,

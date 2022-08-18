@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const PostingWrap = styled.div`
 	width: 100vw;
-	height: 100vh;
+	height: 90vh;
 	display: flex;
 `;
 
@@ -46,18 +46,22 @@ export const PostingImgUproad = styled.div`
 `;
 
 export const InputWrap = styled.div`
-	margin: 30px 10px;
+	margin: 30px 26px;
 
 	display: flex;
 	justify-content: space-between;
 
+	label {
+		font-size: 16px;
+	}
 	input {
 		width: 8rem;
 		margin: auto 10px;
 		padding: 5px;
 		background-color: aliceblue;
-		border: 0px solid #ffffff;
-		border-radius: 5px;
+		border: 4px solid black;
+		border-radius: 10px;
+		outline: none;
 	}
 `;
 
