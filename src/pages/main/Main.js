@@ -80,7 +80,7 @@ const Main = () => {
           </Button>
         </ListHeader>
         <ListContainer>
-          {questionList.length > 0 &&
+          {questionList !== null && questionList.length > 0 &&
             questionList?.map((item) => {
               return (
                 <PostingCard
