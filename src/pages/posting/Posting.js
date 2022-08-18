@@ -128,7 +128,7 @@ const Posting = () => {
 	};
 	return (
 		<>
-			<Header userId={userData.id} />
+			<Header userData={userData} />
 			<PostingWrap>
 				<PostingContainer>
 					<PostingHeader>
