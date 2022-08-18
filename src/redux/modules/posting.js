@@ -139,7 +139,7 @@ const posting = createSlice({
 		// 글 삭제
 		[asyncRemoveQuestion.fulfilled]: (state, action) => {
 			// action.payload -> question id
-			state.questions.filter((item) => item.id !== action.payload);
+			state.questions=state.questions.filter((item) => item.id !== action.payload);
 		},
 		[asyncEditQuestion.fulfilled]: (state, action) => {
 			state.questions = state.questions.map((item) => {

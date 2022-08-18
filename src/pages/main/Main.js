@@ -25,7 +25,7 @@ const Main = () => {
 
   const location = useLocation();
   const userData = location.state ? location.state.userData : "";
-
+  console.log(userData);
   // 문제 전체 조회
   let questionList = useSelector((state) => state.posting.questions);
 	if (questionList > 0) {

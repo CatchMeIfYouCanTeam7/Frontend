@@ -85,13 +85,13 @@ export const BtnContainer = styled.button`
 
 			case 'editPageBtn':
 				return css`
-					width: 70px;
+					width: 65px;
 					height: 35px;
 					margin-top: 10px;
 					margin-right: 10px;
 					background-color: black;
 					color: white;
-					font-size: 18px;
+					font-size: 17px;
 					border-radius: 8px;
 				`;
 
