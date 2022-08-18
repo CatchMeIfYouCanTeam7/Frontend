@@ -4,28 +4,30 @@ import { BtnContainer } from "./Button.styled";
 const Button = (props) => {
   const checkId = (id) => {
     switch (id) {
-      case "backBtn":
-        return (
-          <img src={require("../../image/back_button.png")} alt="backBtn" />
-        );
+			case 'backBtn':
+				return (
+					<img src={require('../../image/back_button.png')} alt="backBtn" />
+				);
 
-      case "showCommentBtn":
-        return (
-          <div>
-            {props.children}
-            <hr />
-          </div>
-        );
+			case 'showCommentBtn':
+				return (
+					<div>
+						{props.children}
+						<hr />
+					</div>
+				);
 
-      case "enrollCommentBtn":
-      case "removeCommentBtn":
-      case "editPostingBtn":
-      case "postingBtn":
-      case "hintBtn":
-      case "editPageBtn":
-      default:
-        return props.children;
-    }
+			case 'enrollCommentBtn':
+			case 'removeCommentBtn':
+			case 'editPostingBtn':
+			case 'postingBtn':
+			case 'hintBtn':
+			case 'editPageBtn':
+			case 'logInBtn':
+			case 'signUpBtn':
+			default:
+				return props.children;
+		}
   };
 
   return (
