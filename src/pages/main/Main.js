@@ -68,7 +68,7 @@ const Main = () => {
 
   return (
     <MainWrap>
-      <Header userData={userData}/>
+			<Header userData={userData}/>
       <MainContainer>
         <ListHeader>
           <p>
