@@ -116,6 +116,7 @@ const Login = () => {
                 <StSpan
                   type="button"
                   onClick={() => navigate("/SignUp")}
+                  style={{fontFamily: 'Jua, sans-serif'}}
                 >회원가입</StSpan>
 
             </form>

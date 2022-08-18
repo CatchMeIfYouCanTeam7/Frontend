@@ -244,13 +244,13 @@ const SignUp = () => {
               fontFamily: 'Rammetto One, cursive'}}
               type="button"
             >
-              SIGN UP
+              LOG IN
             </Button>
             <Button style={{ marginLeft: "10px",
               width:"120px",
               hegiht:"80px",
               fontFamily: 'Rammetto One, cursive' }} type="submit">
-              LOG IN
+              SIGN UP
             </Button>
             </div>
           </StSignUpForm>
